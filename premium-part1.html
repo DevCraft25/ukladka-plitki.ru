@@ -1,0 +1,2440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Укладка плитки в СПБ — Питерский Плиточник</title>
+    <meta name="description" content="Укладка плитки на пол от 2000 рублей за м2 · Облицовка пола · Укладка фартука · Ремонт санузла · Доделки переделки">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --white: #FFFFFF;
+            --graphite: #1C1C1C;
+            --beige: #F5F5F3;
+            --copper: #C66A36;
+            --nude: #F9E9DC;
+            --accent: #FF6B35;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --info: #3B82F6;
+            --transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition-fast: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 20px 40px rgba(28, 28, 28, 0.1);
+            --shadow-lg: 0 25px 50px rgba(28, 28, 28, 0.15);
+            --shadow-xl: 0 35px 60px rgba(28, 28, 28, 0.2);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --spacing: 1rem;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--graphite);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ULTRA CUSTOM CURSOR */
+        .cursor {
+            position: fixed;
+            width: 25px;
+            height: 25px;
+            border: 2px solid var(--copper);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+
+        .cursor.active {
+            transform: translate(-50%, -50%) scale(2);
+            background: var(--copper);
+            opacity: 0.9;
+            box-shadow: 0 0 20px var(--copper);
+        }
+
+        .cursor.hover {
+            transform: translate(-50%, -50%) scale(1.8);
+            border-color: var(--accent);
+            background: rgba(255, 107, 53, 0.2);
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--copper);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: translate(-50%, -50%);
+        }
+
+        /* PROFESSIONAL HEADER */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(25px) saturate(180%);
+            border-bottom: 1px solid rgba(28, 28, 28, 0.05);
+            z-index: 1000;
+            transition: var(--transition-fast);
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-lg);
+            border-bottom: 1px solid rgba(198, 106, 54, 0.1);
+        }
+
+        .header.scrolled .logo {
+            transform: scale(0.95);
+            color: var(--copper);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--copper), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .header.scrolled::after {
+            opacity: 0.6;
+        }
+
+        .nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-family: 'Manrope', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--graphite);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            position: relative;
+            transition: var(--transition-fast);
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, var(--copper), var(--accent));
+            border-radius: 8px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo:hover::before {
+            opacity: 0.1;
+        }
+
+        .logo:hover {
+            transform: translateY(-1px);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--graphite);
+            text-decoration: none;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--copper);
+            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .nav-links a:hover {
+            color: var(--copper);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--copper);
+            color: var(--white);
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-cta:hover {
+            background: var(--graphite);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* PREMIUM HERO SECTION */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(28, 28, 28, 0.4) 0%, rgba(198, 106, 54, 0.2) 50%, rgba(28, 28, 28, 0.4) 100%),
+                        url('images/08_007.webp') center/cover;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(198, 106, 54, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(255, 107, 53, 0.08) 0%, transparent 30%);
+            pointer-events: none;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="0.5" fill="rgba(255,255,255,0.02)"/><circle cx="90" cy="90" r="0.5" fill="rgba(255,255,255,0.02)"/><circle cx="50" cy="30" r="0.3" fill="rgba(255,255,255,0.01)"/><circle cx="30" cy="70" r="0.4" fill="rgba(255,255,255,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            opacity: 0.6;
+            animation: grain 60s linear infinite;
+        }
+
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -5%); }
+            20% { transform: translate(-10%, 5%); }
+            30% { transform: translate(5%, -10%); }
+            40% { transform: translate(-5%, 15%); }
+            50% { transform: translate(-10%, 5%); }
+            60% { transform: translate(15%, 0%); }
+            70% { transform: translate(0%, 15%); }
+            80% { transform: translate(-15%, 10%); }
+            90% { transform: translate(10%, 5%); }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 0 40px;
+            position: relative;
+            z-index: 10;
+            animation: heroFadeIn 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--border-radius-lg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: -1;
+        }
+
+        @keyframes heroFadeIn {
+            0% { opacity: 0; transform: translateY(60px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 32px;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--copper), transparent);
+            border-radius: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--copper);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--graphite);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px rgba(28, 28, 28, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--graphite);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px rgba(255, 255, 255, 0.2);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator span {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .scroll-indicator i {
+            font-size: 24px;
+        }
+
+        /* PREMIUM ABOUT SECTION */
+        .about {
+            padding: 160px 0;
+            background: linear-gradient(135deg, var(--beige) 0%, #f8f9fa 50%, var(--beige) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="dots" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(198,106,54,0.1)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23dots)"/></svg>');
+            opacity: 0.4;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--graphite);
+            margin-bottom: 32px;
+            letter-spacing: -1px;
+        }
+
+        .about-text p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--graphite);
+            margin-bottom: 48px;
+            opacity: 0.8;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--white) 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--copper);
+            font-size: 26px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(198, 106, 54, 0.1), transparent);
+            transform: rotate(-45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .feature:hover .feature-icon::before {
+            transform: rotate(-45deg) translateX(100%);
+        }
+
+        .feature:hover .feature-icon {
+            transform: translateY(-6px) scale(1.15) rotate(5deg);
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, var(--copper) 0%, var(--accent) 100%);
+            color: var(--white);
+        }
+
+        .feature-text h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--graphite);
+            margin-bottom: 4px;
+        }
+
+        .feature-text p {
+            font-size: 14px;
+            color: var(--graphite);
+            opacity: 0.7;
+            margin: 0;
+        }
+
+        .about-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 600px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: var(--transition);
+        }
+
+        .about-image:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        /* FADE IN ANIMATION */
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-left {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .slide-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-right {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .slide-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 0 20px;
+                height: 70px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .nav-cta {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+
+            .hero-content {
+                padding: 0 20px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .about {
+                padding: 100px 0;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .about-image img {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav {
+                padding: 0 16px;
+            }
+
+            .hero-content {
+                padding: 0 16px;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .about {
+                padding: 80px 0;
+            }
+        }
+
+        /* PREMIUM SERVICES SECTION */
+        .services {
+            padding: 160px 0;
+            background: linear-gradient(180deg, var(--white) 0%, #fafbfc 50%, var(--white) 100%);
+            position: relative;
+        }
+
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--copper), transparent);
+        }
+
+        .services::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--copper), transparent);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--graphite);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--graphite);
+            opacity: 0.7;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background: var(--beige);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid rgba(198, 106, 54, 0.1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--copper), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+            transform-origin: left;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, var(--beige) 0%, var(--white) 100%);
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+
+        .service-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .service-content {
+            padding: 40px 30px;
+        }
+
+        .service-content h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--graphite);
+            margin-bottom: 16px;
+        }
+
+        .service-content p {
+            color: var(--graphite);
+            opacity: 0.7;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .service-price {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--copper) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .service-price::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--copper);
+            border-radius: 1px;
+        }
+
+        /* PORTFOLIO STYLES */
+        .portfolio {
+            padding: 160px 0;
+            background: var(--beige);
+        }
+
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--graphite);
+            color: var(--graphite);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--copper);
+            border-color: var(--copper);
+            color: var(--white);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.05);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(28, 28, 28, 0.9));
+            color: var(--white);
+            padding: 40px 24px 24px;
+        }
+
+        .portfolio-overlay h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* CALCULATOR STYLES */
+        .calculator {
+            padding: 160px 0;
+            background: var(--white);
+        }
+
+        .calculator-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--beige);
+            padding: 60px 40px;
+            border-radius: 20px;
+        }
+
+        .calc-step {
+            display: none;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .calc-step.active {
+            display: block;
+        }
+
+        .calc-step h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--graphite);
+            margin-bottom: 32px;
+        }
+
+        .calc-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .calc-option {
+            background: var(--white);
+            border: 2px solid transparent;
+            padding: 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .calc-option:hover,
+        .calc-option.selected {
+            border-color: var(--copper);
+            background: var(--copper);
+            color: var(--white);
+        }
+
+        .calc-option span {
+            display: block;
+            font-size: 14px;
+            opacity: 0.7;
+            margin-top: 8px;
+        }
+
+        #area {
+            width: 100%;
+            max-width: 300px;
+            padding: 16px 20px;
+            border: 2px solid rgba(28, 28, 28, 0.2);
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .calc-result {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(28, 28, 28, 0.1);
+        }
+
+        .result-price {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--copper);
+            margin-bottom: 24px;
+        }
+
+        /* REVIEWS STYLES */
+        .reviews {
+            padding: 160px 0;
+            background: var(--beige);
+        }
+
+        .reviews-slider {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .review-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(28, 28, 28, 0.1);
+            transition: var(--transition);
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stars {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .review-card p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--graphite);
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .reviewer img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .reviewer h5 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--graphite);
+        }
+
+        .reviewer span {
+            font-size: 14px;
+            color: var(--graphite);
+            opacity: 0.7;
+        }
+
+        /* CONTACT STYLES */
+        .contact {
+            padding: 160px 0;
+            background: var(--white);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--graphite);
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            font-size: 18px;
+            color: var(--graphite);
+            opacity: 0.7;
+            margin-bottom: 48px;
+        }
+
+        .contact-items {
+            margin-bottom: 48px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--copper);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 20px;
+        }
+
+        .contact-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--graphite);
+            margin-bottom: 4px;
+        }
+
+        .contact-item p {
+            font-size: 16px;
+            color: var(--graphite);
+            margin: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--beige);
+            color: var(--graphite);
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--copper);
+            color: var(--white);
+        }
+
+        .contact-form {
+            background: var(--beige);
+            padding: 40px;
+            border-radius: 16px;
+        }
+
+        .contact-form h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--graphite);
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            background: var(--white);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--copper);
+        }
+
+        /* FOOTER STYLES */
+        .footer {
+            background: var(--graphite);
+            color: var(--white);
+            padding: 80px 0 40px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .logo {
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--copper);
+        }
+
+        .footer-contact p {
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            background: var(--copper);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 40px;
+            text-align: center;
+            opacity: 0.6;
+        }
+
+        /* PRELOADER - WORKING VERSION */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: all 0.5s ease;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--beige);
+            border-top: 4px solid var(--copper);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* MODAL STYLES */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--graphite);
+        }
+
+        .modal img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* PROGRESS BAR */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--copper);
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+
+        /* ADVANCED CALCULATOR */
+        .calc-progress {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--beige);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active {
+            background: var(--copper);
+            color: var(--white);
+        }
+
+        .progress-step.completed {
+            background: var(--graphite);
+            color: var(--white);
+        }
+
+        .progress-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 50px;
+            height: 2px;
+            background: var(--beige);
+            transform: translateY(-50%);
+        }
+
+        .progress-step:last-child::after {
+            display: none;
+        }
+
+        .progress-step.completed::after {
+            background: var(--copper);
+        }
+
+        /* FLOATING ACTION BUTTON */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--copper);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
+            box-shadow: 0 8px 20px rgba(198, 106, 54, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 30px rgba(198, 106, 54, 0.4);
+        }
+
+        /* ENHANCED TOOLTIPS */
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+
+        .tooltip::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--graphite);
+            color: var(--white);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .tooltip:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        /* ADVANCED FORM VALIDATION */
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.error input {
+            border-color: #ff4444;
+            background: rgba(255, 68, 68, 0.1);
+        }
+
+        .form-group.success input {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .error-message {
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            font-size: 12px;
+            color: #ff4444;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .form-group.error .error-message {
+            opacity: 1;
+        }
+
+        /* MOBILE RESPONSIVE ADDITIONS */
+        @media (max-width: 768px) {
+            .services-grid,
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .calc-options {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-filters {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- MODAL -->
+    <div class="modal" id="portfolioModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <img id="modalImage" src="" alt="">
+            <h3 id="modalTitle"></h3>
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+
+    <!-- FLOATING ACTION BUTTON -->
+    <div class="fab" id="fab" data-tooltip="Связаться с нами">
+        <i class="fas fa-phone"></i>
+    </div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="#" class="logo">ELITE TILES</a>
+            <ul class="nav-links">
+                <li><a href="#about">О компании</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#portfolio">Портфолио</a></li>
+                <li><a href="#calculator">Калькулятор</a></li>
+                <li><a href="#reviews">Отзывы</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+            <a href="tel:+78122345678" class="nav-cta">
+                <i class="fas fa-phone"></i>
+                Звонок
+            </a>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Питерский Плиточник</h1>
+            <p class="hero-subtitle">Укладка плитки на пол от 2000₽ за м² • Облицовка • Фартуки • Ремонт санузлов</p>
+            <div class="hero-buttons">
+                <a href="#calculator" class="btn btn-primary">
+                    <i class="fas fa-calculator"></i>
+                    Рассчитать стоимость
+                </a>
+                <a href="#portfolio" class="btn btn-secondary">
+                    <i class="fas fa-images"></i>
+                    Наши работы
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Прокрутите</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text slide-left">
+                    <h2>Мастерство, проверенное временем</h2>
+                    <p>Мы создаем интерьеры премиум-класса уже более 10 лет. Наша команда — это профессионалы высочайшего уровня, которые превращают ваши идеи в реальность с безупречным качеством исполнения.</p>
+                    
+                    <div class="about-features">
+                        <div class="feature fade-in">
+                            <div class="feature-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>От 2000₽ за м²</h4>
+                                <p>Доступные цены</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature fade-in">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Опыт 10+ лет</h4>
+                                <p>Профессиональное качество</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature fade-in">
+                            <div class="feature-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Облицовка полов</h4>
+                                <p>Качественная укладка</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature fade-in">
+                            <div class="feature-icon">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h4>Доделки</h4>
+                                <p>Переделки ремонт
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image slide-right">
+                    <img src="images/benefits-2.jpg" alt="Мастер за работой">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        let mouseX = 0, mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+        });
+
+        document.addEventListener('mousedown', () => cursor.classList.add('active'));
+        document.addEventListener('mouseup', () => cursor.classList.remove('active'));
+
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animation elements
+        document.querySelectorAll('.fade-in, .slide-left, .slide-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Features staggered animation
+        const features = document.querySelectorAll('.feature');
+        features.forEach((feature, index) => {
+            feature.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        // Portfolio Filter - FIXED VERSION
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+            console.log('Portfolio filters found:', filterBtns.length);
+            console.log('Portfolio items found:', portfolioItems.length);
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    console.log('Filter clicked:', btn.getAttribute('data-filter'));
+                    
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.getAttribute('data-filter');
+
+                    portfolioItems.forEach(item => {
+                        const category = item.getAttribute('data-category');
+                        
+                        if (filter === 'all' || category === filter) {
+                            item.style.display = 'block';
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        } else {
+                            item.style.opacity = '0.3';
+                            item.style.transform = 'scale(0.8)';
+                        }
+                    });
+                });
+            });
+        });
+
+        // Calculator - FIXED VERSION
+        let selectedService = null;
+        let selectedPrice = 0;
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const calcOptions = document.querySelectorAll('.calc-option');
+            const areaInput = document.getElementById('area');
+            const resultPrice = document.querySelector('.result-price');
+
+            if (calcOptions.length > 0) {
+                calcOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        console.log('Calculator option clicked:', option.textContent);
+                        
+                        calcOptions.forEach(opt => opt.classList.remove('selected'));
+                        option.classList.add('selected');
+                        
+                        selectedService = option.getAttribute('data-service');
+                        selectedPrice = parseInt(option.getAttribute('data-price'));
+                        
+                        console.log('Selected price:', selectedPrice);
+                        
+                        // Show step 2
+                        const step1 = document.getElementById('step1');
+                        const step2 = document.getElementById('step2');
+                        
+                        if (step1 && step2) {
+                            step1.classList.remove('active');
+                            step2.classList.add('active');
+                        }
+                        
+                        calculatePrice();
+                    });
+                });
+            }
+
+            if (areaInput) {
+                areaInput.addEventListener('input', calculatePrice);
+            }
+
+            function calculatePrice() {
+                if (!areaInput || !resultPrice) return;
+                
+                const area = parseFloat(areaInput.value) || 0;
+                const total = selectedPrice * area;
+                
+                console.log('Calculating:', area, 'x', selectedPrice, '=', total);
+                
+                if (total > 0) {
+                    resultPrice.textContent = total.toLocaleString('ru-RU') + '₽';
+                } else {
+                    resultPrice.textContent = '0₽';
+                }
+            }
+        });
+
+        // Portfolio item hover effects - FIXED
+        document.addEventListener('DOMContentLoaded', function() {
+            const portfolioItemsHover = document.querySelectorAll('.portfolio-item');
+            
+            portfolioItemsHover.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const img = item.querySelector('img');
+                    if (img) {
+                        img.style.transform = 'scale(1.1)';
+                    }
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    const img = item.querySelector('img');
+                    if (img) {
+                        img.style.transform = 'scale(1)';
+                    }
+                });
+            });
+        });
+
+        // Service cards staggered animation
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        // Form submission - FIXED VERSION
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.querySelector('.contact-form');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    console.log('Form submitted');
+                    
+                    // Simple validation
+                    const inputs = contactForm.querySelectorAll('input[required]');
+                    let isValid = true;
+                    
+                    inputs.forEach(input => {
+                        if (!input.value.trim()) {
+                            input.style.borderColor = '#ff4444';
+                            isValid = false;
+                        } else {
+                            input.style.borderColor = '#C66A36';
+                        }
+                    });
+                    
+                    if (isValid) {
+                        // Show success message
+                        const successMsg = document.createElement('div');
+                        successMsg.innerHTML = '✅ Спасибо за заявку! Мы свяжемся с вами.';
+                        successMsg.style.cssText = 'background: #4CAF50; color: white; padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center;';
+                        
+                        contactForm.appendChild(successMsg);
+                        contactForm.reset();
+                        
+                        setTimeout(() => {
+                            successMsg.remove();
+                        }, 5000);
+                    } else {
+                        alert('Пожалуйста, заполните все обязательные поля.');
+                    }
+                });
+            }
+        });
+
+        // Back to top button
+        const backToTop = document.createElement('button');
+        backToTop.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        backToTop.className = 'back-to-top';
+        backToTop.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--copper);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 18px;
+        `;
+        
+        document.body.appendChild(backToTop);
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.style.opacity = '1';
+                backToTop.style.transform = 'scale(1)';
+            } else {
+                backToTop.style.opacity = '0';
+                backToTop.style.transform = 'scale(0.8)';
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Add click handlers for all buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click effects to all buttons
+            const allButtons = document.querySelectorAll('button, .btn, .cta-button, .nav-cta');
+            allButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    // Add ripple effect
+                    const ripple = document.createElement('span');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255,255,255,0.6);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                    ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                    
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+            
+            // Add CSS for ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // PRELOADER - WORKING VERSION
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.classList.add('hidden');
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 500);
+                }
+            }, 1000);
+        });
+
+        // PROGRESS BAR
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        });
+
+        // PORTFOLIO MODAL - FIXED VERSION
+        document.addEventListener('DOMContentLoaded', function() {
+            const portfolioItems = document.querySelectorAll('.portfolio-item');
+            const modal = document.getElementById('portfolioModal');
+            const modalClose = document.getElementById('modalClose');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+
+            if (portfolioItems.length > 0 && modal) {
+                portfolioItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const img = item.querySelector('img');
+                        const title = item.querySelector('h4');
+                        const description = item.querySelector('p');
+                        
+                        if (img && title && description) {
+                            modalImage.src = img.src;
+                            modalTitle.textContent = title.textContent;
+                            modalDescription.textContent = description.textContent;
+                            modal.classList.add('active');
+                        }
+                    });
+                });
+            }
+
+            if (modalClose) {
+                modalClose.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                });
+            }
+
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            }
+        });
+
+        // FLOATING ACTION BUTTON
+        document.getElementById('fab').addEventListener('click', () => {
+            window.location.href = 'tel:+78122345678';
+        });
+
+        // ADVANCED CALCULATOR
+        let currentStep = 1;
+        let calculatorData = {
+            service: null,
+            serviceName: null,
+            price: 0,
+            area: 0
+        };
+
+        function updateProgressSteps() {
+            for (let i = 1; i <= 3; i++) {
+                const step = document.getElementById(`progressStep${i}`);
+                const stepDiv = document.getElementById(`step${i}`);
+                
+                if (i < currentStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                    stepDiv.classList.remove('active');
+                } else if (i === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                    stepDiv.classList.add('active');
+                } else {
+                    step.classList.remove('active', 'completed');
+                    stepDiv.classList.remove('active');
+                }
+            }
+        }
+
+        document.querySelectorAll('.calc-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.calc-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                calculatorData.service = option.getAttribute('data-service');
+                calculatorData.serviceName = option.textContent.split('от')[0].trim();
+                calculatorData.price = parseInt(option.getAttribute('data-price'));
+                
+                setTimeout(() => {
+                    currentStep = 2;
+                    updateProgressSteps();
+                }, 500);
+            });
+        });
+
+        document.getElementById('calculateBtn').addEventListener('click', () => {
+            const areaInput = document.getElementById('area');
+            calculatorData.area = parseFloat(areaInput.value) || 0;
+            
+            if (calculatorData.area > 0) {
+                document.getElementById('selectedServiceName').textContent = calculatorData.serviceName;
+                document.getElementById('selectedArea').textContent = calculatorData.area;
+                document.getElementById('pricePerMeter').textContent = calculatorData.price;
+                
+                const total = calculatorData.price * calculatorData.area;
+                document.querySelector('.result-price').textContent = total.toLocaleString('ru-RU') + '₽';
+                
+                currentStep = 3;
+                updateProgressSteps();
+            } else {
+                alert('Пожалуйста, введите площадь');
+            }
+        });
+
+        // ADVANCED FORM VALIDATION
+        function validateForm() {
+            const form = document.getElementById('contactForm');
+            const inputs = form.querySelectorAll('input[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                const formGroup = input.parentElement;
+                const value = input.value.trim();
+                
+                // Remove previous states
+                formGroup.classList.remove('error', 'success');
+                
+                if (input.type === 'tel') {
+                    const phoneRegex = /^[+]?[0-9\s\-\(\)]{10,}$/;
+                    if (!value || !phoneRegex.test(value)) {
+                        formGroup.classList.add('error');
+                        isValid = false;
+                    } else {
+                        formGroup.classList.add('success');
+                    }
+                } else {
+                    if (!value) {
+                        formGroup.classList.add('error');
+                        isValid = false;
+                    } else {
+                        formGroup.classList.add('success');
+                    }
+                }
+            });
+            
+            return isValid;
+        }
+
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                // Success animation
+                const button = e.target.querySelector('button[type="submit"]');
+                const originalText = button.textContent;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fas fa-check"></i> Отправлено!';
+                    button.style.background = '#4CAF50';
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.disabled = false;
+                        button.style.background = '';
+                        e.target.reset();
+                        
+                        // Reset form validation states
+                        document.querySelectorAll('.form-group').forEach(group => {
+                            group.classList.remove('error', 'success');
+                        });
+                    }, 2000);
+                }, 1500);
+            }
+        });
+
+        // Real-time form validation
+        document.querySelectorAll('#contactForm input').forEach(input => {
+            input.addEventListener('blur', validateForm);
+            input.addEventListener('input', () => {
+                const formGroup = input.parentElement;
+                if (formGroup.classList.contains('error')) {
+                    validateForm();
+                }
+            });
+        });
+
+        // ENHANCED TOOLTIP
+        document.querySelectorAll('.tooltip').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                element.style.transform = 'scale(1.05)';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.transform = 'scale(1)';
+            });
+        });
+
+        console.log('🏛️ ULTRA PROFESSIONAL SITE LOADED!');
+        console.log('✅ Advanced Features: Preloader, Progress bar, Modal, FAB');
+        console.log('✅ Enhanced Calculator: Multi-step with progress');
+        console.log('✅ Professional Forms: Real-time validation');
+        console.log('✅ Interactive Portfolio: Click to view details');
+        console.log('✅ Premium UX: Tooltips, animations, feedback');
+    </script>
+
+    <!-- SERVICES SECTION -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Наши услуги</h2>
+                <p>Полный спектр премиальных отделочных работ</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="images/decor1.webp" alt="Укладка плитки">
+                    </div>
+                    <div class="service-content">
+                        <h3>Укладка плитки</h3>
+                        <p>Профессиональная укладка керамической плитки любой сложности</p>
+                        <div class="service-price">от 2500₽/м²</div>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="images/kvarcvinil.webp" alt="Керамогранит">
+                    </div>
+                    <div class="service-content">
+                        <h3>Керамогранит</h3>
+                        <p>Укладка крупноформатного керамогранита премиум-класса</p>
+                        <div class="service-price">от 3000₽/м²</div>
+                    </div>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-image">
+                        <img src="images/fartuk1.webp" alt="Фартуки">
+                    </div>
+                    <div class="service-content">
+                        <h3>Кухонные фартуки</h3>
+                        <p>Стильные и практичные фартуки из натурального камня</p>
+                        <div class="service-price">от 2800₽/м²</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Портфолио</h2>
+                <p>Наши лучшие проекты в Санкт-Петербурге</p>
+            </div>
+            <div class="portfolio-filters fade-in">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="bathroom">Ванные</button>
+                <button class="filter-btn" data-filter="kitchen">Кухни</button>
+                <button class="filter-btn" data-filter="living">Гостиные</button>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item fade-in" data-category="bathroom">
+                    <img src="images/sanuzel.webp" alt="Проект 1">
+                    <div class="portfolio-overlay">
+                        <h4>Премиум ванная</h4>
+                        <p>Красивая плитка • 25 м²</p>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in" data-category="kitchen">
+                    <img src="images/fartuk.jpg" alt="Проект 2">
+                    <div class="portfolio-overlay">
+                        <h4>Элитная кухня</h4>
+                        <p>Красивый фартук • 15 м²</p>
+                    </div>
+                </div>
+                <div class="portfolio-item fade-in" data-category="living">
+                    <img src="images/kvarcvinil.webp" alt="Проект 3">
+                    <div class="portfolio-overlay">
+                        <h4>Гостиная VIP</h4>
+                        <p>Пол из плитки • 40 м²</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALCULATOR SECTION -->
+    <section class="calculator" id="calculator">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Калькулятор стоимости</h2>
+                <p>Рассчитайте примерную стоимость ваших работ</p>
+            </div>
+            <div class="calculator-form fade-in">
+                <div class="calc-progress">
+                    <div class="progress-step active" id="progressStep1">1</div>
+                    <div class="progress-step" id="progressStep2">2</div>
+                    <div class="progress-step" id="progressStep3">3</div>
+                </div>
+                <div class="calc-step active" id="step1">
+                    <h3>Выберите тип работ</h3>
+                    <div class="calc-options">
+                        <button class="calc-option" data-service="tile" data-price="2500">Укладка плитки<span>от 2500₽/м²</span></button>
+                        <button class="calc-option" data-service="porcelain" data-price="3000">Керамогранит<span>от 3000₽/м²</span></button>
+                        <button class="calc-option" data-service="backsplash" data-price="2800">Фартук<span>от 2800₽/м²</span></button>
+                    </div>
+                </div>
+                <div class="calc-step" id="step2">
+                    <h3>Укажите площадь</h3>
+                    <input type="number" id="area" placeholder="Площадь в м²" min="1">
+                    <button class="btn btn-primary" id="calculateBtn">Рассчитать</button>
+                </div>
+                <div class="calc-step" id="step3">
+                    <h3>Результат</h3>
+                    <div class="result-details">
+                        <p>Тип работ: <span id="selectedServiceName"></span></p>
+                        <p>Площадь: <span id="selectedArea"></span> м²</p>
+                        <p>Цена за м²: <span id="pricePerMeter"></span>₽</p>
+                    </div>
+                </div>
+                <div class="calc-result">
+                    <div class="result-price">0₽</div>
+                    <button class="btn btn-primary">Оставить заявку</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS SECTION -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>Отзывы клиентов</h2>
+                <p>Мнения наших довольных заказчиков</p>
+            </div>
+            <div class="reviews-slider fade-in">
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Превосходное качество работ! Мастера настоящие профессионалы. Результат превзошел все ожидания."</p>
+                    <div class="reviewer">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" alt="Клиент">
+                        <div>
+                            <h5>Александр Петров</h5>
+                            <span>Владелец квартиры</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"Работали аккуратно, соблюдали все сроки. Плитка уложена идеально, швы ровные. Рекомендую!"</p>
+                    <div class="reviewer">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b829?w=60&h=60&fit=crop&crop=face" alt="Клиент">
+                        <div>
+                            <h5>Елена Морозова</h5>
+                            <span>Дизайнер интерьеров</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info slide-left">
+                    <h2>Свяжитесь с нами</h2>
+                    <p>Готовы обсудить ваш проект и предложить лучшее решение</p>
+                    
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4>Телефон</h4>
+                                <p>+7 (812) 234-56-78</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>info@elitetiles.ru</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Адрес</h4>
+                                <p>Санкт-Петербург, Невский пр., 100</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="#" class="social-link"><i class="fab fa-telegram"></i> Telegram</a>
+                    </div>
+                </div>
+                
+                <form class="contact-form slide-right" id="contactForm">
+                    <h3>Оставить заявку</h3>
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Ваше имя" required>
+                        <div class="error-message">Пожалуйста, введите ваше имя</div>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Телефон" required>
+                        <div class="error-message">Пожалуйста, введите корректный номер телефона</div>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Описание проекта" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">ELITE TILES</div>
+                    <p>Премиальная укладка плитки в Санкт-Петербурге</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Быстрые ссылки</h4>
+                    <ul>
+                        <li><a href="#about">О компании</a></li>
+                        <li><a href="#services">Услуги</a></li>
+                        <li><a href="#portfolio">Портфолио</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Контакты</h4>
+                    <p>+7 (812) 234-56-78</p>
+                    <p>info@elitetiles.ru</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Elite Tiles. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
