@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - 6 Videos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; color: #fff; font-family: Arial; padding: 20px; }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            .video-grid { grid-template-columns: 1fr; }
+        }
+        .video-card {
+            background: #222;
+            border: 2px solid #D4AF37;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.5);
+        }
+        h1 { text-align: center; margin-bottom: 3rem; color: #D4AF37; }
+        h3 { color: #D4AF37; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>TEST - 6 ВИДЕО CARDS</h1>
+    
+    <div class="video-grid">
+        <div class="video-card">
+            <h3>Video 1</h3>
+            <p>Укладка керамогранита</p>
+        </div>
+        
+        <div class="video-card">
+            <h3>Video 2</h3>
+            <p>Монтаж мозаики</p>
+        </div>
+        
+        <div class="video-card">
+            <h3>Video 3</h3>
+            <p>Ванная комната VIP</p>
+        </div>
+        
+        <div class="video-card">
+            <h3>Video 4</h3>
+            <p>Кухонный фартук</p>
+        </div>
+        
+        <div class="video-card">
+            <h3>Video 5</h3>
+            <p>Натуральный камень</p>
+        </div>
+        
+        <div class="video-card">
+            <h3>Video 6</h3>
+            <p>Дизайнерская плитка</p>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 3rem;">
+        <a href="#" style="display: inline-block; padding: 1.2rem 3rem; background: linear-gradient(45deg, #D4AF37, #FFD700); color: #000; font-size: 1.2rem; font-weight: 700; text-decoration: none; border-radius: 50px;">
+            ЗАКАЗАТЬ УСЛУГУ
+        </a>
+    </div>
+    
+    <script>
+        console.log('Total cards:', document.querySelectorAll('.video-card').length);
+    </script>
+</body>
+</html>

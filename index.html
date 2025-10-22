@@ -91,7 +91,6 @@
 
         .nav-links a:hover {
             color: var(--gold);
-            transform: translateY(-2px);
         }
 
         .nav-links a::after {
@@ -107,6 +106,97 @@
 
         .nav-links a:hover::after {
             width: 100%;
+        }
+
+        /* DROPDOWN MENU */
+        .nav-links li {
+            position: relative;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem 0;
+            min-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-50%) translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            margin-top: 0.5rem;
+        }
+
+        .nav-links li:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .dropdown::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown a:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-left-color: var(--gold);
+            color: var(--gold);
+            padding-left: 2rem;
+        }
+
+        .dropdown a::after {
+            display: none;
+        }
+
+        .dropdown a i {
+            color: var(--gold);
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-item-with-dropdown > a::after {
+            content: '\f107';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+            width: auto;
+            height: auto;
+            position: static;
+            background: none;
+        }
+
+        .nav-item-with-dropdown:hover > a::after {
+            transform: rotate(180deg);
         }
 
         .nav-cta {
@@ -339,7 +429,7 @@
         /* PREMIUM SERVICES */
         .services {
             padding: 120px 0;
-            background: linear-gradient(135deg, var(--dark-gray) 0%, var(--black) 100%);
+            background: #000000;
             position: relative;
         }
 
@@ -399,115 +489,281 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
         }
 
         .service-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 20px;
-            padding: 3rem;
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
             overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, transparent 70%),
-                linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .service-card:hover::before {
-            left: 100%;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
         .service-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-10px);
             border-color: var(--gold);
-            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
         }
 
-        .service-icon {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(45deg, var(--gold), #FFD700);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            font-size: 2.5rem;
-            color: var(--black);
-            transition: all 0.3s ease;
+        .service-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
             position: relative;
-            z-index: 10;
         }
 
-        .service-card:hover .service-icon {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
+        .service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+
+        .service-content {
+            padding: 1.5rem;
+            background: transparent;
         }
 
         .service-card h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--white);
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 10;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
         }
 
         .service-card p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
             line-height: 1.6;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 10;
+            margin-bottom: 1rem;
         }
 
         .service-features {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .service-features span {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
-        }
-
-        .service-features i {
-            color: var(--gold);
-            font-size: 1.1rem;
+            display: none;
         }
 
         .service-price {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 900;
+            font-size: 1.1rem;
+            font-weight: 700;
             color: var(--gold);
-            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-btn {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(45deg, var(--gold), #FFD700);
+            color: var(--black);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        /* HIDDEN SERVICES */
+        .service-card.hidden-service {
+            display: none;
+        }
+
+        .service-card.hidden-service.show {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* SHOW ALL BUTTON */
+        .show-all-services {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .show-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .show-all-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .show-all-btn.hidden {
+            display: none;
+        }
+
+        /* HERO VIDEO ON MOBILE */
+        .hero-mobile-video {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero-desktop-img {
+                display: none;
+            }
+            
+            .hero-mobile-video {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .hero-video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.5), rgba(0,0,0,0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+            z-index: 5;
+        }
+
+        .hero-video-play-btn {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(45deg, var(--gold), #FFD700);
+            color: var(--black);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+            padding-left: 8px;
             position: relative;
-            z-index: 10;
+            z-index: 15;
+        }
+
+        .hero-video-play-btn:active {
+            transform: scale(0.9);
+        }
+        
+        .hero-video-play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.8);
+        }
+
+        /* VIDEO MODAL */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 10000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .video-modal.active {
+            display: block;
+        }
+
+        .video-modal-header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 10001;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .video-close-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-close-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+            transform: rotate(90deg);
+        }
+
+        .video-modal-content {
+            width: 100%;
+            height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .video-modal-content iframe {
+            width: 100%;
+            height: 100%;
+            max-width: 1200px;
+            max-height: 675px;
+            border-radius: 15px;
+            border: 2px solid var(--gold);
+        }
+
+        @media (max-width: 768px) {
+            .video-modal-content {
+                height: calc(100vh - 70px);
+                padding: 0.5rem;
+            }
+
+            .video-modal-content iframe {
+                border-radius: 10px;
+                /* For vertical Shorts videos */
+                max-width: min(100%, 400px);
+                max-height: 80vh;
+            }
         }
 
         /* PREMIUM PORTFOLIO */
@@ -706,9 +962,235 @@
         }
 
         .portfolio-cta p {
-            font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 2.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* WORK PROCESS SECTION */
+        .work-process {
+            padding: 120px 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
+            position: relative;
+        }
+
+        .work-process::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .work-process-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .process-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .process-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .process-step.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .process-step:nth-child(2).visible { transition-delay: 0.15s; }
+        .process-step:nth-child(4).visible { transition-delay: 0.3s; }
+        .process-step:nth-child(6).visible { transition-delay: 0.45s; }
+        .process-step:nth-child(8).visible { transition-delay: 0.6s; }
+        .process-step:nth-child(10).visible { transition-delay: 0.75s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--gold) 0%, #FFD700 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--black);
+            box-shadow: 
+                0 10px 30px rgba(212, 175, 55, 0.4),
+                0 0 0 10px rgba(212, 175, 55, 0.1);
+            position: relative;
+        }
+
+        .step-number::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            opacity: 0;
+            animation: pulse 2s ease-out infinite;
+        }
+
+        .step-number::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                transform: rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: rotate(180deg);
+                opacity: 0.5;
+            }
+        }
+
+        .process-step.visible .step-number {
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .step-content {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .step-content:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--gold);
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
+        }
+
+        .step-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--gold) 0%, #FFD700 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .step-content p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .process-connector {
+            margin-left: 40px;
+            height: 40px;
+            width: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-connector::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                var(--gold) 0px,
+                var(--gold) 8px,
+                transparent 8px,
+                transparent 16px
+            );
+            transition: height 0.6s ease-out;
+        }
+
+        .process-connector.active::after {
+            height: 100%;
+        }
+
+        .process-connector .connector-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .process-connector .connector-dot:first-child {
+            top: -4px;
+        }
+
+        .process-connector .connector-dot:last-child {
+            bottom: -4px;
         }
 
         /* PREMIUM STATS */
@@ -1168,6 +1650,13 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 4rem;
+        }
+        
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
         }
 
         .video-thumbnail {
@@ -2055,6 +2544,40 @@
             background: rgba(212, 175, 55, 0.1);
         }
 
+        .mobile-dropdown {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(0, 0, 0, 0.5);
+            margin: 0 2rem;
+            border-radius: 10px;
+        }
+
+        .mobile-dropdown.active {
+            max-height: 600px;
+        }
+
+        .mobile-dropdown a {
+            padding: 0.8rem 1rem;
+            font-size: 0.95rem;
+            margin: 0;
+            border-left: 3px solid transparent;
+        }
+
+        .mobile-dropdown a:hover {
+            border-left-color: var(--gold);
+            padding-left: 1.5rem;
+        }
+
+        .mobile-dropdown-trigger i {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-dropdown-trigger.active i {
+            transform: rotate(180deg);
+        }
+
         /* MOBILE RESPONSIVE */
         @media (max-width: 768px) {
             .nav-links { display: none; }
@@ -2106,11 +2629,75 @@
                 margin-top: 2rem;
             }
             
+            .process-step {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .step-number {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .step-content {
+                padding: 1.5rem;
+            }
+            
+            .step-content h3 {
+                font-size: 1.2rem;
+            }
+            
+            .step-content p {
+                font-size: 0.95rem;
+            }
+            
+            .process-connector {
+                margin-left: 0;
+                width: 40px;
+                height: 2px;
+                background: repeating-linear-gradient(
+                    to right,
+                    var(--gold) 0px,
+                    var(--gold) 8px,
+                    transparent 8px,
+                    transparent 16px
+                );
+            }
+            
+            .process-connector::before {
+                left: -4px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
+            .process-connector::after {
+                right: -4px;
+                left: auto;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
             .services-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
-            .service-card {
-                padding: 2rem;
+            
+            .service-image {
+                height: 180px;
+            }
+            
+            .service-content {
+                padding: 1rem;
+            }
+            
+            .service-card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .service-card p {
+                font-size: 0.85rem;
             }
             .contact-content {
                 grid-template-columns: 1fr;
@@ -2301,7 +2888,21 @@
         <nav class="nav">
             <a href="#" class="logo">ELITE TILES</a>
             <ul class="nav-links">
-                <li><a href="#services">Услуги</a></li>
+                <li class="nav-item-with-dropdown">
+                    <a href="#services">Услуги</a>
+                    <div class="dropdown">
+                        <a href="#services"><i class="fas fa-crown"></i> VIP Ванные комнаты</a>
+                        <a href="#services"><i class="fas fa-gem"></i> Элитные кухни</a>
+                        <a href="#services"><i class="fas fa-palace"></i> Дворцовые полы</a>
+                        <a href="#services"><i class="fas fa-chess-king"></i> Художественная мозаика</a>
+                        <a href="#services"><i class="fas fa-mountain"></i> Натуральный камень</a>
+                        <a href="#services"><i class="fas fa-sparkles"></i> Smart решения</a>
+                        <a href="#services"><i class="fas fa-th-large"></i> Облицовка пола</a>
+                        <a href="#services"><i class="fas fa-bath"></i> Укладка плитки в ванной</a>
+                        <a href="#services"><i class="fas fa-layer-group"></i> Кварцвиниловая плитка</a>
+                        <a href="#services"><i class="fas fa-toilet"></i> Ремонт санузла</a>
+                    </div>
+                </li>
                 <li><a href="#portfolio">Портфолио</a></li>
                 <li><a href="#videos">Видео</a></li>
                 <li><a href="#about">О нас</a></li>
@@ -2320,7 +2921,23 @@
         
         <div class="mobile-menu" id="mobileMenu">
             <ul>
-                <li><a href="#services">Услуги</a></li>
+                <li>
+                    <a href="#services" class="mobile-dropdown-trigger">
+                        Услуги <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="mobile-dropdown">
+                        <a href="#services"><i class="fas fa-crown"></i> VIP Ванные комнаты</a>
+                        <a href="#services"><i class="fas fa-gem"></i> Элитные кухни</a>
+                        <a href="#services"><i class="fas fa-palace"></i> Дворцовые полы</a>
+                        <a href="#services"><i class="fas fa-chess-king"></i> Художественная мозаика</a>
+                        <a href="#services"><i class="fas fa-mountain"></i> Натуральный камень</a>
+                        <a href="#services"><i class="fas fa-sparkles"></i> Smart решения</a>
+                        <a href="#services"><i class="fas fa-th-large"></i> Облицовка пола</a>
+                        <a href="#services"><i class="fas fa-bath"></i> Укладка плитки в ванной</a>
+                        <a href="#services"><i class="fas fa-layer-group"></i> Кварцвиниловая плитка</a>
+                        <a href="#services"><i class="fas fa-toilet"></i> Ремонт санузла</a>
+                    </div>
+                </li>
                 <li><a href="#portfolio">Портфолио</a></li>
                 <li><a href="#videos">Видео</a></li>
                 <li><a href="#about">О нас</a></li>
@@ -2378,11 +2995,23 @@
 
             <div class="hero-visual">
                 <div class="hero-image">
-                    <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Процесс укладки крупноформатной плитки" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; opacity: 0.9;" />
-                    <div style="position: absolute; top: 20px; right: 20px; background: rgba(212, 175, 55, 0.9); color: white; padding: 10px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; z-index: 10;">
+                    <!-- Desktop Version - Image -->
+                    <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Процесс укладки крупноформатной плитки" class="hero-desktop-img" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; opacity: 0.9;" />
+                    
+                    <!-- Mobile Version - Video Preview -->
+                    <div class="hero-mobile-video">
+                        <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Видео о работе" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                        <div class="hero-video-overlay">
+                            <button class="hero-video-play-btn" id="playVideoBtn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div style="position: absolute; top: 20px; right: 20px; background: rgba(212, 175, 55, 0.9); color: white; padding: 10px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 600; z-index: 20; pointer-events: none;">
                         <i class="fas fa-tools"></i> В РАБОТЕ
                     </div>
-                    <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0, 0, 0, 0.7); color: white; padding: 15px 25px; border-radius: 15px; z-index: 10; backdrop-filter: blur(10px);">
+                    <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0, 0, 0, 0.7); color: white; padding: 15px 25px; border-radius: 15px; z-index: 20; backdrop-filter: blur(10px); pointer-events: none;">
                         <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 5px;">Укладка керамогранита</div>
                         <div style="font-size: 0.9rem; opacity: 0.8;">Премиальные материалы • Профессиональный инструмент</div>
                     </div>
@@ -2390,6 +3019,23 @@
             </div>
         </div>
     </section>
+
+    <!-- FULLSCREEN VIDEO MODAL -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-header">
+            <button class="video-close-btn" id="closeVideoBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="video-modal-content">
+            <iframe id="videoIframe" 
+                    src="" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+        </div>
+    </div>
 
     <!-- PREMIUM SERVICES -->
     <section class="services" id="services">
@@ -2404,89 +3050,239 @@
             </div>
 
             <div class="services-grid">
-                <div class="service-card premium">
-                    <div class="service-icon">
-                        <i class="fas fa-crown"></i>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="images/bathroom/photo_1.jpg" alt="VIP Ванные комнаты" />
                     </div>
-                    <h3>VIP ВАННЫЕ КОМНАТЫ</h3>
-                    <p>Элитная облицовка с использованием премиальных материалов. Мрамор, оникс, золотая мозаика.</p>
-                    <div class="service-features">
-                        <span><i class="fas fa-check"></i> Натуральный мрамор</span>
-                        <span><i class="fas fa-check"></i> Золотая мозаика</span>
-                        <span><i class="fas fa-check"></i> LED-подсветка</span>
+                    <div class="service-content">
+                        <h3>VIP Ванные комнаты</h3>
+                        <p>Элитная облицовка с использованием премиальных материалов. Мрамор, оникс, золотая мозаика.</p>
+                        <div class="service-price">от 8500₽/м²</div>
+                        <a href="vip-bathrooms.html" class="service-btn">Подробнее</a>
                     </div>
-                    <div class="service-price">от 8500₽/м²</div>
                 </div>
 
-                <div class="service-card premium">
-                    <div class="service-icon">
-                        <i class="fas fa-gem"></i>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="images/fartuk/photo_1.jpg" alt="Элитные кухни" />
                     </div>
-                    <h3>ЭЛИТНЫЕ КУХНИ</h3>
-                    <p>Эксклюзивные фартуки из натурального камня и дизайнерской плитки премиум-класса.</p>
-                    <div class="service-features">
-                        <span><i class="fas fa-check"></i> Дизайнерская плитка</span>
-                        <span><i class="fas fa-check"></i> Натуральный камень</span>
-                        <span><i class="fas fa-check"></i> Индивидуальный дизайн</span>
+                    <div class="service-content">
+                        <h3>Элитные кухни</h3>
+                        <p>Эксклюзивные фартуки из натурального камня и дизайнерской плитки премиум-класса.</p>
+                        <div class="service-price">от 7500₽/м²</div>
+                        <a href="elite-kitchens.html" class="service-btn">Подробнее</a>
                     </div>
-                    <div class="service-price">от 7500₽/м²</div>
                 </div>
 
-                <div class="service-card premium">
-                    <div class="service-icon">
-                        <i class="fas fa-palace"></i>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="images/keramogranit/keramogranit-7.webp" alt="Дворцовые полы" />
                     </div>
-                    <h3>ДВОРЦОВЫЕ ПОЛЫ</h3>
-                    <p>Керамогранит премиум-класса с имитацией мрамора, паркета, натурального камня.</p>
-                    <div class="service-features">
-                        <span><i class="fas fa-check"></i> Крупный формат</span>
-                        <span><i class="fas fa-check"></i> Бесшовная укладка</span>
-                        <span><i class="fas fa-check"></i> Защитное покрытие</span>
+                    <div class="service-content">
+                        <h3>Дворцовые полы</h3>
+                        <p>Керамогранит премиум-класса с имитацией мрамора, паркета, натурального камня.</p>
+                        <div class="service-price">от 6500₽/м²</div>
+                        <a href="luxury-floors.html" class="service-btn">Подробнее</a>
                     </div>
-                    <div class="service-price">от 6500₽/м²</div>
                 </div>
 
-                <div class="service-card premium">
-                    <div class="service-icon">
-                        <i class="fas fa-chess-king"></i>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="images/keramogranit/keramogranit-3.webp" alt="Художественная мозаика" />
                     </div>
-                    <h3>ХУДОЖЕСТВЕННАЯ МОЗАИКА</h3>
-                    <p>Уникальные композиции и панно из стеклянной, каменной и металлической мозаики.</p>
-                    <div class="service-features">
-                        <span><i class="fas fa-check"></i> Авторский дизайн</span>
-                        <span><i class="fas fa-check"></i> Эксклюзивные материалы</span>
-                        <span><i class="fas fa-check"></i> 3D эффекты</span>
+                    <div class="service-content">
+                        <h3>Художественная мозаика</h3>
+                        <p>Уникальные композиции и панно из стеклянной, каменной и металлической мозаики.</p>
+                        <div class="service-price">от 12000₽/м²</div>
+                        <a href="art-mosaic.html" class="service-btn">Подробнее</a>
                     </div>
-                    <div class="service-price">от 12000₽/м²</div>
                 </div>
 
-                <div class="service-card premium">
-                    <div class="service-icon">
-                        <i class="fas fa-mountain"></i>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="images/kamen/1.webp" alt="Натуральный камень" />
                     </div>
-                    <h3>НАТУРАЛЬНЫЙ КАМЕНЬ</h3>
-                    <p>Работа с мрамором, гранитом, ониксом, травертином. Полировка, реставрация.</p>
-                    <div class="service-features">
-                        <span><i class="fas fa-check"></i> Мрамор Каррара</span>
-                        <span><i class="fas fa-check"></i> Эксклюзивный оникс</span>
-                        <span><i class="fas fa-check"></i> Профессиональная полировка</span>
+                    <div class="service-content">
+                        <h3>Натуральный камень</h3>
+                        <p>Работа с мрамором, гранитом, ониксом, травертином. Полировка, реставрация.</p>
+                        <div class="service-price">от 15000₽/м²</div>
+                        <a href="natural-stone.html" class="service-btn">Подробнее</a>
                     </div>
-                    <div class="service-price">от 15000₽/м²</div>
                 </div>
 
-                <div class="service-card premium">
-                    <div class="service-icon">
-                        <i class="fas fa-sparkles"></i>
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="images/keramogranit/keramogranit-11.webp" alt="Smart решения" />
                     </div>
-                    <h3>SMART РЕШЕНИЯ</h3>
-                    <p>Интеграция умных технологий: подогрев полов, LED-подсветка, автоматика.</p>
-                    <div class="service-features">
-                        <span><i class="fas fa-check"></i> Теплые полы</span>
-                        <span><i class="fas fa-check"></i> LED-интеграция</span>
-                        <span><i class="fas fa-check"></i> Умная автоматика</span>
+                    <div class="service-content">
+                        <h3>Smart решения</h3>
+                        <p>Интеграция умных технологий: подогрев полов, LED-подсветка, автоматика.</p>
+                        <div class="service-price">от 9500₽/м²</div>
+                        <a href="smart-solutions.html" class="service-btn">Подробнее</a>
                     </div>
-                    <div class="service-price">от 9500₽/м²</div>
                 </div>
+
+                <div class="service-card">
+                    <div class="service-image">
+                        <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-15.webp" alt="Облицовка пола" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Облицовка пола</h3>
+                        <p>Укладка плитки на пол от 2000₽ за 1 м². Используем технологию капиллярных клеев с 2х сторон, работаем с системой выравнивания плитки (СВП).</p>
+                        <div class="service-price">от 2000₽/м²</div>
+                        <a href="floor-tiling.html" class="service-btn">Подробнее</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/bathroom/photo_3.jpg" alt="Укладка плитки в ванной" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Укладка плитки в ванной</h3>
+                        <p>Плиточные работы в ванной комнате от 2500₽ за 1 м².</p>
+                        <div class="service-price">от 2500₽/м²</div>
+                        <a href="bathroom-tiling.html" class="service-btn">Подробнее</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/keramogranit/keramogranit-10.webp" alt="Укладка кварцвиниловой плитки" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Укладка кварцвиниловой плитки</h3>
+                        <p>Монтаж кварцвиниловой плитки и ПВХ от 900₽ за 1 м².</p>
+                        <div class="service-price">от 900₽/м²</div>
+                        <a href="vinyl-flooring.html" class="service-btn">Подробнее</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/bathroom/photo_5.jpg" alt="Ремонт санузла" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Ремонт санузла</h3>
+                        <p>Ремонт санузла от 50 000₽ под ключ! Индивидуальный подход к каждому проекту, тщательно продумываем все детали и тонкости.</p>
+                        <div class="service-price">от 50 000₽</div>
+                        <a href="bathroom-renovation.html" class="service-btn">Заказать расчет</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/bathroom/photo_2.jpg" alt="Поделки переделки" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Поделки переделки</h3>
+                        <p>Ваши прошлые мастера не справились с работой? Мы все исправим и сделаем качественно!</p>
+                        <div class="service-price">Договорная</div>
+                        <a href="repair-fixes.html" class="service-btn">Заказать расчет</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/kamen/2.webp" alt="Декоративный камень" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Декоративный камень</h3>
+                        <p>Укладка декоративного камня от 1500₽ за 1 м². Оплата по факту выполненных работ!</p>
+                        <div class="service-price">от 1500₽/м²</div>
+                        <a href="decorative-stone.html" class="service-btn">Заказать расчет</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/06.jpg" alt="Облицовка ступеней" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Облицовка ступеней</h3>
+                        <p>Облицовка ступеней от 1500₽ за 1 м.п. • Оплата по факту выполненных работ!</p>
+                        <div class="service-price">от 1500₽/м.п.</div>
+                        <a href="stairs-tiling.html" class="service-btn">Заказать расчет</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/kamen/4.webp" alt="Облицовка каминов" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Облицовка каминов</h3>
+                        <p>Облицовка каминов от 15 000₽ за изделие. Оплата по факту выполненных работ!</p>
+                        <div class="service-price">от 15 000₽</div>
+                        <a href="fireplace-cladding.html" class="service-btn">Подробнее</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/11_003.jpg" alt="Укладка мозаики" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Укладка мозаики</h3>
+                        <p>Укладка мозаики от 1900₽ за 1 м². Оплата по факту выполненных работ!</p>
+                        <div class="service-price">от 1900₽/м²</div>
+                        <a href="art-mosaic.html" class="service-btn">Заказать расчет</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/07.jpg" alt="Облицовка фасадов" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Облицовка фасадов</h3>
+                        <p>Облицовка фасадов от 1200₽ за 1 м². Оплата по факту выполненных работ!</p>
+                        <div class="service-price">от 1200₽/м²</div>
+                        <a href="facades-cladding.html" class="service-btn">Заказать расчет</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/keramogranit/keramogranit-2.webp" alt="Подоконники из керамогранита" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Подоконники из керамогранита</h3>
+                        <p>от 9000₽ за изделие.</p>
+                        <div class="service-price">от 9000₽</div>
+                        <a href="windowsills.html" class="service-btn">Подробнее</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/stol/stoleshnica-iz-keramogranita.webp" alt="Столешницы из керамогранита" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Столешницы из керамогранита</h3>
+                        <p>от 25000₽ за изделие.</p>
+                        <div class="service-price">от 25 000₽</div>
+                        <a href="countertops.html" class="service-btn">Подробнее</a>
+                    </div>
+                </div>
+
+                <div class="service-card hidden-service">
+                    <div class="service-image">
+                        <img src="images/3d.webp" alt="Укладка 3D панелей" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Укладка 3D панелей</h3>
+                        <p>Укладка 3D панелей от 1200₽ за 1 м². Оплата по факту выполненных работ!</p>
+                        <div class="service-price">от 1200₽/м²</div>
+                        <a href="3d-panels.html" class="service-btn">Заказать расчет</a>
+                    </div>
+                </div>
+
+                <div class="show-all-services">
+                <button class="show-all-btn" id="showAllServices">
+                    <i class="fas fa-th"></i>
+                    ВСЕ УСЛУГИ
+                </button>
             </div>
         </div>
     </section>
@@ -2772,11 +3568,10 @@
             </div>
 
             <div class="video-grid">
-                <div class="video-thumbnail" data-video="0">
+                <!-- VIDEO 1 - O'ZGARTIRING -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/jNQXAC9IVRw">
                     <div class="video-preview">
-                        <video muted loop preload="metadata">
-                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4#t=10" type="video/mp4">
-                        </video>
+                        <img src="images/keramogranit/keramogranit-7.webp" alt="Video 1" style="width:100%;height:100%;object-fit:cover;">
                         <div class="video-overlay">
                             <div class="play-button">
                                 <i class="fas fa-play"></i>
@@ -2789,11 +3584,10 @@
                     </div>
                 </div>
 
-                <div class="video-thumbnail" data-video="1">
+                <!-- VIDEO 2 - O'ZGARTIRING -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
                     <div class="video-preview">
-                        <video muted loop preload="metadata">
-                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4#t=15" type="video/mp4">
-                        </video>
+                        <img src="images/bathroom/photo_1.jpg" alt="Video 2" style="width:100%;height:100%;object-fit:cover;">
                         <div class="video-overlay">
                             <div class="play-button">
                                 <i class="fas fa-play"></i>
@@ -2806,11 +3600,10 @@
                     </div>
                 </div>
 
-                <div class="video-thumbnail" data-video="2">
+                <!-- VIDEO 3 - O'ZGARTIRING -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/jNQXAC9IVRw">
                     <div class="video-preview">
-                        <video muted loop preload="metadata">
-                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4#t=5" type="video/mp4">
-                        </video>
+                        <img src="images/fartuk/photo_1.jpg" alt="Video 3" style="width:100%;height:100%;object-fit:cover;">
                         <div class="video-overlay">
                             <div class="play-button">
                                 <i class="fas fa-play"></i>
@@ -2823,11 +3616,10 @@
                     </div>
                 </div>
 
-                <div class="video-thumbnail" data-video="3">
+                <!-- VIDEO 4 - O'ZGARTIRING -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
                     <div class="video-preview">
-                        <video muted loop preload="metadata">
-                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4#t=8" type="video/mp4">
-                        </video>
+                        <img src="images/keramogranit/keramogranit-2.webp" alt="Video 4" style="width:100%;height:100%;object-fit:cover;">
                         <div class="video-overlay">
                             <div class="play-button">
                                 <i class="fas fa-play"></i>
@@ -2839,6 +3631,45 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- VIDEO 5 - YANGI -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/jNQXAC9IVRw">
+                    <div class="video-preview">
+                        <img src="images/kamen/1.webp" alt="Video 5" style="width:100%;height:100%;object-fit:cover;">
+                        <div class="video-overlay">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="video-info">
+                                <h4>Укладка натурального камня</h4>
+                                <p>Работа с мрамором и гранитом</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIDEO 6 - YANGI -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                    <div class="video-preview">
+                        <img src="images/keramogranit/keramogranit-10.webp" alt="Video 6" style="width:100%;height:100%;object-fit:cover;">
+                        <div class="video-overlay">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="video-info">
+                                <h4>Дизайнерская плитка</h4>
+                                <p>Эксклюзивные решения</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CTA BUTTON -->
+            <div style="text-align: center; margin-top: 4rem;">
+                <a href="#contact" style="display: inline-block; padding: 1.2rem 3rem; background: linear-gradient(45deg, var(--gold), #FFD700); color: var(--black); font-size: 1.2rem; font-weight: 700; text-decoration: none; border-radius: 50px; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5); transition: all 0.3s ease;">
+                    <i class="fas fa-phone-alt"></i> ЗАКАЗАТЬ УСЛУГУ
+                </a>
             </div>
         </div>
     </section>
@@ -2914,6 +3745,82 @@
             </div>
         </div>
     </div>
+
+    <!-- HOW WE WORK PROCESS -->
+    <section class="work-process" id="process">
+        <div class="work-process-container">
+            <div class="section-header">
+                <div class="section-badge">
+                    <i class="fas fa-tasks"></i>
+                    <span>ПРОЦЕСС РАБОТЫ</span>
+                </div>
+                <h2>КАК МЫ РАБОТАЕМ?</h2>
+                <p>Прозрачный процесс от заявки до результата</p>
+            </div>
+
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Прием заявки</h3>
+                        <p>Согласование удобного времени выезда сметчика</p>
+                    </div>
+                </div>
+
+                <div class="process-connector">
+                    <div class="connector-dot"></div>
+                    <div class="connector-dot"></div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Выезд мастера и составление сметы</h3>
+                        <p>Стоимость выезда по г. Санкт-Петербургу – 1000₽, по области – 1500₽. Вы получите: консультацию мастера с опытом работы более 10 лет, точные замеры, подробную смету, список материалов и нашу скидку до 10% на закупку материалов.</p>
+                    </div>
+                </div>
+
+                <div class="process-connector">
+                    <div class="connector-dot"></div>
+                    <div class="connector-dot"></div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Заключение договора</h3>
+                        <p>Зафиксируем в договоре план работ, стоимость и сроки выполнения</p>
+                    </div>
+                </div>
+
+                <div class="process-connector">
+                    <div class="connector-dot"></div>
+                    <div class="connector-dot"></div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Начало работы</h3>
+                        <p>Выполним свою работу качественно и точно в срок</p>
+                    </div>
+                </div>
+
+                <div class="process-connector">
+                    <div class="connector-dot"></div>
+                    <div class="connector-dot"></div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Оплата</h3>
+                        <p>Поэтапная оплата по факту выполненных работ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- PREMIUM STATS -->
     <section class="stats">
@@ -3313,14 +4220,130 @@
             document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
         });
 
-        // Close mobile menu when clicking on links
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
+        // Mobile dropdown toggle
+        const mobileDropdownTrigger = document.querySelector('.mobile-dropdown-trigger');
+        const mobileDropdown = document.querySelector('.mobile-dropdown');
+        
+        if (mobileDropdownTrigger) {
+            mobileDropdownTrigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                mobileDropdownTrigger.classList.toggle('active');
+                mobileDropdown.classList.toggle('active');
+            });
+        }
+
+        // Close mobile menu when clicking on links (except dropdown trigger)
+        document.querySelectorAll('.mobile-menu a:not(.mobile-dropdown-trigger)').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 mobileMenu.classList.remove('active');
                 document.body.style.overflow = 'auto';
+                
+                // Reset dropdown
+                if (mobileDropdownTrigger) {
+                    mobileDropdownTrigger.classList.remove('active');
+                    mobileDropdown.classList.remove('active');
+                }
             });
         });
+
+        // Scroll-triggered animations for work process section
+        const processObserverOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const processObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate connector after step is visible
+                    const nextConnector = entry.target.nextElementSibling;
+                    if (nextConnector && nextConnector.classList.contains('process-connector')) {
+                        setTimeout(() => {
+                            nextConnector.classList.add('active');
+                        }, 400);
+                    }
+                }
+            });
+        }, processObserverOptions);
+
+        // Observe all process steps
+        document.querySelectorAll('.process-step').forEach(step => {
+            processObserver.observe(step);
+        });
+
+        // Show all services functionality
+        const showAllBtn = document.getElementById('showAllServices');
+        const hiddenServices = document.querySelectorAll('.hidden-service');
+        
+        if (showAllBtn) {
+            showAllBtn.addEventListener('click', () => {
+                hiddenServices.forEach((service, index) => {
+                    setTimeout(() => {
+                        service.classList.add('show');
+                    }, index * 100);
+                });
+                
+                // Hide the button after clicking
+                setTimeout(() => {
+                    showAllBtn.classList.add('hidden');
+                }, 300);
+            });
+        }
+
+        // Video Modal Functionality
+        const playVideoBtn = document.getElementById('playVideoBtn');
+        const videoModal = document.getElementById('videoModal');
+        const closeVideoBtn = document.getElementById('closeVideoBtn');
+        const videoIframe = document.getElementById('videoIframe');
+        
+        // TEST with regular YouTube video (Shorts often block embedding)
+        const youtubeVideoId = 'jNQXAC9IVRw'; // Test video - "Me at the zoo" (first YouTube video ever)
+        // REPLACE with YOUR regular YouTube video (not Shorts!)
+        
+        if (playVideoBtn) {
+            playVideoBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Video button clicked!'); // Test log
+                // Better embed URL with all necessary parameters
+                const youtubeEmbedUrl = `https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
+                videoModal.classList.add('active');
+                videoIframe.src = youtubeEmbedUrl;
+                document.body.style.overflow = 'hidden';
+                
+                console.log('Loading video:', youtubeEmbedUrl); // Debug log
+            });
+        }
+        
+        if (closeVideoBtn) {
+            closeVideoBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                videoModal.classList.remove('active');
+                videoIframe.src = '';
+                document.body.style.overflow = 'auto';
+            });
+        }
+        
+        // Close video when clicking outside or ESC key
+        if (videoModal) {
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    videoModal.classList.remove('active');
+                    videoIframe.src = '';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+                    videoModal.classList.remove('active');
+                    videoIframe.src = '';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -3531,11 +4554,35 @@
         const swipeUp = document.getElementById('swipeUp');
         const swipeDown = document.getElementById('swipeDown');
 
-        // Open video player
-        document.querySelectorAll('.video-thumbnail').forEach((thumbnail, index) => {
+        // Debug: Check how many video cards are found
+        const videoThumbnails = document.querySelectorAll('.video-thumbnail');
+        console.log('🎥 Total video cards found:', videoThumbnails.length);
+        console.log('📹 Video cards:', videoThumbnails);
+        
+        // Open video player with YouTube support - FOR VIDEO GRID
+        videoThumbnails.forEach((thumbnail, index) => {
+            console.log(`✅ Setting up video card ${index + 1}`); // Debug
             thumbnail.addEventListener('click', () => {
-                currentVideoIndex = index;
-                openVideoPlayer();
+                console.log(`Video card ${index + 1} clicked!`); // Debug
+                const videoUrl = thumbnail.getAttribute('data-video');
+                console.log('Video URL:', videoUrl); // Debug
+                
+                if (videoUrl) {
+                    if (videoModal && videoIframe) {
+                        const embedUrl = videoUrl.includes('?') 
+                            ? videoUrl + '&autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1' 
+                            : videoUrl + '?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1';
+                        
+                        console.log('Opening video:', embedUrl); // Debug
+                        videoModal.classList.add('active');
+                        videoIframe.src = embedUrl;
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        console.error('videoModal or videoIframe not found!'); // Debug
+                    }
+                } else {
+                    console.error('No video URL found in data-video attribute'); // Debug
+                }
             });
         });
 

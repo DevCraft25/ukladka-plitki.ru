@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Элитные кухни - ELITE TILES</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #D4AF37; --black: #000000; --dark-gray: #0a0a0a; --white: #ffffff; }
+        body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--white); line-height: 1.6; }
+        .header { position: fixed; top: 0; width: 100%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--gold); z-index: 1000; padding: 1.5rem 2rem; }
+        .nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; background: linear-gradient(45deg, var(--gold), #FFD700); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+        .back-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.8rem 1.5rem; background: transparent; border: 1px solid var(--gold); color: var(--gold); text-decoration: none; border-radius: 8px; transition: all 0.3s ease; }
+        .back-btn:hover { background: var(--gold); color: var(--black); }
+        .service-hero { padding-top: 120px; min-height: 70vh; background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url('images/fartuk/photo_1.jpg'); background-size: cover; background-position: center; display: flex; align-items: center; position: relative; }
+        .service-hero::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 150px; background: linear-gradient(to top, var(--black), transparent); }
+        .hero-content { max-width: 1400px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 10; }
+        .service-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.5rem; background: rgba(212, 175, 55, 0.1); border: 1px solid var(--gold); border-radius: 50px; color: var(--gold); font-size: 0.9rem; margin-bottom: 2rem; }
+        .hero-content h1 { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; margin-bottom: 1.5rem; background: linear-gradient(45deg, var(--white), var(--gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-content .subtitle { font-size: 1.5rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem; }
+        .hero-price { display: inline-block; padding: 1rem 2rem; background: var(--gold); color: var(--black); font-size: 1.8rem; font-weight: 700; border-radius: 10px; margin-bottom: 2rem; }
+        .hero-cta { display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.2rem 2.5rem; background: linear-gradient(45deg, var(--gold), #FFD700); color: var(--black); font-size: 1.1rem; font-weight: 700; border-radius: 50px; text-decoration: none; transition: all 0.3s ease; }
+        .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5); }
+        .service-content { max-width: 1400px; margin: 0 auto; padding: 80px 2rem; }
+        .content-section { margin-bottom: 80px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 2rem; color: var(--gold); }
+        .section-text { font-size: 1.2rem; line-height: 1.8; color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .feature-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 15px; padding: 2rem; transition: all 0.3s ease; }
+        .feature-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .feature-icon { width: 60px; height: 60px; background: linear-gradient(45deg, var(--gold), #FFD700); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--black); margin-bottom: 1.5rem; }
+        .feature-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--white); }
+        .feature-card p { color: rgba(255, 255, 255, 0.7); line-height: 1.6; }
+        .price-table { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 15px; overflow: hidden; margin-top: 2rem; }
+        .price-row { display: grid; grid-template-columns: 2fr 1fr; padding: 1.5rem 2rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .price-row:last-child { border-bottom: none; }
+        .price-row:hover { background: rgba(212, 175, 55, 0.05); }
+        .price-label { font-size: 1.1rem; color: rgba(255, 255, 255, 0.9); }
+        .price-value { font-size: 1.3rem; font-weight: 700; color: var(--gold); text-align: right; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .gallery-item { position: relative; border-radius: 15px; overflow: hidden; height: 400px; cursor: pointer; transition: transform 0.3s ease; }
+        .gallery-item:hover { transform: scale(1.05); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+        .cta-section { background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0,0,0,0.5)); border: 2px solid var(--gold); border-radius: 20px; padding: 4rem; text-align: center; margin-top: 5rem; }
+        .cta-section h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 1rem; }
+        .cta-section p { font-size: 1.2rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem; }
+        .footer { background: var(--dark-gray); border-top: 1px solid var(--gold); padding: 3rem 2rem; text-align: center; }
+        .footer-text { color: rgba(255, 255, 255, 0.6); margin-top: 1rem; }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .features-grid, .gallery-grid { grid-template-columns: 1fr; }
+            .price-row { grid-template-columns: 1fr; gap: 0.5rem; }
+            .price-value { text-align: left; }
+            .cta-section { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">ELITE TILES</a>
+            <a href="index.html#services" class="back-btn"><i class="fas fa-arrow-left"></i> Все услуги</a>
+        </nav>
+    </header>
+
+    <section class="service-hero">
+        <div class="hero-content">
+            <div class="service-badge"><i class="fas fa-gem"></i> Премиум класс</div>
+            <h1>Элитные кухни</h1>
+            <p class="subtitle">Эксклюзивные фартуки из натурального камня и дизайнерской плитки</p>
+            <div class="hero-price">от 7500₽/м²</div><br><br>
+            <a href="index.html#contact" class="hero-cta"><i class="fas fa-phone"></i> Заказать расчет</a>
+        </div>
+    </section>
+
+    <div class="service-content">
+        <section class="content-section">
+            <h2 class="section-title">О услуге</h2>
+            <p class="section-text">Создание уникальных кухонных фартуков из натурального камня, дизайнерской плитки и керамогранита премиум-класса. Используем материалы ведущих итальянских и испанских производителей.</p>
+            <p class="section-text">Индивидуальный подход к каждому проекту - от подбора материалов до профессионального монтажа с учетом всех технических требований.</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Что входит в услугу</h2>
+            <div class="features-grid">
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-gem"></i></div><h3>Дизайнерская плитка</h3><p>Эксклюзивная плитка от ведущих европейских брендов с уникальными текстурами.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-mountain"></i></div><h3>Натуральный камень</h3><p>Мрамор, гранит, кварцит - подбираем идеальный материал для вашей кухни.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Индивидуальный дизайн</h3><p>Разработка уникального дизайн-проекта с 3D визуализацией.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-tools"></i></div><h3>Профессиональный монтаж</h3><p>Точная укладка с учетом всех технологических требований.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-lightbulb"></i></div><h3>LED-подсветка</h3><p>Интеграция современной подсветки для подчеркивания красоты материалов.</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Гарантия качества</h3><p>Расширенная гарантия на все работы сроком 3 года.</p></div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Стоимость работ</h2>
+            <div class="price-table">
+                <div class="price-row"><div class="price-label">Укладка керамогранита под камень</div><div class="price-value">от 2500₽/м²</div></div>
+                <div class="price-row"><div class="price-label">Укладка дизайнерской плитки</div><div class="price-value">от 3500₽/м²</div></div>
+                <div class="price-row"><div class="price-label">Укладка натурального камня</div><div class="price-value">от 7500₽/м²</div></div>
+                <div class="price-row"><div class="price-label">Монтаж LED-подсветки</div><div class="price-value">от 1500₽/м.п.</div></div>
+                <div class="price-row"><div class="price-label">Дизайн-проект с визуализацией</div><div class="price-value">от 10000₽</div></div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Галерея работ</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="images/fartuk/photo_1.jpg" alt="Элитная кухня 1"></div>
+                <div class="gallery-item"><img src="images/fartuk/photo_2.jpg" alt="Элитная кухня 2"></div>
+                <div class="gallery-item"><img src="images/fartuk/photo_3.jpg" alt="Элитная кухня 3"></div>
+            </div>
+        </section>
+
+        <div class="cta-section">
+            <h2>Готовы создать кухню вашей мечты?</h2>
+            <p>Свяжитесь с нами для бесплатной консультации</p>
+            <a href="index.html#contact" class="hero-cta"><i class="fas fa-phone"></i> Заказать консультацию</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <a href="index.html" class="logo">ELITE TILES</a>
+            <p class="footer-text">© 2024 ELITE TILES. Все права защищены.</p>
+        </div>
+    </footer>
+</body>
+</html>
