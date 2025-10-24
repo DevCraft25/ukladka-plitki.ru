@@ -623,6 +623,48 @@
         /* HERO VIDEO ON MOBILE */
         .hero-mobile-video {
             display: none;
+            position: relative;
+        }
+
+        .hero-video-slide {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .hero-video-slide.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .hero-video-dots {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .hero-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hero-dot.active {
+            width: 24px;
+            border-radius: 4px;
+            background: var(--gold);
         }
 
         @media (max-width: 768px) {
@@ -736,33 +778,166 @@
 
         .video-modal-content {
             width: 100%;
-            height: calc(100vh - 80px);
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            padding: 0;
+            position: relative;
         }
 
         .video-modal-content iframe {
             width: 100%;
             height: 100%;
-            max-width: 1200px;
-            max-height: 675px;
-            border-radius: 15px;
-            border: 2px solid var(--gold);
+            border: none;
+            border-radius: 0;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        
+        .video-modal-content iframe.swipe-up {
+            animation: slideUp 0.4s ease-out;
+        }
+        
+        .video-modal-content iframe.swipe-down {
+            animation: slideDown 0.4s ease-out;
+        }
+        
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* REELS STYLE VIDEO INFO */
+        .video-reels-info {
+            position: absolute;
+            bottom: 80px;
+            left: 20px;
+            right: 20px;
+            z-index: 10002;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .video-reels-info h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .video-reels-info p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* SWIPE INDICATORS */
+        .video-swipe-indicators {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 10002;
+        }
+
+        .swipe-arrow {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255,255,255,0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .swipe-arrow:hover {
+            background: rgba(212, 175, 55, 0.5);
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: scale(1.1);
+            animation: none;
+        }
+        
+        .swipe-arrow:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* VIDEO PROGRESS DOTS */
+        .video-progress-dots {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10002;
+        }
+
+        .video-progress-dot {
+            width: 4px;
+            height: 30px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .video-progress-dot.active {
+            background: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
         }
 
         @media (max-width: 768px) {
+            .video-modal-header {
+                position: fixed;
+                background: transparent;
+            }
+            
             .video-modal-content {
-                height: calc(100vh - 70px);
-                padding: 0.5rem;
+                height: 100vh;
+                padding: 0;
             }
 
             .video-modal-content iframe {
-                border-radius: 10px;
-                /* For vertical Shorts videos */
-                max-width: min(100%, 400px);
-                max-height: 80vh;
+                border-radius: 0;
+                /* Fullscreen video covering entire screen */
+                width: 100% !important;
+                height: 100% !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
+                position: absolute;
+                top: 0;
+                left: 0;
             }
         }
 
@@ -2998,13 +3173,47 @@
                     <!-- Desktop Version - Image -->
                     <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Процесс укладки крупноформатной плитки" class="hero-desktop-img" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; opacity: 0.9;" />
                     
-                    <!-- Mobile Version - Video Preview -->
-                    <div class="hero-mobile-video">
-                        <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Видео о работе" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                    <!-- Mobile Version - Video Preview with Reels -->
+                    <div class="hero-mobile-video" data-current-video="0">
+                        <!-- Video Slide 1 -->
+                        <div class="hero-video-slide active" data-video-url="https://www.youtube.com/embed/jNQXAC9IVRw" data-title="Укладка керамогранита премиум" data-desc="Профессиональная укладка • Премиальные материалы">
+                            <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Укладка керамогранита" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                        </div>
+                        <!-- Video Slide 2 -->
+                        <div class="hero-video-slide" data-video-url="https://www.youtube.com/embed/YQHsXMglC9A" data-title="Монтаж мозаики элит" data-desc="Художественная укладка • Венецианская мозаика">
+                            <img src="images/bathroom/photo_1.jpg" alt="Монтаж мозаики" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                        </div>
+                        <!-- Video Slide 3 -->
+                        <div class="hero-video-slide" data-video-url="https://www.youtube.com/embed/KQ6zr6kCPj8" data-title="Ванная комната VIP" data-desc="Полная трансформация • Мрамор Каррара">
+                            <img src="images/fartuk/photo_1.jpg" alt="Ванная VIP" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                        </div>
+                        <!-- Video Slide 4 -->
+                        <div class="hero-video-slide" data-video-url="https://www.youtube.com/embed/PT2_F-1esPk" data-title="Кухонный фартук люкс" data-desc="Дизайнерская плитка • LED-подсветка">
+                            <img src="images/keramogranit/keramogranit-2.webp" alt="Кухонный фартук" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                        </div>
+                        <!-- Video Slide 5 -->
+                        <div class="hero-video-slide" data-video-url="https://www.youtube.com/embed/L_jWHffIx5E" data-title="Натуральный камень" data-desc="Работа с мрамором • Полировка и укладка">
+                            <img src="images/kamen/1.webp" alt="Натуральный камень" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                        </div>
+                        <!-- Video Slide 6 -->
+                        <div class="hero-video-slide" data-video-url="https://www.youtube.com/embed/hVimVzgtD6w" data-title="Керамогранит под дерево" data-desc="Имитация паркета • Теплый пол">
+                            <img src="images/keramogranit/keramogranit-10.webp" alt="Дизайнерская плитка" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
+                        </div>
+                        
                         <div class="hero-video-overlay">
                             <button class="hero-video-play-btn" id="playVideoBtn">
                                 <i class="fas fa-play"></i>
                             </button>
+                        </div>
+                        
+                        <!-- Swipe Indicators -->
+                        <div class="hero-video-dots">
+                            <span class="hero-dot active"></span>
+                            <span class="hero-dot"></span>
+                            <span class="hero-dot"></span>
+                            <span class="hero-dot"></span>
+                            <span class="hero-dot"></span>
+                            <span class="hero-dot"></span>
                         </div>
                     </div>
                     
@@ -3020,7 +3229,7 @@
         </div>
     </section>
 
-    <!-- FULLSCREEN VIDEO MODAL -->
+    <!-- FULLSCREEN VIDEO MODAL (REELS STYLE) -->
     <div class="video-modal" id="videoModal">
         <div class="video-modal-header">
             <button class="video-close-btn" id="closeVideoBtn">
@@ -3034,6 +3243,32 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen>
             </iframe>
+            
+            <!-- Video Progress Dots -->
+            <div class="video-progress-dots" id="videoProgressDots">
+                <div class="video-progress-dot active"></div>
+                <div class="video-progress-dot"></div>
+                <div class="video-progress-dot"></div>
+                <div class="video-progress-dot"></div>
+                <div class="video-progress-dot"></div>
+                <div class="video-progress-dot"></div>
+            </div>
+            
+            <!-- Swipe Indicators -->
+            <div class="video-swipe-indicators">
+                <div class="swipe-arrow" id="swipeUpArrow">
+                    <i class="fas fa-chevron-up"></i>
+                </div>
+                <div class="swipe-arrow" id="swipeDownArrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            
+            <!-- Video Info -->
+            <div class="video-reels-info" id="videoReelsInfo">
+                <h3 id="currentVideoTitle">Укладка керамогранита</h3>
+                <p id="currentVideoDesc">Премиальные материалы • Профессиональный инструмент</p>
+            </div>
         </div>
     </div>
 
@@ -4293,57 +4528,268 @@
             });
         }
 
-        // Video Modal Functionality
+        // REELS VIDEO FUNCTIONALITY
+        const heroMobileVideo = document.querySelector('.hero-mobile-video');
+        const videoSlides = document.querySelectorAll('.hero-video-slide');
+        const heroDots = document.querySelectorAll('.hero-dot');
         const playVideoBtn = document.getElementById('playVideoBtn');
         const videoModal = document.getElementById('videoModal');
         const closeVideoBtn = document.getElementById('closeVideoBtn');
         const videoIframe = document.getElementById('videoIframe');
+        const videoProgressDots = document.querySelectorAll('.video-progress-dot');
+        const currentVideoTitle = document.getElementById('currentVideoTitle');
+        const currentVideoDesc = document.getElementById('currentVideoDesc');
+        const header = document.querySelector('.header');
         
-        // TEST with regular YouTube video (Shorts often block embedding)
-        const youtubeVideoId = 'jNQXAC9IVRw'; // Test video - "Me at the zoo" (first YouTube video ever)
-        // REPLACE with YOUR regular YouTube video (not Shorts!)
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let isSwiping = false;
         
-        if (playVideoBtn) {
-            playVideoBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('Video button clicked!'); // Test log
-                // Better embed URL with all necessary parameters
-                const youtubeEmbedUrl = `https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
-                videoModal.classList.add('active');
-                videoIframe.src = youtubeEmbedUrl;
-                document.body.style.overflow = 'hidden';
+        // Update slide display
+        function showSlide(index) {
+            videoSlides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) slide.classList.add('active');
+            });
+            
+            heroDots.forEach((dot, i) => {
+                dot.classList.remove('active');
+                if (i === index) dot.classList.add('active');
+            });
+            
+            currentSlideIndex = index;
+        }
+        
+        // Hero video card swipe (left/right)
+        if (heroMobileVideo) {
+            heroMobileVideo.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                isSwiping = true;
+            });
+            
+            heroMobileVideo.addEventListener('touchmove', (e) => {
+                if (!isSwiping) return;
+            });
+            
+            heroMobileVideo.addEventListener('touchend', (e) => {
+                if (!isSwiping) return;
                 
-                console.log('Loading video:', youtubeEmbedUrl); // Debug log
+                const touchEndX = e.changedTouches[0].clientX;
+                const touchEndY = e.changedTouches[0].clientY;
+                const diffX = touchStartX - touchEndX;
+                const diffY = Math.abs(touchStartY - touchEndY);
+                
+                // Horizontal swipe (left/right)
+                if (Math.abs(diffX) > 50 && diffY < 50) {
+                    if (diffX > 0) {
+                        // Swipe left - next slide
+                        currentSlideIndex = (currentSlideIndex + 1) % videoSlides.length;
+                    } else {
+                        // Swipe right - previous slide
+                        currentSlideIndex = (currentSlideIndex - 1 + videoSlides.length) % videoSlides.length;
+                    }
+                    showSlide(currentSlideIndex);
+                }
+                
+                isSwiping = false;
             });
         }
         
+        // Play button - open fullscreen reels
+        if (playVideoBtn) {
+            playVideoBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Get current slide data
+                const currentSlide = videoSlides[currentSlideIndex];
+                const videoUrl = currentSlide.getAttribute('data-video-url');
+                const title = currentSlide.getAttribute('data-title');
+                const desc = currentSlide.getAttribute('data-desc');
+                
+                // Open fullscreen modal
+                const embedUrl = `${videoUrl}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1`;
+                videoModal.classList.add('active');
+                videoIframe.src = embedUrl;
+                document.body.style.overflow = 'hidden';
+                
+                // Hide header
+                if (header) header.style.display = 'none';
+                
+                // Update info and progress
+                if (currentVideoTitle) currentVideoTitle.textContent = title;
+                if (currentVideoDesc) currentVideoDesc.textContent = desc;
+                updateVideoProgress(currentSlideIndex);
+                
+                console.log('Opening video:', embedUrl);
+            });
+        }
+        
+        // Update video progress dots
+        function updateVideoProgress(index) {
+            videoProgressDots.forEach((dot, i) => {
+                dot.classList.remove('active');
+                if (i === index) dot.classList.add('active');
+            });
+        }
+        
+        // Function to switch video with animation
+        function switchToVideo(index, direction = 'up') {
+            const currentSlide = videoSlides[index];
+            const videoUrl = currentSlide.getAttribute('data-video-url');
+            const title = currentSlide.getAttribute('data-title');
+            const desc = currentSlide.getAttribute('data-desc');
+            
+            // Reset inline styles from swipe gesture
+            videoIframe.style.opacity = '';
+            videoIframe.style.transform = '';
+            
+            // Add animation class
+            videoIframe.classList.remove('swipe-up', 'swipe-down');
+            void videoIframe.offsetWidth; // Force reflow
+            videoIframe.classList.add(direction === 'up' ? 'swipe-up' : 'swipe-down');
+            
+            // Update video
+            const embedUrl = `${videoUrl}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1`;
+            videoIframe.src = embedUrl;
+            
+            if (currentVideoTitle) currentVideoTitle.textContent = title;
+            if (currentVideoDesc) currentVideoDesc.textContent = desc;
+            updateVideoProgress(index);
+            showSlide(index);
+            
+            console.log('Switched to video with', direction, 'animation:', title);
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                videoIframe.classList.remove('swipe-up', 'swipe-down');
+            }, 400);
+        }
+        
+        // Fullscreen video modal - swipe up/down
+        let modalTouchStartY = 0;
+        let modalTouchStartX = 0;
+        let modalSwiping = false;
+        
+        if (videoModal) {
+            // Use capture phase to intercept touches before iframe
+            videoModal.addEventListener('touchstart', (e) => {
+                modalTouchStartY = e.touches[0].clientY;
+                modalTouchStartX = e.touches[0].clientX;
+                modalSwiping = true;
+                console.log('Touch start - Y:', modalTouchStartY);
+            }, { passive: true });
+            
+            videoModal.addEventListener('touchmove', (e) => {
+                if (!modalSwiping) return;
+                
+                const currentY = e.touches[0].clientY;
+                const currentX = e.touches[0].clientX;
+                const diffY = modalTouchStartY - currentY;
+                const diffX = Math.abs(modalTouchStartX - currentX);
+                
+                // Show visual feedback during swipe
+                if (Math.abs(diffY) > 30 && diffX < 50) {
+                    e.preventDefault();
+                    
+                    // Add opacity feedback
+                    const progress = Math.min(Math.abs(diffY) / 200, 1);
+                    videoIframe.style.opacity = 1 - (progress * 0.3);
+                    
+                    // Add slight transform
+                    const translateY = -diffY * 0.3;
+                    videoIframe.style.transform = `translateY(${translateY}px)`;
+                }
+            }, { passive: false });
+            
+            videoModal.addEventListener('touchend', (e) => {
+                if (!modalSwiping) return;
+                
+                const touchEndY = e.changedTouches[0].clientY;
+                const touchEndX = e.changedTouches[0].clientX;
+                const diffY = modalTouchStartY - touchEndY;
+                const diffX = Math.abs(modalTouchStartX - touchEndX);
+                
+                console.log('Touch end - diffY:', diffY, 'diffX:', diffX);
+                
+                // Vertical swipe (make sure horizontal movement is minimal)
+                if (Math.abs(diffY) > 80 && diffX < 50) {
+                    console.log('SWIPE DETECTED!');
+                    
+                    let direction = 'up';
+                    
+                    if (diffY > 0) {
+                        // Swipe up - next video
+                        currentSlideIndex = (currentSlideIndex + 1) % videoSlides.length;
+                        direction = 'up';
+                        console.log('SWIPE UP - Next video:', currentSlideIndex + 1);
+                    } else {
+                        // Swipe down - previous video
+                        currentSlideIndex = (currentSlideIndex - 1 + videoSlides.length) % videoSlides.length;
+                        direction = 'down';
+                        console.log('SWIPE DOWN - Previous video:', currentSlideIndex + 1);
+                    }
+                    
+                    // Update video with animation
+                    switchToVideo(currentSlideIndex, direction);
+                } else {
+                    // Reset styles if swipe wasn't completed
+                    videoIframe.style.opacity = '1';
+                    videoIframe.style.transform = 'translateY(0)';
+                }
+                
+                modalSwiping = false;
+            }, { passive: true });
+        }
+        
+        // SWIPE ARROWS - CLICK EVENTS
+        const swipeUpArrow = document.getElementById('swipeUpArrow');
+        const swipeDownArrow = document.getElementById('swipeDownArrow');
+        
+        if (swipeUpArrow) {
+            swipeUpArrow.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentSlideIndex = (currentSlideIndex + 1) % videoSlides.length;
+                switchToVideo(currentSlideIndex, 'up');
+                console.log('Arrow UP clicked - Next video:', currentSlideIndex + 1);
+            });
+        }
+        
+        if (swipeDownArrow) {
+            swipeDownArrow.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentSlideIndex = (currentSlideIndex - 1 + videoSlides.length) % videoSlides.length;
+                switchToVideo(currentSlideIndex, 'down');
+                console.log('Arrow DOWN clicked - Previous video:', currentSlideIndex + 1);
+            });
+        }
+        
+        // Close video button
         if (closeVideoBtn) {
             closeVideoBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 videoModal.classList.remove('active');
                 videoIframe.src = '';
                 document.body.style.overflow = 'auto';
+                
+                // Show header again
+                if (header) header.style.display = 'block';
             });
         }
         
-        // Close video when clicking outside or ESC key
-        if (videoModal) {
-            videoModal.addEventListener('click', (e) => {
-                if (e.target === videoModal) {
-                    videoModal.classList.remove('active');
-                    videoIframe.src = '';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-            
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && videoModal.classList.contains('active')) {
-                    videoModal.classList.remove('active');
-                    videoIframe.src = '';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
+        // Close video with ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+                videoModal.classList.remove('active');
+                videoIframe.src = '';
+                document.body.style.overflow = 'auto';
+                
+                // Show header again
+                if (header) header.style.display = 'block';
+            }
+        });
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
