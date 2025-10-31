@@ -624,6 +624,27 @@
         .hero-mobile-video {
             display: none;
             position: relative;
+            cursor: grab;
+            user-select: none;
+        }
+        
+        .hero-mobile-video:active {
+            cursor: grabbing;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-desktop-img {
+                display: none;
+            }
+            
+            .hero-mobile-video {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
         }
 
         .hero-video-slide {
@@ -667,20 +688,6 @@
             background: var(--gold);
         }
 
-        @media (max-width: 768px) {
-            .hero-desktop-img {
-                display: none;
-            }
-            
-            .hero-mobile-video {
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
-        }
 
         .hero-video-overlay {
             position: absolute;
@@ -786,19 +793,20 @@
             position: relative;
         }
 
-        .video-modal-content iframe {
+        .video-modal-content video {
             width: 100%;
             height: 100%;
             border: none;
             border-radius: 0;
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            background: #000;
         }
         
-        .video-modal-content iframe.swipe-up {
+        .video-modal-content video.swipe-up {
             animation: slideUp 0.4s ease-out;
         }
         
-        .video-modal-content iframe.swipe-down {
+        .video-modal-content video.swipe-down {
             animation: slideDown 0.4s ease-out;
         }
         
@@ -846,6 +854,64 @@
             font-size: 0.95rem;
             opacity: 0.9;
         }
+        
+        /* CONTROL HINTS */
+        .video-control-hints {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            padding: 2rem 3rem;
+            border-radius: 20px;
+            border: 2px solid var(--gold);
+            display: flex;
+            gap: 2rem;
+            z-index: 10003;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .video-control-hints.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .hint-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--white);
+        }
+        
+        .hint-item i {
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+        
+        .hint-item kbd {
+            background: var(--gold);
+            color: var(--black);
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .hint-item span {
+            font-size: 0.85rem;
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .video-control-hints {
+                display: none;
+            }
+        }
 
         /* SWIPE INDICATORS */
         .video-swipe-indicators {
@@ -860,20 +926,21 @@
         }
 
         .swipe-arrow {
-            width: 50px;
-            height: 50px;
-            border: 2px solid rgba(255,255,255,0.6);
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(212, 175, 55, 0.8);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: rgba(255,255,255,0.9);
-            font-size: 1.5rem;
+            color: var(--gold);
+            font-size: 1.8rem;
             animation: pulse 2s infinite;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
         
         .swipe-arrow:hover {
@@ -3176,27 +3243,27 @@
                     <!-- Mobile Version - Video Preview with Reels -->
                     <div class="hero-mobile-video" data-current-video="0">
                         <!-- Video Slide 1 -->
-                        <div class="hero-video-slide active" data-video-url="https://www.youtube.com/embed/jNQXAC9IVRw" data-title="Укладка керамогранита премиум" data-desc="Профессиональная укладка • Премиальные материалы">
+                        <div class="hero-video-slide active" data-video-url="images/video/Видео WhatsApp 2025-10-29 в 08.36.37_bdde4246.mp4" data-title="Укладка керамогранита премиум" data-desc="Профессиональная укладка • Премиальные материалы">
                             <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Укладка керамогранита" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
                         </div>
                         <!-- Video Slide 2 -->
-                        <div class="hero-video-slide" data-video-url="https://www.youtube.com/embed/YQHsXMglC9A" data-title="Монтаж мозаики элит" data-desc="Художественная укладка • Венецианская мозаика">
+                        <div class="hero-video-slide" data-video-url="images/video/Видео WhatsApp 2025-10-29 в 08.36.52_f9d65aa1.mp4" data-title="Монтаж мозаики элит" data-desc="Художественная укладка • Венецианская мозаика">
                             <img src="images/bathroom/photo_1.jpg" alt="Монтаж мозаики" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
                         </div>
                         <!-- Video Slide 3 -->
-                        <div class="hero-video-slide" data-video-url="https://www.youtube.com/embed/KQ6zr6kCPj8" data-title="Ванная комната VIP" data-desc="Полная трансформация • Мрамор Каррара">
+                        <div class="hero-video-slide" data-video-url="images/video/Видео WhatsApp 2025-10-29 в 08.36.56_36937e04.mp4" data-title="Ванная комната VIP" data-desc="Полная трансформация • Мрамор Каррара">
                             <img src="images/fartuk/photo_1.jpg" alt="Ванная VIP" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
                         </div>
                         <!-- Video Slide 4 -->
-                        <div class="hero-video-slide" data-video-url="https://www.youtube.com/embed/PT2_F-1esPk" data-title="Кухонный фартук люкс" data-desc="Дизайнерская плитка • LED-подсветка">
+                        <div class="hero-video-slide" data-video-url="images/video/Видео WhatsApp 2025-10-29 в 08.37.12_5048e721.mp4" data-title="Кухонный фартук люкс" data-desc="Дизайнерская плитка • LED-подсветка">
                             <img src="images/keramogranit/keramogranit-2.webp" alt="Кухонный фартук" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
                         </div>
                         <!-- Video Slide 5 -->
-                        <div class="hero-video-slide" data-video-url="https://www.youtube.com/embed/L_jWHffIx5E" data-title="Натуральный камень" data-desc="Работа с мрамором • Полировка и укладка">
+                        <div class="hero-video-slide" data-video-url="images/video/Видео WhatsApp 2025-10-29 в 08.37.18_08186d6f.mp4" data-title="Натуральный камень" data-desc="Работа с мрамором • Полировка и укладка">
                             <img src="images/kamen/1.webp" alt="Натуральный камень" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
                         </div>
                         <!-- Video Slide 6 -->
-                        <div class="hero-video-slide" data-video-url="https://www.youtube.com/embed/hVimVzgtD6w" data-title="Керамогранит под дерево" data-desc="Имитация паркета • Теплый пол">
+                        <div class="hero-video-slide" data-video-url="images/video/Видео WhatsApp 2025-10-29 в 08.37.45_2373de48.mp4" data-title="Керамогранит под дерево" data-desc="Имитация паркета • Теплый пол">
                             <img src="images/keramogranit/keramogranit-10.webp" alt="Дизайнерская плитка" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">
                         </div>
                         
@@ -3237,12 +3304,16 @@
             </button>
         </div>
         <div class="video-modal-content">
-            <iframe id="videoIframe" 
-                    src="" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-            </iframe>
+            <video id="videoPlayer" 
+                   playsinline
+                   controls
+                   autoplay
+                   muted
+                   loop
+                   style="width: 100%; height: 100%; object-fit: contain;">
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
             
             <!-- Video Progress Dots -->
             <div class="video-progress-dots" id="videoProgressDots">
@@ -3268,6 +3339,27 @@
             <div class="video-reels-info" id="videoReelsInfo">
                 <h3 id="currentVideoTitle">Укладка керамогранита</h3>
                 <p id="currentVideoDesc">Премиальные материалы • Профессиональный инструмент</p>
+            </div>
+            
+            <!-- Control Hints for Desktop -->
+            <div class="video-control-hints" id="videoControlHints">
+                <div class="hint-item">
+                    <i class="fas fa-arrow-up"></i>
+                    <i class="fas fa-arrow-down"></i>
+                    <span>Стрелки</span>
+                </div>
+                <div class="hint-item">
+                    <i class="fas fa-mouse"></i>
+                    <span>Колесико мыши</span>
+                </div>
+                <div class="hint-item">
+                    <i class="fas fa-hand-pointer"></i>
+                    <span>Кнопки справа</span>
+                </div>
+                <div class="hint-item">
+                    <kbd>ESC</kbd>
+                    <span>Закрыть</span>
+                </div>
             </div>
         </div>
     </div>
@@ -3803,8 +3895,8 @@
             </div>
 
             <div class="video-grid">
-                <!-- VIDEO 1 - O'ZGARTIRING -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/jNQXAC9IVRw">
+                <!-- VIDEO 1 -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/jfKfPfyJRdk">
                     <div class="video-preview">
                         <img src="images/keramogranit/keramogranit-7.webp" alt="Video 1" style="width:100%;height:100%;object-fit:cover;">
                         <div class="video-overlay">
@@ -3819,8 +3911,8 @@
                     </div>
                 </div>
 
-                <!-- VIDEO 2 - O'ZGARTIRING -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                <!-- VIDEO 2 -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/ysz5S6PUM-U">
                     <div class="video-preview">
                         <img src="images/bathroom/photo_1.jpg" alt="Video 2" style="width:100%;height:100%;object-fit:cover;">
                         <div class="video-overlay">
@@ -3835,8 +3927,8 @@
                     </div>
                 </div>
 
-                <!-- VIDEO 3 - O'ZGARTIRING -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/jNQXAC9IVRw">
+                <!-- VIDEO 3 -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/hU7EHKFUMIg">
                     <div class="video-preview">
                         <img src="images/fartuk/photo_1.jpg" alt="Video 3" style="width:100%;height:100%;object-fit:cover;">
                         <div class="video-overlay">
@@ -3851,8 +3943,8 @@
                     </div>
                 </div>
 
-                <!-- VIDEO 4 - O'ZGARTIRING -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                <!-- VIDEO 4 -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/BsekcY04AhQ">
                     <div class="video-preview">
                         <img src="images/keramogranit/keramogranit-2.webp" alt="Video 4" style="width:100%;height:100%;object-fit:cover;">
                         <div class="video-overlay">
@@ -3867,8 +3959,8 @@
                     </div>
                 </div>
 
-                <!-- VIDEO 5 - YANGI -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/jNQXAC9IVRw">
+                <!-- VIDEO 5 -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/Fy9Ce5JgY44">
                     <div class="video-preview">
                         <img src="images/kamen/1.webp" alt="Video 5" style="width:100%;height:100%;object-fit:cover;">
                         <div class="video-overlay">
@@ -3883,8 +3975,8 @@
                     </div>
                 </div>
 
-                <!-- VIDEO 6 - YANGI -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                <!-- VIDEO 6 -->
+                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/AZoiDfG4yPY">
                     <div class="video-preview">
                         <img src="images/keramogranit/keramogranit-10.webp" alt="Video 6" style="width:100%;height:100%;object-fit:cover;">
                         <div class="video-overlay">
@@ -4535,7 +4627,7 @@
         const playVideoBtn = document.getElementById('playVideoBtn');
         const videoModal = document.getElementById('videoModal');
         const closeVideoBtn = document.getElementById('closeVideoBtn');
-        const videoIframe = document.getElementById('videoIframe');
+        const videoPlayer = document.getElementById('videoPlayer');
         const videoProgressDots = document.querySelectorAll('.video-progress-dot');
         const currentVideoTitle = document.getElementById('currentVideoTitle');
         const currentVideoDesc = document.getElementById('currentVideoDesc');
@@ -4561,8 +4653,57 @@
             currentSlideIndex = index;
         }
         
-        // Hero video card swipe (left/right)
+        // Hero video card swipe/drag functionality
         if (heroMobileVideo) {
+            let heroMouseStartX = 0;
+            let heroMouseStartY = 0;
+            let heroIsDragging = false;
+            let heroHasMoved = false;
+            
+            // Mouse drag for desktop
+            heroMobileVideo.addEventListener('mousedown', (e) => {
+                heroIsDragging = true;
+                heroHasMoved = false;
+                heroMouseStartX = e.clientX;
+                heroMouseStartY = e.clientY;
+                heroMobileVideo.style.cursor = 'grabbing';
+                e.preventDefault();
+            });
+            
+            heroMobileVideo.addEventListener('mousemove', (e) => {
+                if (!heroIsDragging) return;
+                const diffX = Math.abs(e.clientX - heroMouseStartX);
+                if (diffX > 5) heroHasMoved = true;
+            });
+            
+            heroMobileVideo.addEventListener('mouseup', (e) => {
+                if (!heroIsDragging) return;
+                
+                const mouseEndX = e.clientX;
+                const diffX = heroMouseStartX - mouseEndX;
+                
+                // Horizontal drag (left/right)
+                if (Math.abs(diffX) > 50 && heroHasMoved) {
+                    if (diffX > 0) {
+                        // Drag left - next slide
+                        currentSlideIndex = (currentSlideIndex + 1) % videoSlides.length;
+                    } else {
+                        // Drag right - previous slide
+                        currentSlideIndex = (currentSlideIndex - 1 + videoSlides.length) % videoSlides.length;
+                    }
+                    showSlide(currentSlideIndex);
+                }
+                
+                heroIsDragging = false;
+                heroMobileVideo.style.cursor = 'grab';
+            });
+            
+            heroMobileVideo.addEventListener('mouseleave', () => {
+                heroIsDragging = false;
+                heroMobileVideo.style.cursor = 'grab';
+            });
+            
+            // Touch swipe for mobile (left/right)
             heroMobileVideo.addEventListener('touchstart', (e) => {
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
@@ -4597,9 +4738,31 @@
             });
         }
         
+        // Shared flag to track if hero was dragged
+        let heroWasDragged = false;
+        
         // Play button - open fullscreen reels
         if (playVideoBtn) {
+            // Prevent play button click during drag
+            heroMobileVideo.addEventListener('mousedown', () => {
+                heroWasDragged = false;
+            });
+            
+            heroMobileVideo.addEventListener('mousemove', (e) => {
+                if (e.buttons === 1) { // Left mouse button is pressed
+                    heroWasDragged = true;
+                }
+            });
+            
             playVideoBtn.addEventListener('click', (e) => {
+                // Don't open video if user was dragging
+                if (heroWasDragged) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    heroWasDragged = false;
+                    return;
+                }
+                
                 e.preventDefault();
                 e.stopPropagation();
                 
@@ -4609,11 +4772,30 @@
                 const title = currentSlide.getAttribute('data-title');
                 const desc = currentSlide.getAttribute('data-desc');
                 
-                // Open fullscreen modal
-                const embedUrl = `${videoUrl}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1`;
+                // Open fullscreen modal with local video
                 videoModal.classList.add('active');
-                videoIframe.src = embedUrl;
+                videoPlayer.src = videoUrl;
+                videoPlayer.load();
+                
+                // Autoplay video
+                videoPlayer.play().then(() => {
+                    console.log('Video playing automatically');
+                }).catch(err => {
+                    console.log('Autoplay prevented:', err);
+                    // Unmute and try again if autoplay was blocked
+                    videoPlayer.muted = false;
+                });
+                
                 document.body.style.overflow = 'hidden';
+                
+                // Show control hints and hide after 5 seconds
+                const controlHints = document.getElementById('videoControlHints');
+                if (controlHints) {
+                    controlHints.classList.remove('hidden');
+                    setTimeout(() => {
+                        controlHints.classList.add('hidden');
+                    }, 5000);
+                }
                 
                 // Hide header
                 if (header) header.style.display = 'none';
@@ -4623,7 +4805,7 @@
                 if (currentVideoDesc) currentVideoDesc.textContent = desc;
                 updateVideoProgress(currentSlideIndex);
                 
-                console.log('Opening video:', embedUrl);
+                console.log('Opening video:', videoUrl);
             });
         }
         
@@ -4643,17 +4825,24 @@
             const desc = currentSlide.getAttribute('data-desc');
             
             // Reset inline styles from swipe gesture
-            videoIframe.style.opacity = '';
-            videoIframe.style.transform = '';
+            videoPlayer.style.opacity = '';
+            videoPlayer.style.transform = '';
             
             // Add animation class
-            videoIframe.classList.remove('swipe-up', 'swipe-down');
-            void videoIframe.offsetWidth; // Force reflow
-            videoIframe.classList.add(direction === 'up' ? 'swipe-up' : 'swipe-down');
+            videoPlayer.classList.remove('swipe-up', 'swipe-down');
+            void videoPlayer.offsetWidth; // Force reflow
+            videoPlayer.classList.add(direction === 'up' ? 'swipe-up' : 'swipe-down');
             
-            // Update video
-            const embedUrl = `${videoUrl}?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1`;
-            videoIframe.src = embedUrl;
+            // Update video source
+            videoPlayer.src = videoUrl;
+            videoPlayer.load();
+            
+            // Autoplay new video
+            videoPlayer.play().then(() => {
+                console.log('Next video playing');
+            }).catch(err => {
+                console.log('Autoplay prevented:', err);
+            });
             
             if (currentVideoTitle) currentVideoTitle.textContent = title;
             if (currentVideoDesc) currentVideoDesc.textContent = desc;
@@ -4664,7 +4853,7 @@
             
             // Remove animation class after animation completes
             setTimeout(() => {
-                videoIframe.classList.remove('swipe-up', 'swipe-down');
+                videoPlayer.classList.remove('swipe-up', 'swipe-down');
             }, 400);
         }
         
@@ -4696,11 +4885,11 @@
                     
                     // Add opacity feedback
                     const progress = Math.min(Math.abs(diffY) / 200, 1);
-                    videoIframe.style.opacity = 1 - (progress * 0.3);
+                    videoPlayer.style.opacity = 1 - (progress * 0.3);
                     
                     // Add slight transform
                     const translateY = -diffY * 0.3;
-                    videoIframe.style.transform = `translateY(${translateY}px)`;
+                    videoPlayer.style.transform = `translateY(${translateY}px)`;
                 }
             }, { passive: false });
             
@@ -4736,8 +4925,8 @@
                     switchToVideo(currentSlideIndex, direction);
                 } else {
                     // Reset styles if swipe wasn't completed
-                    videoIframe.style.opacity = '1';
-                    videoIframe.style.transform = 'translateY(0)';
+                    videoPlayer.style.opacity = '1';
+                    videoPlayer.style.transform = 'translateY(0)';
                 }
                 
                 modalSwiping = false;
@@ -4766,28 +4955,60 @@
             });
         }
         
-        // Close video button
-        if (closeVideoBtn) {
-            closeVideoBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                videoModal.classList.remove('active');
-                videoIframe.src = '';
-                document.body.style.overflow = 'auto';
+        // Mouse wheel support for laptop/desktop
+        let wheelTimeout;
+        if (videoModal) {
+            videoModal.addEventListener('wheel', (e) => {
+                if (!videoModal.classList.contains('active')) return;
                 
-                // Show header again
-                if (header) header.style.display = 'block';
-            });
+                // Debounce wheel events to prevent too fast switching
+                clearTimeout(wheelTimeout);
+                wheelTimeout = setTimeout(() => {
+                    e.preventDefault();
+                    
+                    if (e.deltaY > 0) {
+                        // Scroll down - next video
+                        currentSlideIndex = (currentSlideIndex + 1) % videoSlides.length;
+                        switchToVideo(currentSlideIndex, 'up');
+                        console.log('Mouse wheel DOWN - Next video');
+                    } else if (e.deltaY < 0) {
+                        // Scroll up - previous video
+                        currentSlideIndex = (currentSlideIndex - 1 + videoSlides.length) % videoSlides.length;
+                        switchToVideo(currentSlideIndex, 'down');
+                        console.log('Mouse wheel UP - Previous video');
+                    }
+                }, 300); // 300ms debounce
+            }, { passive: false });
         }
         
-        // Close video with ESC key
+        // Keyboard shortcuts (ESC, Arrow Up/Down, Space)
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+            if (!videoModal.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') {
                 videoModal.classList.remove('active');
-                videoIframe.src = '';
+                videoPlayer.pause();
+                videoPlayer.src = '';
                 document.body.style.overflow = 'auto';
-                
-                // Show header again
-                if (header) header.style.display = 'block';
+                if (header) header.style.display = '';
+            } else if (e.key === 'ArrowUp' || e.key === 'Up') {
+                e.preventDefault();
+                currentSlideIndex = (currentSlideIndex - 1 + videoSlides.length) % videoSlides.length;
+                switchToVideo(currentSlideIndex, 'down');
+                console.log('Arrow UP key - Previous video');
+            } else if (e.key === 'ArrowDown' || e.key === 'Down') {
+                e.preventDefault();
+                currentSlideIndex = (currentSlideIndex + 1) % videoSlides.length;
+                switchToVideo(currentSlideIndex, 'up');
+                console.log('Arrow DOWN key - Next video');
+            } else if (e.key === ' ' || e.key === 'Spacebar') {
+                // Spacebar to play/pause
+                e.preventDefault();
+                if (videoPlayer.paused) {
+                    videoPlayer.play();
+                } else {
+                    videoPlayer.pause();
+                }
             }
         });
 
@@ -4988,7 +5209,7 @@
         ];
 
         let currentVideoIndex = 0;
-        const videoPlayer = document.getElementById('videoPlayer');
+        // Note: videoPlayer already declared above for reels functionality
         const mainVideo = document.getElementById('mainVideo');
         const videoTitle = document.getElementById('videoTitle');
         const videoDescription = document.getElementById('videoDescription');
@@ -5014,17 +5235,27 @@
                 console.log('Video URL:', videoUrl); // Debug
                 
                 if (videoUrl) {
-                    if (videoModal && videoIframe) {
-                        const embedUrl = videoUrl.includes('?') 
-                            ? videoUrl + '&autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1' 
-                            : videoUrl + '?autoplay=1&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1';
+                    if (videoModal && videoPlayer) {
+                        console.log('Opening video from grid:', videoUrl); // Debug
                         
-                        console.log('Opening video:', embedUrl); // Debug
+                        // Open modal with local video
                         videoModal.classList.add('active');
-                        videoIframe.src = embedUrl;
+                        videoPlayer.src = videoUrl;
+                        videoPlayer.load();
+                        
+                        // Autoplay video
+                        videoPlayer.play().then(() => {
+                            console.log('Grid video playing');
+                        }).catch(err => {
+                            console.log('Autoplay prevented:', err);
+                        });
+                        
                         document.body.style.overflow = 'hidden';
+                        
+                        // Hide header
+                        if (header) header.style.display = 'none';
                     } else {
-                        console.error('videoModal or videoIframe not found!'); // Debug
+                        console.error('videoModal or videoPlayer not found!'); // Debug
                     }
                 } else {
                     console.error('No video URL found in data-video attribute'); // Debug
@@ -5070,12 +5301,18 @@
             videoCounter.textContent = `${currentVideoIndex + 1} / ${videoData.length}`;
         }
 
-        // Close video player
-        closePlayer.addEventListener('click', () => {
-            videoPlayer.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            mainVideo.pause();
-        });
+        // Close video modal
+        if (closeVideoBtn) {
+            closeVideoBtn.addEventListener('click', () => {
+                videoModal.classList.remove('active');
+                videoPlayer.pause();
+                videoPlayer.src = '';
+                document.body.style.overflow = 'auto';
+                
+                // Show header again
+                if (header) header.style.display = '';
+            });
+        }
 
         // Swipe up (next video)
         swipeUp.addEventListener('click', () => {
