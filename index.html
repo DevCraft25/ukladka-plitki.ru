@@ -804,42 +804,32 @@
         }
         
         .video-modal-content video.swipe-up {
-            animation: slideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            animation: slideUp 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .video-modal-content video.swipe-down {
-            animation: slideDown 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            animation: slideDown 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         @keyframes slideUp {
             0% {
-                transform: translateY(100%) scale(0.97);
-                opacity: 0;
-                filter: blur(3px);
-            }
-            70% {
-                opacity: 0.9;
+                transform: translateY(100%);
+                opacity: 1;
             }
             100% {
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
                 opacity: 1;
-                filter: blur(0);
             }
         }
         
         @keyframes slideDown {
             0% {
-                transform: translateY(-100%) scale(0.97);
-                opacity: 0;
-                filter: blur(3px);
-            }
-            70% {
-                opacity: 0.9;
+                transform: translateY(-100%);
+                opacity: 1;
             }
             100% {
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
                 opacity: 1;
-                filter: blur(0);
             }
         }
 
@@ -5114,10 +5104,10 @@
             
             console.log('Switched to video with', direction, 'animation:', title);
             
-            // Remove animation class after animation completes (450ms to match CSS)
+            // Remove animation class after animation completes (350ms to match CSS)
             setTimeout(() => {
                 videoPlayer.classList.remove('swipe-up', 'swipe-down');
-            }, 450);
+            }, 350);
         }
         
         // Fullscreen video modal - swipe up/down
@@ -5147,9 +5137,8 @@
                 if (Math.abs(diffY) > 10 && Math.abs(diffY) > diffX) {
                     videoIsSwiping = true;
                     
-                    // Visual feedback during swipe - smoother and earlier
-                    const progress = Math.min(Math.abs(diffY) / 150, 0.4);
-                    videoPlayer.style.opacity = String(1 - progress);
+                    // No opacity change - keep video visible during swipe for seamless transition
+                    // videoPlayer.style.opacity = '1';
                     
                     console.log('Swiping... diffY:', diffY);
                 }
