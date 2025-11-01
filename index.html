@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>ELITE TILES | Premium Укладка Плитки СПб ⭐ #1 В ГОРОДЕ</title>
     <meta name="description" content="🔥 PREMIUM укладка плитки в СПб ⭐ 1000+ ЭЛИТНЫХ проектов ⭐ Гарантия 5 ЛЕТ ⭐ VIP мастера ⭐ Цены от 3500₽/м² ⭐ 24/7 консультации">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -26,6 +26,12 @@
             --shadow-dark: 0 10px 50px rgba(0, 0, 0, 0.3);
         }
 
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             background: 
@@ -34,6 +40,9 @@
                 linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
             color: var(--white);
             overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+            position: relative;
         }
 
         /* PREMIUM HEADER */
@@ -55,8 +64,9 @@
 
         .nav {
             max-width: 1400px;
+            width: 100%;
             margin: 0 auto;
-            padding: 1.5rem 2rem;
+            padding: 1.5rem clamp(1rem, 3vw, 2rem);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -939,6 +949,67 @@
             opacity: 0.9;
         }
         
+        /* SWIPE DOWN INDICATOR - Instagram Shorts Style */
+        .swipe-indicator {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10004;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            color: var(--white);
+            animation: bounceSwipeVertical 2s ease-in-out infinite;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .swipe-indicator.show {
+            opacity: 1;
+        }
+        
+        .swipe-indicator i {
+            font-size: 3.5rem;
+            color: var(--gold);
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.9));
+        }
+        
+        .swipe-indicator span {
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+        
+        @keyframes bounceSwipeVertical {
+            0%, 100% {
+                transform: translateY(-50%);
+            }
+            50% {
+                transform: translateY(-35%);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .swipe-indicator {
+                right: 15px;
+            }
+            
+            .swipe-indicator i {
+                font-size: 3rem;
+            }
+            
+            .swipe-indicator span {
+                font-size: 0.9rem;
+                letter-spacing: 2px;
+            }
+        }
+        
         .progress-bar-bg {
             width: 100%;
             height: 4px;
@@ -1054,22 +1125,25 @@
         }
         
         .video-callback-form .form-group {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
         }
         
         .video-callback-form label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             color: var(--gold);
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .video-callback-form input {
             width: 100%;
-            padding: 0.9rem 1.2rem;
+            padding: 1rem 1.2rem;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 2px solid rgba(212, 175, 55, 0.3);
             border-radius: 10px;
             color: var(--white);
             font-size: 1rem;
@@ -1085,6 +1159,7 @@
         
         .video-callback-form input::placeholder {
             color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
         }
         
         .submit-callback-btn {
@@ -1119,6 +1194,16 @@
                 width: 95%;
                 padding: 2rem 1.5rem;
                 border-radius: 20px;
+            }
+            
+            .video-callback-form label {
+                font-size: 0.85rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .video-callback-form input {
+                padding: 0.9rem 1rem;
+                font-size: 0.95rem;
             }
             
             .video-callback-btn {
@@ -3194,6 +3279,80 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+        /* TABLET RESPONSIVE */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .nav {
+                padding: 1.5rem 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: clamp(3rem, 5vw, 4rem);
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contact-content {
+                gap: 3rem;
+            }
+            
+            .about-content {
+                gap: 3rem;
+            }
+        }
+        
+        /* LARGE SCREENS - Wider layouts */
+        @media (min-width: 1400px) {
+            .nav {
+                max-width: 1600px;
+            }
+            
+            .hero-container,
+            .services-grid,
+            .contact-content,
+            .about-content {
+                max-width: 1400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        
+        /* FLUID TYPOGRAPHY - Scales with viewport */
+        html {
+            font-size: clamp(14px, 1vw, 16px);
+        }
+        
+        /* Ensure images are responsive */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Prevent horizontal scroll - with exceptions */
+        section,
+        .hero-container,
+        .services-grid,
+        .contact-content,
+        .about-content,
+        .footer-content {
+            max-width: 100%;
+        }
+        
+        /* Responsive containers */
+        .hero,
+        .services,
+        .process,
+        .portfolio,
+        .about,
+        .testimonials,
+        .contact {
+            width: 100%;
+            padding-left: clamp(1rem, 3vw, 2rem);
+            padding-right: clamp(1rem, 3vw, 2rem);
+        }
+        
         /* PREMIUM LOADING SCREEN */
         .loading-screen {
             position: fixed;
@@ -3529,6 +3688,12 @@
                 Your browser does not support the video tag.
             </video>
             
+            <!-- Swipe Down Indicator -->
+            <div class="swipe-indicator" id="swipeIndicator">
+                <i class="fas fa-hand-point-down"></i>
+                <span>Листай</span>
+            </div>
+            
             <!-- Custom Video Progress Bar -->
             <div class="custom-video-progress" id="customVideoProgress">
                 <div class="progress-bar-bg">
@@ -3578,11 +3743,11 @@
                 <form id="quickCallbackForm">
                     <div class="form-group">
                         <label for="videoName">Ваше имя</label>
-                        <input type="text" id="videoName" name="name" placeholder="Введите имя" required>
+                        <input type="text" id="videoName" name="name" required>
                     </div>
                     <div class="form-group">
                         <label for="videoPhone">Телефон</label>
-                        <input type="tel" id="videoPhone" name="phone" placeholder="+7 (___) ___-__-__" required>
+                        <input type="tel" id="videoPhone" name="phone" required>
                     </div>
                     <button type="submit" class="submit-callback-btn">
                         <i class="fas fa-paper-plane"></i>
@@ -5049,6 +5214,19 @@
                 // Hide header
                 if (header) header.style.display = 'none';
                 
+                // Show swipe indicator for first video
+                const swipeIndicator = document.getElementById('swipeIndicator');
+                if (swipeIndicator && currentSlideIndex === 0) {
+                    setTimeout(() => {
+                        swipeIndicator.classList.add('show');
+                    }, 1000); // Show after 1 second
+                    
+                    // Auto-hide after 4 seconds
+                    setTimeout(() => {
+                        swipeIndicator.classList.remove('show');
+                    }, 5000);
+                }
+                
                 // Update info and progress
                 if (currentVideoTitle) currentVideoTitle.textContent = title;
                 if (currentVideoDesc) currentVideoDesc.textContent = desc;
@@ -5157,6 +5335,12 @@
                 const isValidSwipe = (Math.abs(diffY) > 50) || (Math.abs(diffY) > 30 && swipeTime < 400);
                 
                 if (videoIsSwiping && isValidSwipe) {
+                    // Hide swipe indicator on first swipe
+                    const swipeIndicator = document.getElementById('swipeIndicator');
+                    if (swipeIndicator) {
+                        swipeIndicator.classList.remove('show');
+                    }
+                    
                     let direction;
                     
                     if (diffY > 0) {
