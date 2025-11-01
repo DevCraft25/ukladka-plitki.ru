@@ -798,27 +798,27 @@
             height: 100%;
             border: none;
             border-radius: 0;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                        opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), 
+                        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             background: #000;
         }
         
         .video-modal-content video.swipe-up {
-            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: slideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         }
         
         .video-modal-content video.swipe-down {
-            animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: slideDown 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         }
         
         @keyframes slideUp {
             0% {
-                transform: translateY(100%) scale(0.95);
+                transform: translateY(100%) scale(0.97);
                 opacity: 0;
-                filter: blur(5px);
+                filter: blur(3px);
             }
-            60% {
-                opacity: 0.8;
+            70% {
+                opacity: 0.9;
             }
             100% {
                 transform: translateY(0) scale(1);
@@ -829,12 +829,12 @@
         
         @keyframes slideDown {
             0% {
-                transform: translateY(-100%) scale(0.95);
+                transform: translateY(-100%) scale(0.97);
                 opacity: 0;
-                filter: blur(5px);
+                filter: blur(3px);
             }
-            60% {
-                opacity: 0.8;
+            70% {
+                opacity: 0.9;
             }
             100% {
                 transform: translateY(0) scale(1);
@@ -5114,10 +5114,10 @@
             
             console.log('Switched to video with', direction, 'animation:', title);
             
-            // Remove animation class after animation completes (600ms to match CSS)
+            // Remove animation class after animation completes (450ms to match CSS)
             setTimeout(() => {
                 videoPlayer.classList.remove('swipe-up', 'swipe-down');
-            }, 600);
+            }, 450);
         }
         
         // Fullscreen video modal - swipe up/down
@@ -5144,11 +5144,11 @@
                 const diffX = Math.abs(videoTouchStartX - currentX);
                 
                 // Check if it's a vertical swipe (more Y than X movement)
-                if (Math.abs(diffY) > 20 && Math.abs(diffY) > diffX) {
+                if (Math.abs(diffY) > 10 && Math.abs(diffY) > diffX) {
                     videoIsSwiping = true;
                     
-                    // Visual feedback during swipe
-                    const progress = Math.min(Math.abs(diffY) / 200, 0.5);
+                    // Visual feedback during swipe - smoother and earlier
+                    const progress = Math.min(Math.abs(diffY) / 150, 0.4);
                     videoPlayer.style.opacity = String(1 - progress);
                     
                     console.log('Swiping... diffY:', diffY);
@@ -5164,8 +5164,8 @@
                 
                 console.log('Touch ended - diffY:', diffY, 'time:', swipeTime + 'ms', 'videoIsSwiping:', videoIsSwiping);
                 
-                // Swipe detection: at least 80px movement OR fast swipe (velocity)
-                const isValidSwipe = (Math.abs(diffY) > 80) || (Math.abs(diffY) > 40 && swipeTime < 300);
+                // Swipe detection: at least 50px movement OR fast swipe (velocity)
+                const isValidSwipe = (Math.abs(diffY) > 50) || (Math.abs(diffY) > 30 && swipeTime < 400);
                 
                 if (videoIsSwiping && isValidSwipe) {
                     let direction;
