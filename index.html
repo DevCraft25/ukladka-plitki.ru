@@ -846,7 +846,7 @@
         /* REELS STYLE VIDEO INFO - Bottom Left */
         .video-reels-info {
             position: absolute;
-            bottom: 120px;
+            bottom: 160px;
             left: 20px;
             max-width: 60%;
             z-index: 10002;
@@ -926,20 +926,31 @@
             }
         }
         
-        /* CUSTOM VIDEO PROGRESS */
+        /* CUSTOM VIDEO PROGRESS - Very Bottom Position */
         .custom-video-progress {
             position: absolute;
-            top: 20px;
+            bottom: 10px;
             left: 20px;
-            right: 20px;
+            right: 90px;
             z-index: 10002;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        }
+        
+        .video-time {
+            position: absolute;
+            right: 20px;
+            bottom: 10px;
+            z-index: 10003;
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            white-space: nowrap;
+            line-height: 1;
+            opacity: 0.9;
         }
         
         .progress-bar-bg {
-            flex: 1;
+            width: 100%;
             height: 4px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 2px;
@@ -953,18 +964,11 @@
             transition: width 0.3s ease;
         }
         
-        .video-time {
-            color: var(--white);
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-            white-space: nowrap;
-        }
         
-        /* VIDEO CALLBACK BUTTON - Bottom Left */
+        /* VIDEO CALLBACK BUTTON - Above Progress Bar */
         .video-callback-btn-wrapper {
             position: absolute;
-            bottom: 20px;
+            bottom: 70px;
             left: 20px;
             z-index: 10002;
         }
@@ -1134,22 +1138,29 @@
             }
             
             .video-callback-btn-wrapper {
-                bottom: 15px;
+                bottom: 60px;
                 left: 15px;
             }
             
             .custom-video-progress {
-                top: 15px;
+                bottom: 8px;
                 left: 15px;
-                right: 15px;
+                right: 75px;
             }
             
             .video-time {
-                font-size: 0.85rem;
+                right: 15px;
+                bottom: 8px;
+                font-size: 0.7rem;
+                line-height: 1;
+            }
+            
+            .progress-bar-bg {
+                width: 100%;
             }
             
             .video-reels-info {
-                bottom: 90px;
+                bottom: 140px;
                 left: 15px;
                 max-width: 70%;
             }
@@ -2541,6 +2552,7 @@
             50% { opacity: 1; }
         }
 
+        /* OLD VIDEO TIME CSS - COMMENTED OUT (conflicts with new video modal time)
         .video-time {
             position: absolute;
             top: 4rem;
@@ -2553,6 +2565,7 @@
             backdrop-filter: blur(10px);
             z-index: 10001;
         }
+        */
 
         /* Mobile specific adjustments */
         @media (max-width: 768px) {
@@ -3521,7 +3534,6 @@
             <video id="videoPlayer" 
                    playsinline
                    autoplay
-                   muted
                    style="width: 100%; height: 100%; object-fit: contain; cursor: pointer;">
                 <source src="" type="video/mp4">
                 Your browser does not support the video tag.
@@ -3532,9 +3544,11 @@
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="progressBarFill"></div>
                 </div>
-                <div class="video-time" id="videoTime">
-                    <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
-                </div>
+            </div>
+            
+            <!-- Video Time - Separate from progress bar -->
+            <div class="video-time" id="videoTime">
+                <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
             </div>
             
             <!-- Video Progress Dots -->
@@ -5023,13 +5037,15 @@
                 videoPlayer.src = videoUrl;
                 videoPlayer.load();
                 
-                // Autoplay video
+                // Autoplay video with sound
+                videoPlayer.muted = false; // Enable sound
                 videoPlayer.play().then(() => {
-                    console.log('Video playing automatically');
+                    console.log('Video playing automatically with sound');
                 }).catch(err => {
-                    console.log('Autoplay prevented:', err);
-                    // Unmute and try again if autoplay was blocked
-                    videoPlayer.muted = false;
+                    console.log('Autoplay with sound prevented, trying muted:', err);
+                    // If autoplay with sound fails, try muted autoplay
+                    videoPlayer.muted = true;
+                    videoPlayer.play().catch(e => console.log('Autoplay failed:', e));
                 });
                 
                 document.body.style.overflow = 'hidden';
@@ -5080,11 +5096,15 @@
             videoPlayer.src = videoUrl;
             videoPlayer.load();
             
-            // Autoplay new video
+            // Autoplay new video with sound
+            videoPlayer.muted = false; // Keep sound enabled
             videoPlayer.play().then(() => {
-                console.log('Next video playing');
+                console.log('Next video playing with sound');
             }).catch(err => {
                 console.log('Autoplay prevented:', err);
+                // If autoplay fails, try muted
+                videoPlayer.muted = true;
+                videoPlayer.play().catch(e => console.log('Autoplay failed:', e));
             });
             
             if (currentVideoTitle) currentVideoTitle.textContent = title;
@@ -5622,11 +5642,15 @@
                         videoPlayer.src = videoUrl;
                         videoPlayer.load();
                         
-                        // Autoplay video
+                        // Autoplay video with sound
+                        videoPlayer.muted = false; // Enable sound
                         videoPlayer.play().then(() => {
-                            console.log('Grid video playing');
+                            console.log('Grid video playing with sound');
                         }).catch(err => {
                             console.log('Autoplay prevented:', err);
+                            // Try muted if autoplay fails
+                            videoPlayer.muted = true;
+                            videoPlayer.play().catch(e => console.log('Autoplay failed:', e));
                         });
                         
                         document.body.style.overflow = 'hidden';
