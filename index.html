@@ -730,6 +730,7 @@
             padding-left: 8px;
             position: relative;
             z-index: 15;
+            animation: playButtonPulse 2.5s ease-in-out infinite;
         }
 
         .hero-video-play-btn:active {
@@ -739,6 +740,18 @@
         .hero-video-play-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 15px 40px rgba(212, 175, 55, 0.8);
+            animation: none;
+        }
+        
+        @keyframes playButtonPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+            }
+            50% { 
+                transform: scale(1.08);
+                box-shadow: 0 15px 45px rgba(212, 175, 55, 0.8);
+            }
         }
 
         /* VIDEO MODAL */
@@ -926,13 +939,50 @@
             }
         }
         
+        /* VIDEO VOLUME BUTTON */
+        .video-volume-btn {
+            position: absolute;
+            bottom: 5px;
+            left: 20px;
+            z-index: 10003;
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .video-volume-btn:hover {
+            background: rgba(212, 175, 55, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .video-volume-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .video-volume-btn.muted {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
         /* CUSTOM VIDEO PROGRESS - Very Bottom Position */
         .custom-video-progress {
             position: absolute;
             bottom: 10px;
-            left: 20px;
+            left: 65px;
             right: 90px;
             z-index: 10002;
+            cursor: pointer;
+            padding: 8px 0;
+            margin: -8px 0;
         }
         
         .video-time {
@@ -949,7 +999,7 @@
             opacity: 0.9;
         }
         
-        /* SWIPE DOWN INDICATOR - Instagram Shorts Style */
+        /* SWIPE UP INDICATOR */
         .swipe-indicator {
             position: absolute;
             right: 20px;
@@ -959,9 +1009,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem;
             color: var(--white);
-            animation: bounceSwipeVertical 2s ease-in-out infinite;
+            animation: bounceSwipeVertical 1.5s ease-in-out infinite;
             opacity: 0;
             transition: opacity 0.5s ease;
         }
@@ -971,19 +1020,9 @@
         }
         
         .swipe-indicator i {
-            font-size: 3.5rem;
+            font-size: 4rem;
             color: var(--gold);
-            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.9));
-        }
-        
-        .swipe-indicator span {
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 1));
         }
         
         @keyframes bounceSwipeVertical {
@@ -991,7 +1030,7 @@
                 transform: translateY(-50%);
             }
             50% {
-                transform: translateY(-35%);
+                transform: translateY(-20%);
             }
         }
         
@@ -1001,12 +1040,7 @@
             }
             
             .swipe-indicator i {
-                font-size: 3rem;
-            }
-            
-            .swipe-indicator span {
-                font-size: 0.9rem;
-                letter-spacing: 2px;
+                font-size: 3.5rem;
             }
         }
         
@@ -1016,13 +1050,26 @@
             background: rgba(255, 255, 255, 0.2);
             border-radius: 2px;
             overflow: hidden;
+            transition: height 0.2s ease;
+        }
+        
+        .custom-video-progress:hover .progress-bar-bg,
+        .custom-video-progress:active .progress-bar-bg {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
         }
         
         .progress-bar-fill {
             height: 100%;
             background: var(--gold);
             width: 0%;
-            transition: width 0.3s ease;
+            transition: width 0.1s ease;
+        }
+        
+        .custom-video-progress:hover .progress-bar-fill,
+        .custom-video-progress:active .progress-bar-fill {
+            background: linear-gradient(90deg, var(--gold), #FFD700);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
         }
         
         
@@ -1062,8 +1109,14 @@
         }
         
         @keyframes buttonPulse {
-            0%, 100% { box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4); }
-            50% { box-shadow: 0 5px 30px rgba(212, 175, 55, 0.7); }
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 5px 30px rgba(212, 175, 55, 0.7);
+            }
         }
         
         /* VIDEO CALLBACK FORM - Centered */
@@ -1073,22 +1126,15 @@
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            max-width: 450px;
-            background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(30px);
-            border: 2px solid var(--gold);
+            max-width: 520px;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 2.5rem 2.5rem;
             border-radius: 25px;
-            padding: 2.5rem;
+            border: 2px solid var(--gold);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10005;
-            transition: bottom 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.95), 
-                        0 0 50px rgba(212, 175, 55, 0.3),
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
                         inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-        
-        .video-callback-form.active {
-            bottom: 50%;
-            transform: translate(-50%, 50%);
         }
         
         .callback-form-header {
@@ -1189,11 +1235,98 @@
             transform: translateY(0);
         }
         
+        /* SOCIAL CONTACT BUTTONS */
+        .social-contact-divider {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin: 1.5rem 0 1rem 0;
+            position: relative;
+        }
+        
+        .social-contact-divider::before,
+        .social-contact-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.3));
+        }
+        
+        .social-contact-divider::before {
+            left: 0;
+        }
+        
+        .social-contact-divider::after {
+            right: 0;
+            background: linear-gradient(to left, transparent, rgba(212, 175, 55, 0.3));
+        }
+        
+        .social-contact-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid;
+        }
+        
+        .whatsapp-btn {
+            background: rgba(37, 211, 102, 0.15);
+            color: #25d366;
+            border-color: #25d366;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #25d366;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+        }
+        
+        .telegram-btn {
+            background: rgba(0, 136, 204, 0.15);
+            color: #0088cc;
+            border-color: #0088cc;
+        }
+        
+        .telegram-btn:hover {
+            background: #0088cc;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 136, 204, 0.4);
+        }
+        
+        .social-btn i {
+            font-size: 1.3rem;
+        }
+        
         @media (max-width: 768px) {
             .video-callback-form {
                 width: 95%;
-                padding: 2rem 1.5rem;
+                padding: 1.5rem 1.2rem;
                 border-radius: 20px;
+                max-height: 60vh;
+                overflow-y: auto;
+            }
+            
+            .video-callback-form.active {
+                bottom: auto;
+                top: 15%;
+                transform: translate(-50%, 0);
             }
             
             .video-callback-form label {
@@ -1212,14 +1345,36 @@
                 gap: 0.6rem;
             }
             
+            .social-contact-divider {
+                font-size: 0.8rem;
+                margin: 1.2rem 0 0.8rem 0;
+            }
+            
+            .social-btn {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .social-btn i {
+                font-size: 1.2rem;
+            }
+            
             .video-callback-btn-wrapper {
                 bottom: 60px;
                 left: 15px;
             }
             
+            .video-volume-btn {
+                bottom: 5px;
+                left: 15px;
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            
             .custom-video-progress {
                 bottom: 8px;
-                left: 15px;
+                left: 55px;
                 right: 75px;
             }
             
@@ -1258,30 +1413,6 @@
         @keyframes pulse {
             0%, 100% { opacity: 0.6; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.1); }
-        }
-
-        /* VIDEO PROGRESS DOTS */
-        .video-progress-dots {
-            position: absolute;
-            top: 80px;
-            left: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 10002;
-        }
-
-        .video-progress-dot {
-            width: 4px;
-            height: 30px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .video-progress-dot.active {
-            background: var(--gold);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
         }
 
         @media (max-width: 768px) {
@@ -3690,9 +3821,13 @@
             
             <!-- Swipe Down Indicator -->
             <div class="swipe-indicator" id="swipeIndicator">
-                <i class="fas fa-hand-point-down"></i>
-                <span>Листай</span>
+                <i class="fas fa-hand-point-up"></i>
             </div>
+            
+            <!-- Volume Control Button -->
+            <button class="video-volume-btn" id="videoVolumeBtn">
+                <i class="fas fa-volume-up"></i>
+            </button>
             
             <!-- Custom Video Progress Bar -->
             <div class="custom-video-progress" id="customVideoProgress">
@@ -3704,16 +3839,6 @@
             <!-- Video Time - Separate from progress bar -->
             <div class="video-time" id="videoTime">
                 <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
-            </div>
-            
-            <!-- Video Progress Dots -->
-            <div class="video-progress-dots" id="videoProgressDots">
-                <div class="video-progress-dot active"></div>
-                <div class="video-progress-dot"></div>
-                <div class="video-progress-dot"></div>
-                <div class="video-progress-dot"></div>
-                <div class="video-progress-dot"></div>
-                <div class="video-progress-dot"></div>
             </div>
             
             <!-- Swipe Indicators Removed -->
@@ -3753,6 +3878,19 @@
                         <i class="fas fa-paper-plane"></i>
                         Отправить заявку
                     </button>
+                    
+                    <div class="social-contact-divider">или свяжитесь с нами</div>
+                    
+                    <div class="social-contact-buttons">
+                        <a href="https://wa.me/79999999999" target="_blank" class="social-btn whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="https://t.me/yourusername" target="_blank" class="social-btn telegram-btn">
+                            <i class="fab fa-telegram"></i>
+                            <span>Telegram</span>
+                        </a>
+                    </div>
                 </form>
             </div>
             
@@ -5043,7 +5181,6 @@
         const videoModal = document.getElementById('videoModal');
         const closeVideoBtn = document.getElementById('closeVideoBtn');
         const videoPlayer = document.getElementById('videoPlayer');
-        const videoProgressDots = document.querySelectorAll('.video-progress-dot');
         const currentVideoTitle = document.getElementById('currentVideoTitle');
         const currentVideoDesc = document.getElementById('currentVideoDesc');
         const header = document.querySelector('.header');
@@ -5227,20 +5364,11 @@
                     }, 5000);
                 }
                 
-                // Update info and progress
+                // Update info
                 if (currentVideoTitle) currentVideoTitle.textContent = title;
                 if (currentVideoDesc) currentVideoDesc.textContent = desc;
-                updateVideoProgress(currentSlideIndex);
                 
                 console.log('Opening video:', videoUrl);
-            });
-        }
-        
-        // Update video progress dots
-        function updateVideoProgress(index) {
-            videoProgressDots.forEach((dot, i) => {
-                dot.classList.remove('active');
-                if (i === index) dot.classList.add('active');
             });
         }
         
@@ -5277,7 +5405,6 @@
             
             if (currentVideoTitle) currentVideoTitle.textContent = title;
             if (currentVideoDesc) currentVideoDesc.textContent = desc;
-            updateVideoProgress(index);
             showSlide(index);
             
             console.log('Switched to video with', direction, 'animation:', title);
@@ -5468,11 +5595,98 @@
                 }
             });
             
+            // Interactive progress bar - seek by touch/click
+            const customVideoProgress = document.getElementById('customVideoProgress');
+            if (customVideoProgress) {
+                let isSeeking = false;
+                
+                const seekVideo = (e) => {
+                    const progressBar = customVideoProgress.getBoundingClientRect();
+                    const clickX = (e.touches ? e.touches[0].clientX : e.clientX) - progressBar.left;
+                    const percentage = Math.max(0, Math.min(100, (clickX / progressBar.width) * 100));
+                    const seekTime = (percentage / 100) * videoPlayer.duration;
+                    
+                    if (!isNaN(seekTime) && videoPlayer.duration > 0) {
+                        videoPlayer.currentTime = seekTime;
+                    }
+                };
+                
+                // Touch events for mobile
+                customVideoProgress.addEventListener('touchstart', (e) => {
+                    isSeeking = true;
+                    seekVideo(e);
+                    e.preventDefault();
+                }, { passive: false });
+                
+                customVideoProgress.addEventListener('touchmove', (e) => {
+                    if (isSeeking) {
+                        seekVideo(e);
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+                
+                customVideoProgress.addEventListener('touchend', () => {
+                    isSeeking = false;
+                });
+                
+                // Mouse events for desktop
+                customVideoProgress.addEventListener('mousedown', (e) => {
+                    isSeeking = true;
+                    seekVideo(e);
+                });
+                
+                customVideoProgress.addEventListener('mousemove', (e) => {
+                    if (isSeeking) {
+                        seekVideo(e);
+                    }
+                });
+                
+                customVideoProgress.addEventListener('mouseup', () => {
+                    isSeeking = false;
+                });
+                
+                customVideoProgress.addEventListener('mouseleave', () => {
+                    isSeeking = false;
+                });
+                
+                // Click to seek
+                customVideoProgress.addEventListener('click', seekVideo);
+            }
+            
             // Reset progress when video ends
             videoPlayer.addEventListener('ended', () => {
                 const progressBarFill = document.getElementById('progressBarFill');
                 if (progressBarFill) {
                     progressBarFill.style.width = '0%';
+                }
+            });
+        }
+        
+        // VIDEO VOLUME CONTROL
+        const videoVolumeBtn = document.getElementById('videoVolumeBtn');
+        if (videoVolumeBtn && videoPlayer) {
+            videoVolumeBtn.addEventListener('click', () => {
+                if (videoPlayer.muted) {
+                    // Unmute
+                    videoPlayer.muted = false;
+                    videoVolumeBtn.classList.remove('muted');
+                    videoVolumeBtn.querySelector('i').className = 'fas fa-volume-up';
+                } else {
+                    // Mute
+                    videoPlayer.muted = true;
+                    videoVolumeBtn.classList.add('muted');
+                    videoVolumeBtn.querySelector('i').className = 'fas fa-volume-mute';
+                }
+            });
+            
+            // Update button state based on video muted property
+            videoPlayer.addEventListener('volumechange', () => {
+                if (videoPlayer.muted) {
+                    videoVolumeBtn.classList.add('muted');
+                    videoVolumeBtn.querySelector('i').className = 'fas fa-volume-mute';
+                } else {
+                    videoVolumeBtn.classList.remove('muted');
+                    videoVolumeBtn.querySelector('i').className = 'fas fa-volume-up';
                 }
             });
         }
