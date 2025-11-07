@@ -834,25 +834,44 @@
             animation: slideDown 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
+        /* Instagram Reels style - smooth connected transition */
+        .video-modal-content {
+            overflow: hidden !important;
+        }
+        
         @keyframes slideUp {
             0% {
                 transform: translateY(100%);
-                opacity: 1;
             }
             100% {
                 transform: translateY(0);
-                opacity: 1;
             }
         }
         
         @keyframes slideDown {
             0% {
                 transform: translateY(-100%);
-                opacity: 1;
             }
             100% {
                 transform: translateY(0);
-                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOutUp {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100%);
+            }
+        }
+        
+        @keyframes slideOutDown {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100%);
             }
         }
 
@@ -1023,6 +1042,38 @@
             font-size: 4rem;
             color: var(--gold);
             filter: drop-shadow(0 0 20px rgba(212, 175, 55, 1));
+        }
+        
+        /* PAUSE ICON - Simple and Clean */
+        .video-pause-icon {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99999;
+            width: 100px;
+            height: 100px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        
+        .video-pause-icon.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .video-pause-icon i {
+            font-size: 3rem;
+            color: #ffffff;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
         
         @keyframes bounceSwipeVertical {
@@ -2622,7 +2673,7 @@
             z-index: 10001;
         }
 
-        .swipe-up, .swipe-down {
+        .swipe-up, .swipe-down, .video-share-btn {
             width: 50px;
             height: 50px;
             background: rgba(255, 255, 255, 0.2);
@@ -2639,9 +2690,19 @@
             transition: all 0.3s ease;
         }
 
-        .swipe-up:hover, .swipe-down:hover {
+        .swipe-up:hover, .swipe-down:hover, .video-share-btn:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.1);
+        }
+        
+        .video-share-btn {
+            position: relative;
+        }
+        
+        .video-share-btn .share-count {
+            font-size: 0.7rem;
+            margin-top: 2px;
+            font-weight: 600;
         }
 
         .swipe-up span, .swipe-down span {
@@ -3829,6 +3890,11 @@
                 <i class="fas fa-volume-up"></i>
             </button>
             
+            <!-- Share Button -->
+            <button class="video-share-btn-old" id="videoShareBtnOld" title="Поделиться" style="position: absolute; right: 20px; top: 65%; transform: translateY(-50%); width: 50px; height: 50px; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; cursor: pointer; z-index: 10003; transition: all 0.3s ease;">
+                <i class="fas fa-share"></i>
+            </button>
+            
             <!-- Custom Video Progress Bar -->
             <div class="custom-video-progress" id="customVideoProgress">
                 <div class="progress-bar-bg">
@@ -4618,6 +4684,9 @@
                     <div class="swipe-up" id="swipeUp">
                         <i class="fas fa-chevron-up"></i>
                     </div>
+                    <button class="video-share-btn" id="videoShareBtn" title="Поделиться">
+                        <i class="fas fa-share"></i>
+                    </button>
                     <div class="swipe-down" id="swipeDown">  
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -5372,33 +5441,48 @@
             });
         }
         
-        // Function to switch video with animation
+        // Instagram Reels style - smooth connected transition with 2 videos
+        let isTransitioning = false;
+        
         function switchToVideo(index, direction = 'up') {
+            if (isTransitioning) return; // Prevent overlapping transitions
+            isTransitioning = true;
+            
             const currentSlide = videoSlides[index];
             const videoUrl = currentSlide.getAttribute('data-video-url');
             const title = currentSlide.getAttribute('data-title');
             const desc = currentSlide.getAttribute('data-desc');
             
-            // Reset inline styles from swipe gesture
-            videoPlayer.style.opacity = '';
-            videoPlayer.style.transform = '';
+            // Clone current video for exit animation
+            const exitVideo = videoPlayer.cloneNode(true);
+            exitVideo.style.position = 'absolute';
+            exitVideo.style.top = '0';
+            exitVideo.style.left = '0';
+            exitVideo.style.width = '100%';
+            exitVideo.style.height = '100%';
+            exitVideo.style.objectFit = 'cover';
+            exitVideo.style.zIndex = '1';
+            exitVideo.play().catch(() => {}); // Continue playing
             
-            // Add animation class
-            videoPlayer.classList.remove('swipe-up', 'swipe-down');
-            void videoPlayer.offsetWidth; // Force reflow
-            videoPlayer.classList.add(direction === 'up' ? 'swipe-up' : 'swipe-down');
+            // Add exit animation
+            exitVideo.style.animation = direction === 'up' ? 'slideOutUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards' : 'slideOutDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+            videoPlayer.parentElement.appendChild(exitVideo);
             
-            // Update video source
+            // Prepare new video
+            videoPlayer.style.position = 'absolute';
+            videoPlayer.style.zIndex = '2';
             videoPlayer.src = videoUrl;
             videoPlayer.load();
             
+            // Start new video from off-screen
+            videoPlayer.style.transform = direction === 'up' ? 'translateY(100%)' : 'translateY(-100%)';
+            videoPlayer.style.animation = direction === 'up' ? 'slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards' : 'slideDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+            
             // Autoplay new video with sound
-            videoPlayer.muted = false; // Keep sound enabled
+            videoPlayer.muted = false;
             videoPlayer.play().then(() => {
                 console.log('Next video playing with sound');
             }).catch(err => {
-                console.log('Autoplay prevented:', err);
-                // If autoplay fails, try muted
                 videoPlayer.muted = true;
                 videoPlayer.play().catch(e => console.log('Autoplay failed:', e));
             });
@@ -5407,12 +5491,15 @@
             if (currentVideoDesc) currentVideoDesc.textContent = desc;
             showSlide(index);
             
-            console.log('Switched to video with', direction, 'animation:', title);
-            
-            // Remove animation class after animation completes (350ms to match CSS)
+            // Cleanup after transition
             setTimeout(() => {
-                videoPlayer.classList.remove('swipe-up', 'swipe-down');
-            }, 350);
+                exitVideo.remove();
+                videoPlayer.style.animation = '';
+                videoPlayer.style.transform = '';
+                videoPlayer.style.position = '';
+                videoPlayer.style.zIndex = '';
+                isTransitioning = false;
+            }, 400);
         }
         
         // Fullscreen video modal - swipe up/down
@@ -5523,6 +5610,9 @@
             }, { passive: false });
         }
         
+        // PAUSE ICON VARIABLE (accessible everywhere)
+        let currentPauseIcon = null;
+        
         // Keyboard shortcuts (ESC, Arrow Up/Down, Space)
         document.addEventListener('keydown', (e) => {
             if (!videoModal.classList.contains('active')) return;
@@ -5548,8 +5638,20 @@
                 e.preventDefault();
                 if (videoPlayer.paused) {
                     videoPlayer.play();
+                    // HIDE PAUSE ICON when playing
+                    if (currentPauseIcon) {
+                        currentPauseIcon.remove();
+                        currentPauseIcon = null;
+                    }
                 } else {
                     videoPlayer.pause();
+                    // SHOW PAUSE ICON (triangle)
+                    if (!currentPauseIcon) {
+                        currentPauseIcon = document.createElement('div');
+                        currentPauseIcon.innerHTML = '<div style="width:0; height:0; border-left:40px solid white; border-top:20px solid transparent; border-bottom:20px solid transparent; filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3));"></div>';
+                        currentPauseIcon.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:999999; display:flex; align-items:center; justify-content:center; pointer-events:none;';
+                        document.body.appendChild(currentPauseIcon);
+                    }
                 }
             }
         });
@@ -5562,9 +5664,23 @@
                 if (videoPlayer.paused) {
                     videoPlayer.play();
                     console.log('Video resumed');
+                    
+                    // HIDE PAUSE ICON when playing
+                    if (currentPauseIcon) {
+                        currentPauseIcon.remove();
+                        currentPauseIcon = null;
+                    }
                 } else {
                     videoPlayer.pause();
                     console.log('Video paused');
+                    
+                    // SHOW PAUSE ICON (triangle)
+                    if (!currentPauseIcon) {
+                        currentPauseIcon = document.createElement('div');
+                        currentPauseIcon.innerHTML = '<div style="width:0; height:0; border-left:40px solid white; border-top:20px solid transparent; border-bottom:20px solid transparent; filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3));"></div>';
+                        currentPauseIcon.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:999999; display:flex; align-items:center; justify-content:center; pointer-events:none;';
+                        document.body.appendChild(currentPauseIcon);
+                    }
                 }
             });
             
@@ -5662,6 +5778,46 @@
             });
         }
         
+        // SHARE BUTTON - OLD MODAL
+        const videoShareBtnOld = document.getElementById('videoShareBtnOld');
+        if (videoShareBtnOld) {
+            videoShareBtnOld.addEventListener('click', async () => {
+                const shareText = `🏆 Укладка плитки премиум качества\n\n📱 Профессиональная укладка любой сложности\n🌐 Сайт: https://укладка-плитки.рф\n📞 Телефон: +7 (999) 123-45-67\n\n✨ Закажите бесплатный замер!`;
+                
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: 'Укладка плитки премиум',
+                            text: shareText,
+                            url: window.location.href
+                        });
+                    } catch (err) {
+                        if (err.name !== 'AbortError') {
+                            copyShareText(shareText);
+                        }
+                    }
+                } else {
+                    copyShareText(shareText);
+                }
+            });
+        }
+        
+        function copyShareText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('✅ Ссылка скопирована!');
+            }).catch(() => {
+                showNotification('❌ Ошибка копирования');
+            });
+        }
+        
+        function showNotification(message) {
+            const notif = document.createElement('div');
+            notif.textContent = message;
+            notif.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(0,0,0,0.9); color:white; padding:20px 40px; border-radius:15px; z-index:999999; font-size:1.1rem; font-weight:600; box-shadow:0 10px 40px rgba(0,0,0,0.5);';
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 2500);
+        }
+    
         // VIDEO VOLUME CONTROL
         const videoVolumeBtn = document.getElementById('videoVolumeBtn');
         if (videoVolumeBtn && videoPlayer) {
@@ -5997,6 +6153,9 @@
         let currentVideoIndex = 0;
         // Note: videoPlayer already declared above for reels functionality
         const mainVideo = document.getElementById('mainVideo');
+        
+        // Pause icon now shown in video click handler above
+        
         const videoTitle = document.getElementById('videoTitle');
         const videoDescription = document.getElementById('videoDescription');
         const videoWrapper = document.getElementById('videoWrapper');
@@ -6006,6 +6165,8 @@
         const closePlayer = document.getElementById('closePlayer');
         const swipeUp = document.getElementById('swipeUp');
         const swipeDown = document.getElementById('swipeDown');
+
+        // Pause icon already created at script start
 
         // Debug: Check how many video cards are found
         const videoThumbnails = document.querySelectorAll('.video-thumbnail');
@@ -6115,6 +6276,48 @@
             currentVideoIndex = currentVideoIndex === 0 ? videoData.length - 1 : currentVideoIndex - 1;
             switchVideo();
         });
+
+        // Share button - with website URL
+        const videoShareBtn = document.getElementById('videoShareBtn');
+        if (videoShareBtn) {
+            videoShareBtn.addEventListener('click', async () => {
+                const currentVideo = videoData[currentVideoIndex];
+                const shareText = `${currentVideo.title}\n\n📱 Укладка плитки премиум качества\n🌐 Сайт: https://укладка-плитки.рф\n📞 Телефон: +7 (999) 123-45-67`;
+                
+                // Try Web Share API first (mobile)
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: currentVideo.title,
+                            text: shareText,
+                            url: 'https://укладка-плитки.рф'
+                        });
+                        console.log('Shared successfully');
+                    } catch (err) {
+                        if (err.name !== 'AbortError') {
+                            console.log('Share failed:', err);
+                            copyToClipboard(shareText);
+                        }
+                    }
+                } else {
+                    // Fallback - copy to clipboard
+                    copyToClipboard(shareText);
+                }
+            });
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Show success notification
+                const notification = document.createElement('div');
+                notification.textContent = '✅ Ссылка скопирована!';
+                notification.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(0,0,0,0.9); color:white; padding:15px 30px; border-radius:10px; z-index:999999; font-size:1rem;';
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 2000);
+            }).catch(err => {
+                console.error('Copy failed:', err);
+            });
+        }
 
         function switchVideo() {
             // Add switching animation
