@@ -4,12 +4,11 @@
  * Укладка плитки - Backend Config
  */
 
-// SprintHost database credentials
-// ВАЖНО: Замените эти данные на ваши реальные данные из SprintHost панели
-define('DB_HOST', 'localhost'); // Обычно localhost на SprintHost
-define('DB_NAME', 'your_database_name'); // Имя базы данных из SprintHost
-define('DB_USER', 'your_database_user'); // Пользователь БД из SprintHost
-define('DB_PASS', 'your_database_password'); // Пароль БД из SprintHost
+// SprintHost database credentials - CONFIGURED ✅
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'a0273231_ukladka_plitki');
+define('DB_USER', 'a0273231_ukladka_plitki');
+define('DB_PASS', 'asd123$$');
 define('DB_CHARSET', 'utf8mb4');
 
 // Site settings
