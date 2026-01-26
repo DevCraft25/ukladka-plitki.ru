@@ -24,9 +24,17 @@ async function loadVideosFromDatabase() {
                 views: video.views
             }));
             
-            // Reinitialize video player if function exists
+            // Reinitialize video player/grid if helper functions exist
             if (typeof initializeVideoPlayer === 'function') {
                 initializeVideoPlayer();
+            }
+
+            if (typeof renderVideoGridFromDatabase === 'function') {
+                renderVideoGridFromDatabase();
+            }
+
+            if (typeof syncHeroSlidesWithDatabase === 'function') {
+                syncHeroSlidesWithDatabase();
             }
             
             // Track video views
@@ -139,29 +147,58 @@ function attachLeadForms() {
             
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
+        }, true);
+    }
+    
+    // Premium bottom form on main page
+    const premiumForm = document.getElementById('premiumForm');
+    if (premiumForm) {
+        premiumForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nameInput = premiumForm.querySelector('input[name="name"]') || premiumForm.querySelector('#name');
+            const phoneInput = premiumForm.querySelector('input[name="phone"]') || premiumForm.querySelector('#phone');
+            const emailInput = premiumForm.querySelector('input[name="email"]') || premiumForm.querySelector('#email');
+            const serviceSelect = premiumForm.querySelector('select[name="service"]') || premiumForm.querySelector('#service');
+            const messageInput = premiumForm.querySelector('textarea[name="message"]') || premiumForm.querySelector('#message');
+
+            const fd = new FormData(premiumForm);
+
+            const name = ((nameInput?.value ?? fd.get('name')) || '').toString().trim();
+            const phone = ((phoneInput?.value ?? fd.get('phone')) || '').toString().trim();
+            const email = ((emailInput?.value ?? fd.get('email')) || '').toString().trim();
+            const service = ((serviceSelect?.value ?? fd.get('service')) || '').toString();
+            const message = ((messageInput?.value ?? fd.get('message')) || '').toString().trim();
+
+            const submitBtn = premiumForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+
+            const formData = {
+                name,
+                phone,
+                email,
+                message: service ? `[${service}] ${message || ''}` : message,
+                source: 'premium_form'
+            };
+
+            console.log('premium debug', { name, phone, email, service, message, formData });
+
+            const result = await submitLeadToDatabase(formData);
+
+            if (result.success) {
+                showNotification('✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.', 'success');
+                premiumForm.reset();
+            } else {
+                showNotification('❌ ' + result.message, 'error');
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
         });
     }
     
-    // Callback form from video modal
-    const videoCallbackBtn = document.getElementById('videoCallbackBtn');
-    if (videoCallbackBtn) {
-        videoCallbackBtn.addEventListener('click', async () => {
-            const phone = prompt('Введите ваш номер телефона:');
-            if (phone) {
-                const result = await submitLeadToDatabase({
-                    name: 'Заявка из видео',
-                    phone: phone,
-                    source: 'video_callback'
-                });
-                
-                if (result.success) {
-                    showNotification('✅ Спасибо! Мы вам перезвоним!', 'success');
-                } else {
-                    showNotification('❌ Ошибка. Попробуйте позже.', 'error');
-                }
-            }
-        });
-    }
 }
 
 // Show notification
@@ -171,15 +208,25 @@ function showNotification(message, type = 'success') {
     notification.textContent = message;
     notification.style.cssText = `
         position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'success' ? '#10b981' : '#ef4444'};
-        color: white;
+        top: 24px;
+        right: 24px;
+        max-width: 320px;
+        background: rgba(0, 0, 0, 0.96);
+        color: #ffffff;
         padding: 1rem 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        border-radius: 14px;
+        border: 1px solid ${type === 'success' ? '#D4AF37' : '#f97373'};
+        box-shadow: 0 18px 45px rgba(0,0,0,0.65);
         z-index: 999999;
         font-weight: 600;
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        letter-spacing: 0.02em;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        backdrop-filter: blur(16px);
+        border-left: 3px solid ${type === 'success' ? '#D4AF37' : '#f97373'};
+        text-shadow: 0 1px 2px rgba(0,0,0,0.6);
         animation: slideInRight 0.3s ease;
     `;
     

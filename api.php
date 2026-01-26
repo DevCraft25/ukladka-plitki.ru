@@ -78,15 +78,20 @@ function getVideos() {
  * Submit lead (zayavka)
  */
 function submitLead() {
-    $data = json_decode(file_get_contents('php://input'), true);
-    
-    // Validate required fields
-    if (empty($data['name']) || empty($data['phone'])) {
-        jsonResponse(['error' => 'Name and phone are required'], 400);
+    // Read raw input and try to decode JSON
+    $rawBody = file_get_contents('php://input');
+    $data = json_decode($rawBody, true);
+
+    // Fallback: if JSON parsing failed, try standard POST data
+    if (!is_array($data)) {
+        $data = $_POST ?? [];
     }
-    
-    $name = sanitize($data['name']);
-    $phone = sanitize($data['phone']);
+
+    $rawName = isset($data['name']) ? trim($data['name']) : '';
+    $rawPhone = isset($data['phone']) ? trim($data['phone']) : '';
+
+    $name = sanitize($rawName);
+    $phone = sanitize($rawPhone);
     $email = !empty($data['email']) ? sanitize($data['email']) : null;
     $message = !empty($data['message']) ? sanitize($data['message']) : null;
     $source = sanitize($data['source'] ?? 'website');

@@ -66,11 +66,3 @@ INSERT INTO settings (setting_key, setting_value, setting_type, description) VAL
 ('whatsapp_number', '79991234567', 'text', 'WhatsApp номер'),
 ('telegram_username', 'ukladka_plitki', 'text', 'Telegram username');
 
--- Sample videos
-INSERT INTO videos (title, description, video_url, display_order, is_active) VALUES
-('Укладка керамогранита премиум', 'Премиальные материалы • Профессиональный инструмент', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', 1, 1),
-('Натуральный мрамор', 'Эксклюзивная работа с мрамором. Идеальные швы и полировка', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4', 2, 1),
-('Мозаика для ванной', 'Сложная мозаичная укладка. Водостойкие материалы премиум класса', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4', 3, 1),
-('Теплый пол', 'Монтаж теплого пола под плитку. Современные технологии комфорта', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', 4, 1),
-('Дизайнерская плитка', 'Уникальные дизайнерские решения. От эскиза до реализации', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4', 5, 1),
-('Кухонный фартук элит', 'От проекта до результата. Натуральный камень с LED-подсветкой', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4', 6, 1);

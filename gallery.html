@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Галерея работ | ELITE TILER</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #D4AF37;
+      --white: #ffffff;
+      --black: #0a0a0a;
+      --bg: #000000;
+      --shadow-gold: 0 10px 30px rgba(212, 175, 55, 0.4);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(45deg, var(--gold), #FFD700);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+    .btn-premium {
+      background: linear-gradient(45deg, var(--gold), #FFD700);
+      color: var(--black);
+      padding: 0.9rem 1.4rem;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      box-shadow: var(--shadow-gold);
+    }
+    .section-header { text-align:center; margin: 10px 0 26px; }
+    .section-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin: 0 0 8px;
+      background: linear-gradient(45deg, var(--white), var(--gold));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-header p {
+      color: rgba(255,255,255,.8);
+      margin: 0;
+      font-size: 1rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .tile { border: 1px solid rgba(212,175,55,.3); border-radius: 16px; overflow: hidden; background: #0a0a0a; }
+    .tile img { width: 100%; height: 240px; object-fit: cover; display:block; }
+    @media(min-width: 768px) {
+      .tile img { height: 320px; }
+    }
+    .top-actions { display:flex; gap:10px; }
+    .footer-actions { text-align: center; margin-top: 26px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand">ELITE TILER</div>
+      <div class="top-actions">
+        <a class="btn-premium" href="index.html#portfolio"><i class="fas fa-arrow-left"></i> На главную</a>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h1>Фотогалерея работ</h1>
+      <p>Реальные примеры наших работ. Больше фото добавим по мере обновлений.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <a class="tile" href="#"><img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-01.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/apron/232007.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/keramogranit/keramogranit-7.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/keramogranit/keramogranit-3.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/apron/232710.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-01.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/apron/232007.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/keramogranit/keramogranit-7.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/keramogranit/keramogranit-3.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Пример работы"/></a>
+      <a class="tile" href="#"><img src="images/apron/232710.webp" alt="Пример работы"/></a>
+    </div>
+
+    <div class="footer-actions">
+      <a class="btn-premium" href="index.html#contact"><i class="fas fa-phone-alt"></i> Заказать консультацию</a>
+    </div>
+  </div>
+</body>
+</html>

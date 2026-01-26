@@ -192,8 +192,8 @@ $videos = $stmt->fetchAll();
                 
                 <div class="form-group">
                     <label for="video_url">URL видео *</label>
-                    <input type="url" id="video_url" name="video_url" required value="<?= htmlspecialchars($edit_video['video_url'] ?? '') ?>" placeholder="https://example.com/video.mp4">
-                    <small>Прямая ссылка на MP4 файл</small>
+                    <input type="url" id="video_url" name="video_url" required value="<?= htmlspecialchars($edit_video['video_url'] ?? '') ?>" placeholder="https://example.com/video-url">
+                    <small>Прямая ссылка на видеофайл (MP4)</small>
                 </div>
                 
                 <div class="form-group">
