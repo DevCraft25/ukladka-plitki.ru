@@ -2263,6 +2263,93 @@
             text-align: center;
         }
 
+        .testimonial-content.story {
+            display: flex;
+            gap: 2rem;
+            align-items: stretch;
+            text-align: left;
+            padding: 2rem;
+        }
+        .testimonials .story-left {
+            flex: 1 1 55%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .testimonials .client-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .testimonials .client-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(212, 175, 55, 0.5);
+        }
+        .testimonials .client-info h4 {
+            margin: 0;
+            font-size: 1.15rem;
+            color: var(--white);
+        }
+        .testimonials .client-info .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            background: linear-gradient(45deg, var(--gold), #ffd700);
+            color: var(--black);
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+        .testimonials .client-info .meta {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        .testimonials .chat {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .testimonials .msg {
+            max-width: 85%;
+            padding: 0.8rem 1rem;
+            border-radius: 14px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .testimonials .msg.left {
+            background: rgba(255, 255, 255, 0.08);
+            align-self: flex-start;
+        }
+        .testimonials .msg.right {
+            background: rgba(212, 175, 55, 0.2);
+            align-self: flex-end;
+        }
+        .testimonials .story-photo {
+            flex: 1 1 45%;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .testimonials .story-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .testimonial-content.story { flex-direction: column; }
+            .testimonials .story-photo { height: 240px; }
+            .testimonials .client-avatar { width: 56px; height: 56px; }
+        }
+
         .testimonial-quote {
             margin-bottom: 2.5rem;
         }
@@ -4790,7 +4877,7 @@
             <div class="video-corner-elements corner-bottom-right"></div>
 
             <div class="video-wrapper" id="videoWrapper">
-                <video id="mainVideo" playsinline muted loop></video>
+                <video id="mainVideo" playsinline webkit-playsinline muted autoplay loop></video>
                 
                 <div class="video-progress-side">
                     <div class="progress-dots" id="progressDots">
@@ -4976,84 +5063,82 @@
             <div class="section-header">
                 <div class="section-badge">
                     <i class="fas fa-quote-left"></i>
-                    <span>ОТЗЫВЫ КЛИЕНТОВ</span>
+                    <span>ИСТОРИИ КЛИЕНТОВ</span>
                 </div>
-                <h2>ЧТО ГОВОРЯТ О НАС</h2>
-                <p>Мнения наших клиентов - лучшая реклама нашего мастерства</p>
+                <h2>ПОЧЕМУ ВОЗВРАЩАЮТСЯ К НАМ</h2>
+                <p>Реальные переписки и фото — сильнее любых отзывов</p>
             </div>
 
             <div class="testimonials-slider">
                 <div class="testimonial-item active">
-                    <div class="testimonial-content">
-                        <div class="testimonial-quote">
-                            <i class="fas fa-quote-left"></i>
-                            <p>"Невероятная работа! Мрамор в ванной выглядит как в дорогом отеле. Мастера настоящие профессионалы, каждая деталь продумана до мелочей. Гарантия 5 лет - это показатель уверенности в своей работе."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
-                            <div class="author-info">
-                                <h4>Александр Петров</h4>
-                                <span>Владелец пентхауса</span>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                    <div class="testimonial-content story">
+                        <div class="story-left">
+                            <div class="client-header">
+                                <img class="client-avatar" src="images/11_003.jpg" alt="Михаил">
+                                <div class="client-info">
+                                    <div><span class="badge">Повторный клиент</span><span class="meta">25 января</span></div>
+                                    <h4>Михаил</h4>
+                                    <div class="meta">Россия • Санкт‑Петербург</div>
                                 </div>
                             </div>
+                            <div class="chat">
+                                <div class="msg left">Александр, здравствуйте. Вы у нас когда‑то плитку клали. Мы записали номер.</div>
+                                <div class="msg right">Здравствуйте!</div>
+                                <div class="msg left">Вы можете снова положить плитку на пол и на фартук кухни в ближайшее время?</div>
+                                <div class="msg right">Пришлите, пожалуйста, фото/видео задачи.</div>
+                                <div class="msg left">В первую очередь на пол плитку положить пять квадратов.</div>
+                            </div>
+                        </div>
+                        <div class="story-photo">
+                            <img src="images/fartuk.jpg" alt="Фото задачи клиента">
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="testimonial-quote">
-                            <i class="fas fa-quote-left"></i>
-                            <p>"Художественная мозаика в кухне превзошла все ожидания! Это настоящее произведение искусства. Работали аккуратно, убирали за собой, соблюдали сроки. Цена полностью оправдана качеством."</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user-circle"></i>
-                            </div>
-                            <div class="author-info">
-                                <h4>Екатерина Волкова</h4>
-                                <span>Дизайнер интерьеров</span>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                    <div class="testimonial-content story">
+                        <div class="story-left">
+                            <div class="client-header">
+                                <img class="client-avatar" src="images/07.jpg" alt="Екатерина">
+                                <div class="client-info">
+                                    <div><span class="badge">Повторный клиент</span><span class="meta">Проект кухни</span></div>
+                                    <h4>Екатерина</h4>
+                                    <div class="meta">Дизайнер интерьеров</div>
                                 </div>
                             </div>
+                            <div class="chat">
+                                <div class="msg left">Здравствуйте! Делали у вас санузел в 2023. Хотим обновить фартук на кухне под мозаику.</div>
+                                <div class="msg right">Отлично, пришлите габариты и 2–3 фото зоны.</div>
+                                <div class="msg left">Скинула. Стиль — светлый камень, шов минимальный.</div>
+                                <div class="msg right">Сделаем безупречно. Согласуем раскладку и даты.</div>
+                            </div>
+                        </div>
+                        <div class="story-photo">
+                            <img src="images/03_003.jpg" alt="Фото кухни клиента">
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="testimonial-quote">
-                            <i class="fas fa-quote-left"></i>
-                            <p>"Делали полы во всем доме - 200 кв.м. керамогранитом под мрамор. Результат потрясающий! Бесшовная укладка, идеальная геометрия. Через год все выглядит как новое. Рекомендую всем знакомым!"</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="author-avatar">
-                                <i class="fas fa-user-graduate"></i>
-                            </div>
-                            <div class="author-info">
-                                <h4>Михаил Соколов</h4>
-                                <span>Предприниматель</span>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                    <div class="testimonial-content story">
+                        <div class="story-left">
+                            <div class="client-header">
+                                <img class="client-avatar" src="images/10_004.jpg" alt="Сергей">
+                                <div class="client-info">
+                                    <div><span class="badge">Повторный клиент</span><span class="meta">Пол + фартук</span></div>
+                                    <h4>Сергей</h4>
+                                    <div class="meta">Рекомендует друзьям</div>
                                 </div>
                             </div>
+                            <div class="chat">
+                                <div class="msg left">Приветствую! Раньше укладывали у меня в прихожей. Нужна плитка в кухне — около 5 м².</div>
+                                <div class="msg right">Примем. Подскажите формат плитки и желаемый шов.</div>
+                                <div class="msg left">60×60, без порожков, шов тонкий.</div>
+                                <div class="msg right">Сделаем в уровне, подрежем аккуратно. Готовы выехать на замер.</div>
+                            </div>
+                        </div>
+                        <div class="story-photo">
+                            <img src="images/ukladka_pol.jpg" alt="Фото пола клиента">
                         </div>
                     </div>
                 </div>
@@ -7024,11 +7109,25 @@
                 swipeHint.style.opacity = '0';
             }, 3000);
             
-            // Auto-play after opening (HTML5 video only; YouTube autoplays via embed params)
             if (!usingYouTube && mainVideo) {
+                try {
+                    mainVideo.muted = true;
+                    mainVideo.setAttribute('muted', '');
+                    mainVideo.setAttribute('playsinline', '');
+                    mainVideo.setAttribute('webkit-playsinline', '');
+                    mainVideo.autoplay = true;
+                } catch (_) {}
                 setTimeout(() => {
-                    mainVideo.play();
-                }, 300);
+                    const p = mainVideo.play();
+                    if (p && typeof p.catch === 'function') {
+                        p.catch(() => {
+                            try {
+                                mainVideo.muted = true;
+                                mainVideo.play();
+                            } catch (_) {}
+                        });
+                    }
+                }, 100);
             }
         }
 
@@ -7055,12 +7154,64 @@
                             ensureVideoDataFromGrid();
                             openedByAutoScroll = true;
                             openVideoPlayer();
-                            sessionStorage.setItem('reelsAutoOpenDone', '1');
-                            obs.disconnect();
+                            if (reelsOverlay && reelsOverlay.classList.contains('active')) {
+                                sessionStorage.setItem('reelsAutoOpenDone', '1');
+                                obs.disconnect();
+                            }
                         }
                     });
                 }, { threshold: 0.3, rootMargin: '0px 0px -10% 0px' });
                 io.observe(block);
+                let pendingMobileOpen = false;
+                let tapOpenOnce = null;
+                const cleanup = () => {
+                    window.removeEventListener('scroll', manualVisibilityCheck, { passive: true });
+                    window.removeEventListener('touchmove', manualVisibilityCheck, { passive: true });
+                    window.removeEventListener('resize', manualVisibilityCheck);
+                    if (pendingMobileOpen) {
+                        if (tapOpenOnce) {
+                            window.removeEventListener('touchstart', tapOpenOnce, { passive: true });
+                            window.removeEventListener('click', tapOpenOnce, true);
+                            tapOpenOnce = null;
+                        }
+                        pendingMobileOpen = false;
+                    }
+                };
+                const manualVisibilityCheck = () => {
+                    if (sessionStorage.getItem('reelsAutoOpenDone') === '1') { cleanup(); return; }
+                    if (!block) return;
+                    const rect = block.getBoundingClientRect();
+                    const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+                    const visible = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+                    const denom = Math.min(vh, rect.height || vh) || 1;
+                    const ratio = visible / denom;
+                    if (ratio >= 0.2) {
+                        if (sessionStorage.getItem('reelsAutoOpenDone') === '1') { cleanup(); return; }
+                        ensureVideoDataFromGrid();
+                        openedByAutoScroll = true;
+                        openVideoPlayer();
+                        if (reelsOverlay && reelsOverlay.classList.contains('active')) {
+                            sessionStorage.setItem('reelsAutoOpenDone', '1');
+                            cleanup();
+                        } else if (!pendingMobileOpen) {
+                            pendingMobileOpen = true;
+                            tapOpenOnce = () => {
+                                if (sessionStorage.getItem('reelsAutoOpenDone') === '1') { cleanup(); return; }
+                                openVideoPlayer();
+                                if (reelsOverlay && reelsOverlay.classList.contains('active')) {
+                                    sessionStorage.setItem('reelsAutoOpenDone', '1');
+                                    cleanup();
+                                }
+                            };
+                            window.addEventListener('touchstart', tapOpenOnce, { passive: true, once: true });
+                            window.addEventListener('click', tapOpenOnce, { capture: true, once: true });
+                        }
+                    }
+                };
+                window.addEventListener('scroll', manualVisibilityCheck, { passive: true });
+                window.addEventListener('touchmove', manualVisibilityCheck, { passive: true });
+                window.addEventListener('resize', manualVisibilityCheck);
+                setTimeout(manualVisibilityCheck, 200);
             } catch (e) { console.warn('Reels auto-open setup failed:', e); }
         }
         setupReelsAutoOpen();
