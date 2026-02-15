@@ -944,6 +944,148 @@
 
     @media (prefers-reduced-motion: reduce) {
     }
+
+    /* Video Hero Section */
+    .video-hero {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      min-height: 500px;
+      overflow: hidden;
+      border-radius: 0 0 40px 40px;
+    }
+    .video-hero video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      z-index: 1;
+    }
+    .video-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+      z-index: 2;
+    }
+    .video-hero-content {
+      position: relative;
+      z-index: 3;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .video-hero-content h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 900;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .video-hero-content p {
+      font-size: clamp(16px, 2vw, 22px);
+      max-width: 700px;
+      margin-bottom: 30px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* Video Controls */
+    .video-controls {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(20px);
+      padding: 12px 24px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .v-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(var(--accent-rgb), 0.9);
+      color: #000;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.2s ease;
+    }
+    .v-btn:hover {
+      transform: scale(1.1);
+      background: var(--accent);
+    }
+    .v-progress {
+      width: 200px;
+      height: 6px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 3px;
+      position: relative;
+      cursor: pointer;
+    }
+    .v-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 3px;
+      position: relative;
+    }
+    .v-progress-knob {
+      position: absolute;
+      right: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      cursor: grab;
+    }
+    .v-progress-knob:active {
+      cursor: grabbing;
+    }
+    .v-time {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 600;
+      min-width: 90px;
+      text-align: center;
+    }
+    .v-volume {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .v-volume input {
+      width: 60px;
+      height: 4px;
+      -webkit-appearance: none;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      outline: none;
+    }
+    .v-volume input::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -963,8 +1105,8 @@
         </div>
         <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end">
           <select class="theme-select" id="themeSelect" aria-label="Тема">
+            <option value="gold" selected>Золото</option>
             <option value="green">Зелёный</option>
-            <option value="gold">Золото</option>
             <option value="blue">Синий</option>
             <option value="red">Красный</option>
             <option value="purple">Фиолетовый</option>
@@ -976,25 +1118,40 @@
   </header>
 
   <main id="top">
-    <section class="hero">
-      <div class="container">
-        <div class="hero-grid">
-          <div>
-            <div class="kicker"><i class="fa-solid fa-shield-heart"></i> Честные сроки • Договор • Гарантия</div>
-            <h1>Ремонт квартир от частной бригады</h1>
-            <p class="subtitle">Сделаем ремонт «под ключ» аккуратно и по-человечески: смета понятная, этапы прозрачные, качество контролируем сами. Без менеджерских накруток — вы общаетесь напрямую с бригадой.</p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#lead"><i class="fa-solid fa-phone"></i> Получить смету</a>
-              <a class="btn" href="#portfolio"><i class="fa-solid fa-images"></i> Смотреть работы</a>
-              <button class="btn" id="copyPhone" type="button"><i class="fa-solid fa-copy"></i> Скопировать телефон</button>
-            </div>
-            <div class="facts">
-              <div class="fact"><b>Сроки</b><span>фиксируем в договоре</span></div>
-              <div class="fact"><b>Материалы</b><span>помогаем выбрать без переплаты</span></div>
-              <div class="fact"><b>Гарантия</b><span>до 3 лет на работы</span></div>
-            </div>
+    <!-- Video Hero Section -->
+    <section class="video-hero" id="videoHero">
+      <video id="heroVideo" autoplay muted loop playsinline>
+        <source src="../images/video/1.mp4" type="video/mp4">
+      </video>
+      <div class="video-hero-content">
+        <div class="kicker"><i class="fa-solid fa-shield-heart"></i> Честные сроки • Договор • Гарантия</div>
+        <h1>Ремонт квартир от частной бригады</h1>
+        <p>Сделаем ремонт «под ключ» аккуратно и по-человечески: смета понятная, этапы прозрачные, качество контролируем сами.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#lead"><i class="fa-solid fa-phone"></i> Получить смету</a>
+          <a class="btn" href="#calculator"><i class="fa-solid fa-calculator"></i> Калькулятор</a>
+        </div>
+      </div>
+      <!-- Video Controls -->
+      <div class="video-controls">
+        <button class="v-btn" id="vPlayPause" type="button"><i class="fa-solid fa-pause"></i></button>
+        <div class="v-time" id="vTime">0:00 / 0:00</div>
+        <div class="v-progress" id="vProgress">
+          <div class="v-progress-fill" id="vProgressFill" style="width: 0%;">
+            <div class="v-progress-knob"></div>
           </div>
+        </div>
+        <div class="v-volume">
+          <i class="fa-solid fa-volume-high" style="color: rgba(255,255,255,0.8); font-size: 14px;"></i>
+          <input type="range" id="vVolume" min="0" max="100" value="50">
+        </div>
+      </div>
+    </section>
 
+    <!-- Calculator Section -->
+    <section id="calculator" style="padding: 40px 0; background: linear-gradient(135deg, var(--bg), var(--bg2));">
+      <div class="container">
+        <div style="max-width: 800px; margin: 0 auto;">
           <aside class="hero-card" aria-label="Калькулятор">
             <div class="hero-card-inner">
               <div class="calc-title">
@@ -1208,8 +1365,8 @@
     <div class="customizer-b">
       <!-- Быстрые пресеты -->
       <div class="c-presets" id="cPresets">
-        <div class="c-preset active" data-theme="green" style="background: linear-gradient(135deg, #22c55e, #16a34a);" title="Зелёный"></div>
-        <div class="c-preset" data-theme="gold" style="background: linear-gradient(135deg, #D4AF37, #FFD700);" title="Золотой"></div>
+        <div class="c-preset" data-theme="green" style="background: linear-gradient(135deg, #22c55e, #16a34a);" title="Зелёный"></div>
+        <div class="c-preset active" data-theme="gold" style="background: linear-gradient(135deg, #D4AF37, #FFD700);" title="Золотой"></div>
         <div class="c-preset" data-theme="blue" style="background: linear-gradient(135deg, #3b82f6, #2563eb);" title="Синий"></div>
         <div class="c-preset" data-theme="red" style="background: linear-gradient(135deg, #ef4444, #b91c1c);" title="Красный"></div>
         <div class="c-preset" data-theme="purple" style="background: linear-gradient(135deg, #a855f7, #7c3aed);" title="Фиолетовый"></div>
@@ -1287,11 +1444,11 @@
       <div style="margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase;">Акценты</div>
       <div class="c-simple-row">
         <label>Акцент 1</label>
-        <input id="c_accent" type="color" value="#22c55e" style="width: 44px; height: 44px; border: 2px solid #22c55e; border-radius: 8px; cursor: pointer;">
+        <input id="c_accent" type="color" value="#D4AF37" style="width: 44px; height: 44px; border: 2px solid #D4AF37; border-radius: 8px; cursor: pointer;">
       </div>
       <div class="c-simple-row">
         <label>Акцент 2</label>
-        <input id="c_accent2" type="color" value="#16a34a" style="width: 44px; height: 44px; border: 2px solid #16a34a; border-radius: 8px; cursor: pointer;">
+        <input id="c_accent2" type="color" value="#FFD700" style="width: 44px; height: 44px; border: 2px solid #FFD700; border-radius: 8px; cursor: pointer;">
       </div>
 
       <button class="c-reset-btn" id="customizerReset" type="button" style="margin-top: 15px;"><i class="fa-solid fa-rotate-left"></i> Сбросить все</button>
@@ -1318,7 +1475,7 @@
     (function () {
       // Theme switcher (5 variants)
       var THEME_KEY = 'remont_theme_v1';
-      var defaultTheme = 'green';
+      var defaultTheme = 'gold';
       var select = document.getElementById('themeSelect');
 
       function applyTheme(t) {
@@ -1706,6 +1863,79 @@
       skipBtn.addEventListener('click', nextQuiz);
       updateSummary();
       renderQuiz();
+
+      // Video Hero Controls
+      (function () {
+        var video = document.getElementById('heroVideo');
+        var playBtn = document.getElementById('vPlayPause');
+        var progress = document.getElementById('vProgress');
+        var progressFill = document.getElementById('vProgressFill');
+        var timeDisplay = document.getElementById('vTime');
+        var volumeSlider = document.getElementById('vVolume');
+        var isDragging = false;
+
+        if (!video) return;
+
+        function formatTime(seconds) {
+          var mins = Math.floor(seconds / 60);
+          var secs = Math.floor(seconds % 60);
+          return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+
+        function updateProgress() {
+          if (!video.duration) return;
+          var pct = (video.currentTime / video.duration) * 100;
+          progressFill.style.width = pct + '%';
+          timeDisplay.textContent = formatTime(video.currentTime) + ' / ' + formatTime(video.duration);
+        }
+
+        video.addEventListener('timeupdate', updateProgress);
+        video.addEventListener('loadedmetadata', updateProgress);
+
+        playBtn.addEventListener('click', function () {
+          if (video.paused) {
+            video.play();
+            playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+          } else {
+            video.pause();
+            playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+          }
+        });
+
+        function seek(e) {
+          var rect = progress.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var pct = Math.max(0, Math.min(1, x / rect.width));
+          if (video.duration) {
+            video.currentTime = pct * video.duration;
+          }
+        }
+
+        progress.addEventListener('click', seek);
+
+        progress.addEventListener('mousedown', function (e) {
+          isDragging = true;
+          seek(e);
+          e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function (e) {
+          if (isDragging) seek(e);
+        });
+
+        document.addEventListener('mouseup', function () {
+          isDragging = false;
+        });
+
+        volumeSlider.addEventListener('input', function () {
+          video.volume = volumeSlider.value / 100;
+          if (video.muted && volumeSlider.value > 0) {
+            video.muted = false;
+          }
+        });
+
+        video.volume = 0.5;
+      })();
 
       // Fake lead action (placeholder)
       document.getElementById('leadBtn').addEventListener('click', function () {
