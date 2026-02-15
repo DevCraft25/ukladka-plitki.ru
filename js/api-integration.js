@@ -158,16 +158,16 @@ function attachLeadForms() {
 
             const nameInput = premiumForm.querySelector('input[name="name"]') || premiumForm.querySelector('#name');
             const phoneInput = premiumForm.querySelector('input[name="phone"]') || premiumForm.querySelector('#phone');
+            const telegramInput = premiumForm.querySelector('input[name="telegram"]') || premiumForm.querySelector('#telegram');
             const emailInput = premiumForm.querySelector('input[name="email"]') || premiumForm.querySelector('#email');
-            const serviceSelect = premiumForm.querySelector('select[name="service"]') || premiumForm.querySelector('#service');
             const messageInput = premiumForm.querySelector('textarea[name="message"]') || premiumForm.querySelector('#message');
 
             const fd = new FormData(premiumForm);
 
             const name = ((nameInput?.value ?? fd.get('name')) || '').toString().trim();
             const phone = ((phoneInput?.value ?? fd.get('phone')) || '').toString().trim();
+            const telegram = ((telegramInput?.value ?? fd.get('telegram')) || '').toString().trim();
             const email = ((emailInput?.value ?? fd.get('email')) || '').toString().trim();
-            const service = ((serviceSelect?.value ?? fd.get('service')) || '').toString();
             const message = ((messageInput?.value ?? fd.get('message')) || '').toString().trim();
 
             const submitBtn = premiumForm.querySelector('button[type="submit"]');
@@ -179,11 +179,12 @@ function attachLeadForms() {
                 name,
                 phone,
                 email,
-                message: service ? `[${service}] ${message || ''}` : message,
+                telegram,
+                message,
                 source: 'premium_form'
             };
 
-            console.log('premium debug', { name, phone, email, service, message, formData });
+            console.log('premium debug', { name, phone, telegram, email, message, formData });
 
             const result = await submitLeadToDatabase(formData);
 

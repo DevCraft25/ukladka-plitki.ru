@@ -13,7 +13,18 @@ define('DB_CHARSET', 'utf8mb4');
 
 // Site settings
 define('SITE_URL', 'https://укладка-плитки.рф');
-define('ADMIN_EMAIL', 'admin@укладка-плитки.рф');
+define('ADMIN_EMAIL', 'Lenmaster@list.ru');
+
+// SMTP settings (optional). If configured, API will send lead notifications via SMTP.
+// Leave SMTP_ENABLED as false until you have hosting/email access details.
+define('SMTP_ENABLED', false);
+define('SMTP_HOST', '');
+define('SMTP_PORT', 587);
+define('SMTP_ENCRYPTION', 'tls'); // 'tls', 'ssl', or ''
+define('SMTP_USERNAME', '');
+define('SMTP_PASSWORD', '');
+define('SMTP_FROM_EMAIL', ''); // If empty, will be derived from SITE_URL
+define('SMTP_FROM_NAME', 'ELITE TILER');
 
 // Security
 define('ADMIN_SESSION_NAME', 'ukladka_admin_session');

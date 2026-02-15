@@ -14,7 +14,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         :root {
             --gold: #D4AF37;
             --dark-gold: #B8860B;
@@ -30,6 +30,15 @@
             font-size: 16px;
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
+        }
+        
+        img,
+        video {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            user-drag: none;
         }
         
         body {
@@ -257,11 +266,11 @@
         }
 
         .hero-container {
-            max-width: 1400px;
+            max-width: 1500px;
             margin: 0 auto;
             padding: 0 2rem;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 0.9fr 1.1fr;
             gap: 5rem;
             align-items: center;
             position: relative;
@@ -390,7 +399,7 @@
 
         .hero-image {
             width: 100%;
-            height: 600px;
+            height: 1000px;
             background: 
                 radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.3) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
@@ -407,6 +416,19 @@
             overflow: hidden;
         }
 
+        @media (max-width: 768px) {
+            .hero-container { grid-template-columns: 1fr; gap: 2rem; padding: 0 0.25rem; }
+            .hero-image { height: 74vh; height: 74svh; }
+        }
+
+        @media (min-width: 769px) and (max-width: 1199px) {
+            .hero-image { height: 1000px; }
+        }
+
+        @media (min-width: 1200px) {
+            .hero-image { height: 1100px; }
+        }
+
         .hero-image::after {
             content: '';
             position: absolute;
@@ -417,6 +439,7 @@
             background-image: 
                 repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(212, 175, 55, 0.05) 10px, rgba(212, 175, 55, 0.05) 20px),
                 repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255, 215, 0, 0.03) 15px, rgba(255, 215, 0, 0.03) 30px);
+            z-index: 1;
         }
 
         .hero-image::before {
@@ -428,6 +451,13 @@
             height: 200%;
             background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             animation: shine 3s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        /* When video is confirmed playing, remove decorative overlays for a clearer picture */
+        .hero-image.hero-has-video::before,
+        .hero-image.hero-has-video::after {
+            opacity: 0 !important;
         }
 
         @keyframes shine {
@@ -485,7 +515,10 @@
             font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 900;
             margin-bottom: 1.5rem;
+            display: inline-block;
+            padding: 0 0.08em;
             background: linear-gradient(45deg, var(--white), var(--gold));
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -504,7 +537,7 @@
         }
 
         .service-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: #121212;
             border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 15px;
             overflow: hidden;
@@ -597,6 +630,14 @@
             animation: fadeInUp 0.6s ease-out;
         }
 
+        .service-card.paged-hide {
+            display: none !important;
+        }
+
+        .service-card.page-show {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
         /* SHOW ALL BUTTON */
         .show-all-services {
             text-align: center;
@@ -629,6 +670,56 @@
         .show-all-btn.hidden {
             display: none;
         }
+
+        /* HERO DESKTOP VIDEO PREVIEW */
+        .hero-desktop-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            z-index: 4;
+            display: block;
+        }
+
+        .hero-video-overlay-desktop {
+            display: none;
+        }
+
+        @media (min-width: 769px) {
+            .hero-desktop-video { display: block; }
+            .hero-video-overlay-desktop { display: flex; }
+        }
+
+        /* Hide the desktop image only when video is confirmed running */
+        .hero-image.hero-has-video .hero-desktop-img { display: none; }
+
+        /* On desktop, always hide the static image so video shows instead */
+        @media (min-width: 769px) {
+            .hero-image .hero-desktop-img { display: none; }
+        }
+
+        .hero-desktop-slides {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            z-index: 2;
+            display: none;
+        }
+        .hero-desktop-slides .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .hero-desktop-slides .slide.active { opacity: 1; }
+        @media (min-width: 769px) { .hero-desktop-slides { display: block; } }
 
         /* HERO VIDEO ON MOBILE */
         .hero-mobile-video {
@@ -680,6 +771,8 @@
                 width: 100%;
                 height: 100%;
             }
+            /* Hide mobile image slides so the video preview is visible underneath */
+            .hero-mobile-video .hero-video-slide { display: none !important; }
         }
 
         .hero-video-slide {
@@ -730,12 +823,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.5), rgba(0,0,0,0.3));
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(2px);
+            backdrop-filter: none;
             z-index: 5;
+        }
+
+        /* Make desktop overlay transparent for a clearer video preview */
+        .hero-video-overlay-desktop {
+            background: transparent !important;
+            backdrop-filter: none !important;
         }
 
         .hero-video-play-btn {
@@ -1636,7 +1735,7 @@
             overflow: hidden;
             border: 1px solid rgba(212, 175, 55, 0.3);
             height: 350px;
-            background: #0a0a0a;
+            background: #121212;
         }
         .portfolio-photo img {
             width: 100%;
@@ -1650,16 +1749,54 @@
             overflow: hidden;
             border: 1px solid rgba(212, 175, 55, 0.3);
             height: 500px;
-            background: #0a0a0a;
+            background: #121212;
+            position: relative;
         }
         .portfolio-feature img { width:100%; height:100%; object-fit:cover; display:block; cursor: zoom-in; }
-        .portfolio-thumbs { position: relative; overflow: hidden; margin-top: 12px; touch-action: pan-y; }
+        .feature-zoom-btn { position: absolute; top: 10px; right: 10px; width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(212,175,55,.4); background: rgba(20,20,20,.85); color: #fff; display: inline-flex; align-items: center; justify-content: center; z-index: 5; box-shadow: 0 8px 24px rgba(0,0,0,.35); transition: transform .15s ease, background .2s ease; }
+        .feature-zoom-btn:hover { transform: scale(1.05); background: rgba(30,30,30,.92); }
+        .feature-zoom-btn:active { transform: scale(.98); }
+        .feature-zoom-btn i { font-size: 18px; }
+        @media(max-width: 768px) { .feature-zoom-btn { width: 40px; height: 40px; border-radius: 10px; top: 8px; right: 8px; } }
+        .portfolio-thumbs { position: relative; overflow: hidden; margin-top: 12px; margin-bottom: 18px; touch-action: pan-y; }
         .thumb-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; transition: transform 0.3s ease, opacity 0.3s ease; will-change: transform, opacity; }
         .thumb-track.slide-left { transform: translateX(-100%); opacity: 0; }
         .thumb-track.slide-right { transform: translateX(100%); opacity: 0; }
         .thumb-track.dragging { transition: none; }
-        .portfolio-thumb { border-radius: 16px; overflow:hidden; border:1px solid rgba(212,175,55,.3); height: 180px; background:#0a0a0a; }
+        .portfolio-thumb { border-radius: 16px; overflow:hidden; border:1px solid rgba(212,175,55,.3); height: 180px; background:#121212; }
         .portfolio-thumb img { width:100%; height:100%; object-fit:cover; display:block; cursor: zoom-in; }
+        @media(max-width: 768px) {
+            .portfolio-thumbs::before,
+            .portfolio-thumbs::after {
+                content: '‹';
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 28px;
+                height: 28px;
+                border-radius: 999px;
+                border: 1px solid rgba(212,175,55,0.35);
+                background: rgba(0,0,0,0.35);
+                box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+                pointer-events: none;
+                opacity: 0.9;
+                z-index: 5;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: rgba(212,175,55,0.95);
+                font-size: 20px;
+                line-height: 1;
+                text-shadow: 0 4px 14px rgba(0,0,0,0.5);
+            }
+            .portfolio-thumbs::before {
+                left: 6px;
+            }
+            .portfolio-thumbs::after {
+                right: 6px;
+                content: '›';
+            }
+        }
         /* Fade transition for rotator */
         .portfolio-feature img,
         .portfolio-thumb img { transition: opacity 0.4s ease; }
@@ -1669,9 +1806,13 @@
             .portfolio-photo { height: 260px; }
             .portfolio-feature { height: 260px; }
             .portfolio-thumb { height: 110px; }
+            .portfolio-container { padding: 0 0.75rem; }
+            .portfolio-thumbs { margin-top: 10px; margin-bottom: 12px; }
+            .thumb-track { gap: 8px; }
         }
         .portfolio-more {
             text-align: center;
+            margin-top: 18px;
         }
 
         /* Simplify portfolio on homepage: no filters, no overlays */
@@ -1849,9 +1990,10 @@
         }
 
         /* Lightbox toolbar + sidebar */
-        .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000; overflow: hidden; }
+        .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000; overflow: hidden; touch-action: none; }
         .lightbox.active { display: flex; }
-        .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform .25s ease; cursor: zoom-in; }
+        .lightbox img { max-width: 94vw; max-height: 88vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform .25s ease, opacity .25s ease; cursor: zoom-in; }
+        .lightbox.dragging img { transition: none; }
         .lightbox.zoomed img { transform: scale(1.8); cursor: zoom-out; }
         .lightbox-toolbar { position: absolute; top: 0; left: 0; right: 0; height: 56px; display: flex; align-items: center; justify-content: flex-end; padding: 0 16px; background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0)); pointer-events: none; }
         .lightbox-toolbar .lb-btn { pointer-events: all; border: 1px solid rgba(212,175,55,.4); background: rgba(20,20,20,.8); color: #fff; padding: 8px 12px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background .2s ease, transform .1s ease; }
@@ -1867,15 +2009,19 @@
         @media (max-width: 640px) {
             .lightbox-nav .lb-navbtn { width: 40px; height: 40px; }
         }
-        .lightbox-sidebar { position: absolute; top: 0; right: 0; height: 100%; width: 200px; max-width: 80vw; background: rgba(10,10,10,0.92); border-left: 1px solid rgba(212,175,55,.25); transform: translateX(100%); transition: transform .28s ease; overflow-y: auto; padding: 12px; box-shadow: -12px 0 30px rgba(0,0,0,.4); }
+        .lightbox-sidebar { position: absolute; top: 0; right: 0; height: 100%; width: 200px; max-width: 80vw; background: rgba(18,18,18,0.94); border-left: 1px solid rgba(212,175,55,.25); transform: translateX(100%); transition: transform .28s ease; overflow-y: auto; padding: 12px; box-shadow: -12px 0 30px rgba(0,0,0,.4); }
         .lightbox.show-sidebar .lightbox-sidebar { transform: translateX(0); }
         .lightbox-sidebar .lb-list { display: flex; flex-direction: column; gap: 8px; }
-        .lightbox-sidebar .lb-item { border: 1px solid rgba(212,175,55,.25); border-radius: 10px; overflow: hidden; cursor: pointer; background: #0a0a0a; height: 84px; flex: 0 0 auto; }
+        .lightbox-sidebar .lb-item { border: 1px solid rgba(212,175,55,.25); border-radius: 10px; overflow: hidden; cursor: pointer; background: #121212; height: 84px; flex: 0 0 auto; }
         .lightbox-sidebar .lb-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .lightbox-sidebar .lb-item.active { outline: 2px solid #ff4d6d; outline-offset: 2px; }
         /* Reserve space for sidebar so the main image remains visible when open */
         .lightbox.show-sidebar { padding-right: min(200px, 80vw); }
         .lightbox.show-sidebar img { max-width: calc(100vw - min(200px, 80vw) - 24px); }
+
+        @media (max-width: 640px) {
+            .lightbox img { max-width: 96vw; max-height: 92vh; }
+        }
 
         /* WORK PROCESS SECTION */
         .work-process {
@@ -2263,93 +2409,6 @@
             text-align: center;
         }
 
-        .testimonial-content.story {
-            display: flex;
-            gap: 2rem;
-            align-items: stretch;
-            text-align: left;
-            padding: 2rem;
-        }
-        .testimonials .story-left {
-            flex: 1 1 55%;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .testimonials .client-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .testimonials .client-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(212, 175, 55, 0.5);
-        }
-        .testimonials .client-info h4 {
-            margin: 0;
-            font-size: 1.15rem;
-            color: var(--white);
-        }
-        .testimonials .client-info .badge {
-            display: inline-block;
-            padding: 0.25rem 0.6rem;
-            border-radius: 999px;
-            background: linear-gradient(45deg, var(--gold), #ffd700);
-            color: var(--black);
-            font-weight: 700;
-            font-size: 0.8rem;
-            margin-right: 0.5rem;
-        }
-        .testimonials .client-info .meta {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-        }
-        .testimonials .chat {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 16px;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-        }
-        .testimonials .msg {
-            max-width: 85%;
-            padding: 0.8rem 1rem;
-            border-radius: 14px;
-            line-height: 1.5;
-            color: rgba(255, 255, 255, 0.9);
-        }
-        .testimonials .msg.left {
-            background: rgba(255, 255, 255, 0.08);
-            align-self: flex-start;
-        }
-        .testimonials .msg.right {
-            background: rgba(212, 175, 55, 0.2);
-            align-self: flex-end;
-        }
-        .testimonials .story-photo {
-            flex: 1 1 45%;
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-        }
-        .testimonials .story-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        @media (max-width: 768px) {
-            .testimonial-content.story { flex-direction: column; }
-            .testimonials .story-photo { height: 240px; }
-            .testimonials .client-avatar { width: 56px; height: 56px; }
-        }
-
         .testimonial-quote {
             margin-bottom: 2.5rem;
         }
@@ -2459,6 +2518,41 @@
             transform: scale(1.3);
         }
 
+        .testimonial-content.story { text-align: left; padding: 0; background: transparent; }
+        .story-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(212,175,55,0.28); border-radius: 24px; padding: 1.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
+        .story-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .story-header .avatar { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; background: #1a1a1a; border: 1px solid rgba(212,175,55,0.4); flex: 0 0 auto; }
+        .story-header .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .story-header .meta h4 { color: var(--white); margin: 0; font-size: 1.1rem; font-weight: 800; letter-spacing: .01em; }
+        .story-header .meta .badge { display: inline-block; font-size: 0.78rem; color: var(--black); background: linear-gradient(45deg, var(--gold), #FFD700); border-radius: 999px; padding: 0.25rem 0.6rem; margin-top: 0.35rem; font-weight: 700; }
+        .chat-box { background: rgba(0,0,0,0.35); border: 1px solid rgba(212,175,55,0.18); border-radius: 20px; padding: 1rem; margin-top: 0.5rem; }
+        .chat-thread { display: flex; flex-direction: column; gap: 0.6rem; }
+        .msg { display: flex; align-items: flex-end; gap: 0.6rem; max-width: 90%; }
+        .msg.client { flex-direction: row; }
+        .msg.me { flex-direction: row-reverse; margin-left: auto; }
+        .msg .avatar { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #111; border: 1px solid rgba(212,175,55,0.35); flex: 0 0 auto; }
+        .msg .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .msg .bubble { background: rgba(255,255,255,0.08); border: 1px solid rgba(212,175,55,0.25); padding: 0.8rem 1rem; border-radius: 16px 16px 16px 4px; color: rgba(255,255,255,0.92); line-height: 1.55; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+        .msg.me .bubble { background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(255,215,0,0.15)); border-color: rgba(212,175,55,0.45); border-radius: 16px 16px 4px 16px; }
+        .msg .bubble .meta { display: flex; align-items: center; gap: 0.35rem; margin-top: 0.2rem; justify-content: flex-end; }
+        .msg .bubble .time { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+        .msg .bubble .status { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+        .story-photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: 0.6rem; margin-top: 0.9rem; }
+        .story-photos img { width: 100%; height: 110px; object-fit: cover; border-radius: 14px; border: 1px solid rgba(212,175,55,0.3); }
+        .messenger-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.25); border-radius: 18px; padding: 0.6rem 0.9rem; }
+        .messenger-header .meta h4 { margin: 0; font-size: 1.05rem; font-weight: 800; color: #fff; }
+        .messenger-header .meta .sub { font-size: 0.82rem; color: rgba(255,255,255,0.65); }
+        .messenger-header .platform { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.35rem 0.7rem; border-radius: 999px; border: 1px solid rgba(33, 150, 243, 0.45); background: rgba(33, 150, 243, 0.12); color: rgba(255,255,255,0.92); font-weight: 800; font-size: 0.82rem; white-space: nowrap; }
+        .messenger-header .platform i { color: #2AABEE; }
+        .messenger-header .actions { color: rgba(255,255,255,0.7); }
+        .date-chip { display: inline-block; margin: .6rem auto .2rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(212,175,55,0.25); color: rgba(255,255,255,0.8); font-size: 0.82rem; padding: .25rem .6rem; border-radius: 999px; }
+        @keyframes chatIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
+        .testimonial-item.active .chat-thread .msg { animation: chatIn .45s ease both; }
+        .testimonial-item.active .chat-thread .msg:nth-child(1){ animation-delay: .02s; }
+        .testimonial-item.active .chat-thread .msg:nth-child(2){ animation-delay: .10s; }
+        .testimonial-item.active .chat-thread .msg:nth-child(3){ animation-delay: .18s; }
+        .testimonial-item.active .chat-thread .msg:nth-child(4){ animation-delay: .26s; }
+
         /* PREMIUM ABOUT US */
         .about {
             padding: 120px 0;
@@ -2490,6 +2584,51 @@
             font-size: 1.1rem;
             line-height: 1.7;
             margin-bottom: 2.5rem;
+        }
+
+        .about-text .about-lead {
+            margin-bottom: 1.2rem;
+        }
+
+        .about-more {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: max-height 0.45s ease, opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .about-more.is-open {
+            max-height: 900px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-more-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            min-height: auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.35rem;
+            color: var(--gold);
+            font-size: 0.98rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+
+        .about-more-btn:hover {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .about-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
         }
 
         .about-highlights {
@@ -3235,12 +3374,12 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 20px;
-            padding: 3rem;
+            padding: 2.2rem;
         }
 
         .form-header {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.6rem;
         }
 
         .form-header h3 {
@@ -3258,13 +3397,32 @@
         .premium-form {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.1rem;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+            gap: 1.4rem;
+        }
+
+        .form-submit .btn-premium {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .form-quick-divider {
+            margin-top: 0.5rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.95rem;
+        }
+
+        .form-quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.75rem;
         }
 
         .form-group {
@@ -3282,7 +3440,7 @@
             background: transparent;
             border: none;
             border-bottom: 2px solid rgba(212, 175, 55, 0.3);
-            padding: 1rem 0;
+            padding: 0.8rem 0;
             font-size: 1.1rem;
             color: var(--white);
             transition: all 0.3s ease;
@@ -3629,6 +3787,7 @@
             .hero {
                 padding-top: 100px; /* Account for fixed header */
                 min-height: calc(100vh - 80px);
+                min-height: calc(100svh - 80px);
             }
             
             .hero-container {
@@ -3658,13 +3817,37 @@
             }
             
             .hero-image {
-                height: 400px;
-                margin-top: 2rem;
+                height: 74vh;
+                height: 74svh;
+                margin-top: 0;
             }
             
+            .testimonials { padding: 72px 0; }
+            .testimonials .section-header { margin-bottom: 2.25rem; }
+            .testimonials .section-header h2 { margin-bottom: 2rem; }
+            .testimonials-slider { margin: 1.75rem 0; }
+            .testimonials-container { padding: 0 0.45rem; }
+            .story-card { padding: 1rem; border-radius: 18px; max-height: 78svh; overflow: hidden; }
+            .messenger-header { border-radius: 14px; padding: 0.5rem 0.75rem; }
+            .story-header { gap: 0.75rem; margin-bottom: 0.75rem; }
+            .story-header .avatar { width: 52px; height: 52px; }
+            .date-chip { margin: .5rem auto .1rem; }
+            .chat-box { padding: 0.75rem; border-radius: 16px; max-height: 37svh; overflow: auto; -webkit-overflow-scrolling: touch; }
+            .msg { max-width: 100%; }
+            .story-photos { margin-top: 0.75rem; }
+            .story-photos img { height: 82px; border-radius: 12px; }
+            .testimonial-controls { gap: 0.75rem; justify-content: center; }
+            .testimonial-controls .control-btn { display: none; }
+            .testimonial-dots { position: relative; }
+            .testimonial-dots::after { content: 'Свайп влево/вправо'; font-size: 0.8rem; color: rgba(255,255,255,0.55); position: absolute; bottom: -1.5rem; left: 50%; transform: translateX(-50%); white-space: nowrap; pointer-events: none; }
+        
             /* Tighten spacing between Services and Portfolio on mobile */
             .services {
                 padding: 60px 0 24px;
+            }
+
+            .services-container {
+                padding: 0 0.45rem;
             }
 
             .show-all-services {
@@ -3672,57 +3855,105 @@
             }
 
             .portfolio {
-                padding: 36px 0;
+                padding: 44px 0 36px;
+                border-top: 1px solid rgba(212, 175, 55, 0.14);
+            }
+
+            .portfolio .section-header {
+                margin-bottom: 2.25rem;
             }
             
+            .work-process-container {
+                padding: 0 0.45rem;
+            }
+            
+            .process-timeline {
+                gap: 0.9rem;
+                margin-top: 2.2rem;
+            }
+
+            .process-connector {
+                display: none;
+            }
+
             .process-step {
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
-                text-align: center;
+                text-align: left;
+                gap: 1rem;
+                background: #121212;
+                border: 1px solid rgba(212, 175, 55, 0.22);
+                border-radius: 18px;
+                padding: 18px 46px 18px 16px;
+                cursor: pointer;
+                width: 100%;
+                min-height: 92px;
+                position: relative;
+                box-shadow: 0 10px 24px rgba(0,0,0,.28);
+            }
+
+            .process-step::after {
+                content: '\f078';
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+                position: absolute;
+                right: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: rgba(212,175,55,.75);
+                font-size: 1.05rem;
+                transition: transform 0.22s ease;
+                pointer-events: none;
+            }
+
+            .process-step.open::after {
+                transform: translateY(-50%) rotate(180deg);
+            }
+
+            .process-step:active {
+                transform: scale(0.99);
             }
             
             .step-number {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
+                width: 54px;
+                height: 54px;
+                font-size: 1.25rem;
+                flex: 0 0 auto;
             }
             
             .step-content {
-                padding: 1.5rem;
+                padding: 10px 12px;
+                flex: 1;
+                padding-right: 10px;
+                min-width: 0;
             }
             
             .step-content h3 {
-                font-size: 1.2rem;
+                font-size: 1.18rem;
+                line-height: 1.2;
+                margin-bottom: 0.35rem;
+                overflow-wrap: anywhere;
+                word-break: break-word;
             }
             
             .step-content p {
-                font-size: 0.95rem;
+                font-size: 1.02rem;
+                line-height: 1.45;
+                margin: 0;
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                transition: max-height 0.25s ease, opacity 0.25s ease;
             }
-            
-            .process-connector {
-                margin-left: 0;
-                width: 40px;
-                height: 2px;
-                background: repeating-linear-gradient(
-                    to right,
-                    var(--gold) 0px,
-                    var(--gold) 8px,
-                    transparent 8px,
-                    transparent 16px
-                );
+
+            .process-step.open .step-content p {
+                max-height: 260px;
+                opacity: 1;
+                margin-top: 0.35rem;
             }
-            
-            .process-connector::before {
-                left: -4px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-            
-            .process-connector::after {
-                right: -4px;
-                left: auto;
-                top: 50%;
-                transform: translateY(-50%);
+
+            .process-step.open .step-number {
+                box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12), 0 12px 32px rgba(212, 175, 55, 0.12);
             }
             
             .services-grid {
@@ -3731,11 +3962,25 @@
             }
             
             .service-image {
-                height: 180px;
+                height: 150px;
             }
             
             .service-content {
-                padding: 1rem;
+                padding: 0.9rem;
+            }
+
+            .service-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: auto;
+                max-width: 100%;
+                box-sizing: border-box;
+                white-space: nowrap;
+                line-height: 1.15;
+                padding: 0.75rem 1.45rem;
+                font-size: 0.8rem;
+                margin-left: auto;
             }
             
             .service-card h3 {
@@ -3743,13 +3988,23 @@
             }
             
             .service-card p {
-                font-size: 0.85rem;
+                font-size: 0.95rem;
+                line-height: 1.5;
             }
             .contact-content {
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
             .contact-info {
+                grid-template-columns: 1fr;
+            }
+            .contact-form-wrapper {
+                padding: 1.35rem;
+            }
+            .form-header {
+                margin-bottom: 1.5rem;
+            }
+            .form-quick-actions {
                 grid-template-columns: 1fr;
             }
             .form-row {
@@ -3767,6 +4022,10 @@
                 gap: 1rem;
                 text-align: center;
             }
+
+            .about-container {
+                padding: 0 0.45rem;
+            }
             .about-content {
                 grid-template-columns: 1fr;
                 gap: 3rem;
@@ -3777,8 +4036,99 @@
             .about-highlights {
                 gap: 1.5rem;
             }
+            .about-actions {
+                justify-content: flex-end;
+                width: 100%;
+                margin-bottom: 0.9rem;
+            }
+            .about-actions .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+            .about-actions .btn-secondary.about-more-btn {
+                width: auto;
+                justify-content: flex-end;
+            }
+            .about-text p {
+                font-size: 1.02rem;
+                line-height: 1.7;
+            }
+            .about-more-btn {
+                font-size: 0.96rem;
+                line-height: 1.12;
+            }
+            .about-highlights {
+                margin-top: 0.25rem;
+            }
             .values-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.85rem;
+            }
+
+            .value-card {
+                padding: 1.05rem;
+                border-radius: 18px;
+                min-width: 0;
+            }
+
+            .value-icon {
+                width: 58px;
+                height: 58px;
+                margin-bottom: 0.9rem;
+            }
+
+            .value-card h4 {
+                font-size: 1rem;
+                line-height: 1.15;
+                margin-bottom: 0.65rem;
+                letter-spacing: -0.01em;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+            }
+
+            .value-card p {
+                font-size: 0.92rem;
+                line-height: 1.45;
+            }
+
+            .stats {
+                padding: 72px 0;
+            }
+
+            .stats-container {
+                padding: 0 0.45rem;
+            }
+
+            .stats-grid {
                 grid-template-columns: 1fr;
+                gap: 1.25rem;
+                margin-top: 2.25rem;
+            }
+
+            .stat-item {
+                padding: 1.6rem 1.25rem;
+                border-radius: 20px;
+            }
+
+            .stat-icon {
+                width: 64px;
+                height: 64px;
+                margin: 0 auto 1rem;
+            }
+
+            .stat-number {
+                font-size: 3rem;
+                margin: 0.4rem 0;
+            }
+
+            .stat-label {
+                font-size: 1.05rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-description {
+                font-size: 0.95rem;
+                line-height: 1.45;
             }
 
             /* Make video overlays truly fullscreen on mobile */
@@ -3868,7 +4218,6 @@
         .hero,
         .services,
         .process,
-        .portfolio,
         .about,
         .testimonials,
         .contact {
@@ -4045,8 +4394,7 @@
                         <a href="#services"><i class="fas fa-toilet"></i> Ремонт санузла</a>
                     </div>
                 </li>
-                <li><a href="#portfolio">Портфолио</a></li>
-                <li><a href="#videos">Видео</a></li>
+                <li><a href="gallery.html">Портфолио</a></li>
                 <li><a href="#about">О нас</a></li>
                 <li><a href="#contact">Контакты</a></li>
             </ul>
@@ -4080,8 +4428,7 @@
                         <a href="#services"><i class="fas fa-toilet"></i> Ремонт санузла</a>
                     </div>
                 </li>
-                <li><a href="#portfolio">Портфолио</a></li>
-                <li><a href="#videos">Видео</a></li>
+                <li><a href="gallery.html">Портфолио</a></li>
                 <li><a href="#about">О нас</a></li>
                 <li><a href="#contact">Контакты</a></li>
             </ul>
@@ -4128,7 +4475,7 @@
                         <i class="fas fa-phone-alt"></i>
                         БЕСПЛАТНАЯ КОНСУЛЬТАЦИЯ
                     </a>
-                    <a href="#portfolio" class="btn-secondary">
+                    <a href="gallery.html" class="btn-secondary">
                         <i class="fas fa-images"></i>
                         НАШИ ШЕДЕВРЫ
                     </a>
@@ -4136,10 +4483,14 @@
             </div>
 
             <div class="hero-visual">
-                <div class="hero-reels-label">Наш Reels</div>
+                <div class="hero-reels-label">Наши Reels</div>
                 <div class="hero-image">
                     <!-- Desktop Version - Image -->
                     <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Процесс укладки крупноформатной плитки" class="hero-desktop-img" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; opacity: 0.9;" />
+                    <video id="heroDesktopVideo" class="hero-desktop-video" muted playsinline autoplay loop preload="auto" controlsList="nodownload noremoteplayback" disablepictureinpicture></video>
+                    <div class="hero-video-overlay hero-video-overlay-desktop">
+                        <button class="hero-video-play-btn" id="openReelsBtnDesktop"><i class="fas fa-play"></i></button>
+                    </div>
                     
                     <!-- Mobile Version - Video Preview with Reels -->
                     <div class="hero-mobile-video" data-current-video="0">
@@ -4207,7 +4558,9 @@
         <div class="video-modal-content">
             <video id="videoPlayer" 
                    playsinline
-                   autoplay>
+                   autoplay
+                   controlsList="nodownload noremoteplayback"
+                   disablepictureinpicture>
                 <source src="" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
@@ -4271,6 +4624,10 @@
                     <div class="form-group">
                         <label for="videoPhone">Телефон</label>
                         <input type="tel" id="videoPhone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoEmail">Email</label>
+                        <input type="email" id="videoEmail" name="email" autocomplete="email">
                     </div>
                     <button type="submit" class="submit-callback-btn">
                         <i class="fas fa-paper-plane"></i>
@@ -4366,7 +4723,7 @@
 
                 <div class="service-card">
                     <div class="service-image">
-                        <img src="images/keramogranit/keramogranit-3.webp" alt="Художественная мозаика" />
+                        <img src="images/11_003.jpg" alt="Художественная мозаика" />
                     </div>
                     <div class="service-content">
                         <h3>Художественная мозаика</h3>
@@ -4388,7 +4745,7 @@
                     </div>
                 </div>
 
-                <div class="service-card">
+                <div class="service-card hidden-service">
                     <div class="service-image">
                         <img src="images/keramogranit/keramogranit-11.webp" alt="Smart решения" />
                     </div>
@@ -4486,7 +4843,7 @@
 
                 <div class="service-card hidden-service">
                     <div class="service-image">
-                        <img src="images/kamen/4.webp" alt="Облицовка каминов" />
+                        <img src="images/kamin/photo_1.jpg" alt="Облицовка каминов" />
                     </div>
                     <div class="service-content">
                         <h3>Облицовка каминов</h3>
@@ -4559,7 +4916,7 @@
                 <div class="show-all-services">
                 <button class="show-all-btn" id="showAllServices">
                     <i class="fas fa-th"></i>
-                    ВСЕ УСЛУГИ
+                    ЕЩЁ УСЛУГИ
                 </button>
             </div>
         </div>
@@ -4579,6 +4936,7 @@
 
 
             <div class="portfolio-feature">
+                <button class="feature-zoom-btn" type="button" aria-label="Увеличить"><i class="fas fa-search-plus"></i></button>
                 <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-01.webp" alt="Пример работы крупный" />
             </div>
             <div class="portfolio-thumbs">
@@ -4598,7 +4956,7 @@
             <div class="portfolio-more">
                 <a href="gallery.html" class="btn-premium">
                     <i class="fas fa-images"></i>
-                    Больше фото
+                    Больше примеров
                 </a>
             </div>
         </div>
@@ -4638,9 +4996,47 @@
                 <div class="about-info">
                     <div class="about-text">
                         <h3>15 лет совершенства</h3>
-                        <p>Компания ELITE TILER была основана в 2009 году группой опытных мастеров-плиточников, объединенных общей целью — создавать интерьеры премиум-класса, которые станут произведением искусства.</p>
+                        <p class="about-lead">Компания ELITE TILER была основана в 2009 году группой опытных мастеров-плиточников. Мы специализируемся на премиальной укладке керамогранита, мозаики и натурального камня — от подготовки основания до идеальной геометрии швов.</p>
+
+                        <div class="about-more" id="aboutMoreContent" aria-hidden="true">
+                            <p>Берём на себя весь цикл работ: подготовка основания, гидроизоляция, выравнивание, раскладка, резка и запил под 45°, укладка, затирка и финальная приёмка. Работаем аккуратно и чисто — с защитой мебели и поверхностей.</p>
+                            <p>Помогаем с подбором материалов, согласуем технологию под ваш формат плитки и условия помещения, заранее предупреждаем о рисках и предлагаем оптимальные решения. Наша цель — чтобы результат выглядел дорого и служил годами.</p>
+                        </div>
+
+                        <div class="about-actions">
+                            <button type="button" class="btn-secondary about-more-btn" id="aboutMoreBtn" aria-controls="aboutMoreContent" aria-expanded="false">Подробнее</button>
+                        </div>
                         
                         <div class="about-highlights">
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-file-signature"></i>
+                                </div>
+                                <div class="highlight-text">
+                                    <h4>Договор и смета</h4>
+                                    <p>Прозрачная стоимость и перечень работ до начала проекта</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-shield-check"></i>
+                                </div>
+                                <div class="highlight-text">
+                                    <h4>Гарантия</h4>
+                                    <p>Контроль качества на каждом этапе и гарантия на работы</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <i class="fas fa-broom"></i>
+                                </div>
+                                <div class="highlight-text">
+                                    <h4>Чистота на объекте</h4>
+                                    <p>Защита поверхностей, уборка и аккуратная сдача помещения</p>
+                                </div>
+                            </div>
                             <div class="highlight-item">
                                 <div class="highlight-icon">
                                     <i class="fas fa-award"></i>
@@ -4737,124 +5133,7 @@
         </div>
     </section>
 
-    <!-- PREMIUM VIDEO REELS -->
-    <section class="video-reels" id="videos">
-        <div class="video-reels-container">
-            <div class="section-header">
-                <div class="section-badge">
-                    <i class="fas fa-play-circle"></i>
-                    <span>ВИДЕО ПРОЕКТЫ</span>
-                </div>
-                <h2>НАШИ РАБОТЫ В ДЕЙСТВИИ</h2>
-                <p>Смотрите процесс создания элитных интерьеров</p>
-            </div>
-
-            <div class="video-grid">
-                <!-- VIDEO 1 -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/jfKfPfyJRdk">
-                    <div class="video-preview">
-                        <img src="images/keramogranit/keramogranit-7.webp" alt="Video 1" style="width:100%;height:100%;object-fit:cover;">
-                        <div class="video-overlay">
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
-                            </div>
-                            <div class="video-info">
-                                <h4>Укладка элитного керамогранита</h4>
-                                <p>Процесс создания роскошного пола</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIDEO 2 -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/ysz5S6PUM-U">
-                    <div class="video-preview">
-                        <img src="images/bathroom/photo_1.jpg" alt="Video 2" style="width:100%;height:100%;object-fit:cover;">
-                        <div class="video-overlay">
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
-                            </div>
-                            <div class="video-info">
-                                <h4>Монтаж мозаики премиум</h4>
-                                <p>Художественная укладка</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIDEO 3 -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/hU7EHKFUMIg">
-                    <div class="video-preview">
-                        <img src="images/fartuk/photo_1.jpg" alt="Video 3" style="width:100%;height:100%;object-fit:cover;">
-                        <div class="video-overlay">
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
-                            </div>
-                            <div class="video-info">
-                                <h4>Ванная комната VIP</h4>
-                                <p>Полная трансформация</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIDEO 4 -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/BsekcY04AhQ">
-                    <div class="video-preview">
-                        <img src="images/keramogranit/keramogranit-2.webp" alt="Video 4" style="width:100%;height:100%;object-fit:cover;">
-                        <div class="video-overlay">
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
-                            </div>
-                            <div class="video-info">
-                                <h4>Кухонный фартук элит</h4>
-                                <p>От проекта до результата</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIDEO 5 -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/Fy9Ce5JgY44">
-                    <div class="video-preview">
-                        <img src="images/kamen/1.webp" alt="Video 5" style="width:100%;height:100%;object-fit:cover;">
-                        <div class="video-overlay">
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
-                            </div>
-                            <div class="video-info">
-                                <h4>Укладка натурального камня</h4>
-                                <p>Работа с мрамором и гранитом</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIDEO 6 -->
-                <div class="video-thumbnail" data-video="https://www.youtube.com/embed/AZoiDfG4yPY">
-                    <div class="video-preview">
-                        <img src="images/keramogranit/keramogranit-10.webp" alt="Video 6" style="width:100%;height:100%;object-fit:cover;">
-                        <div class="video-overlay">
-                            <div class="play-button">
-                                <i class="fas fa-play"></i>
-                            </div>
-                            <div class="video-info">
-                                <h4>Дизайнерская плитка</h4>
-                                <p>Эксклюзивные решения</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- CTA BUTTON -->
-            <div style="text-align: center; margin-top: 4rem;">
-                <a href="#contact" style="display: inline-block; padding: 1.2rem 3rem; background: linear-gradient(45deg, var(--gold), #FFD700); color: var(--black); font-size: 1.2rem; font-weight: 700; text-decoration: none; border-radius: 50px; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5); transition: all 0.3s ease;">
-                    <i class="fas fa-phone-alt"></i> ЗАКАЗАТЬ УСЛУГУ
-                </a>
-            </div>
-        </div>
-    </section>
+    
 
     <!-- FULL SCREEN VIDEO PLAYER (REELS STYLE) - HIDDEN -->
     <div class="video-player-fullscreen" id="reelsPlayer">
@@ -4877,7 +5156,7 @@
             <div class="video-corner-elements corner-bottom-right"></div>
 
             <div class="video-wrapper" id="videoWrapper">
-                <video id="mainVideo" playsinline webkit-playsinline muted autoplay loop></video>
+                <video id="mainVideo" playsinline muted loop controlsList="nodownload noremoteplayback" disablepictureinpicture></video>
                 
                 <div class="video-progress-side">
                     <div class="progress-dots" id="progressDots">
@@ -5062,83 +5341,146 @@
         <div class="testimonials-container">
             <div class="section-header">
                 <div class="section-badge">
-                    <i class="fas fa-quote-left"></i>
+                    <i class="fas fa-comments"></i>
                     <span>ИСТОРИИ КЛИЕНТОВ</span>
                 </div>
-                <h2>ПОЧЕМУ ВОЗВРАЩАЮТСЯ К НАМ</h2>
-                <p>Реальные переписки и фото — сильнее любых отзывов</p>
+                <h2>К НАМ СНОВА<br>ВОЗВРАЩАЮТСЯ</h2>
+                <p>Реальные диалоги: делали укладку — клиент вернулся с новой задачей</p>
             </div>
 
             <div class="testimonials-slider">
                 <div class="testimonial-item active">
                     <div class="testimonial-content story">
-                        <div class="story-left">
-                            <div class="client-header">
-                                <img class="client-avatar" src="images/11_003.jpg" alt="Михаил">
-                                <div class="client-info">
-                                    <div><span class="badge">Повторный клиент</span><span class="meta">25 января</span></div>
+                        <div class="story-card">
+                            <div class="messenger-header">
+                                <div class="meta">
                                     <h4>Михаил</h4>
-                                    <div class="meta">Россия • Санкт‑Петербург</div>
+                                    <div class="sub">был(а) недавно • Россия</div>
+                                </div>
+                                <div class="platform"><i class="fab fa-telegram-plane"></i><span>Telegram</span></div>
+                                <div class="actions"><i class="fas fa-ellipsis-h"></i></div>
+                            </div>
+                            <div class="story-header">
+                                <div class="avatar"><img src="images/07_006.jpg" alt="Михаил"></div>
+                                <div class="meta">
+                                    <h4>Михаил</h4>
+                                    <div class="badge">Повторное обращение</div>
                                 </div>
                             </div>
-                            <div class="chat">
-                                <div class="msg left">Александр, здравствуйте. Вы у нас когда‑то плитку клали. Мы записали номер.</div>
-                                <div class="msg right">Здравствуйте!</div>
-                                <div class="msg left">Вы можете снова положить плитку на пол и на фартук кухни в ближайшее время?</div>
-                                <div class="msg right">Пришлите, пожалуйста, фото/видео задачи.</div>
-                                <div class="msg left">В первую очередь на пол плитку положить пять квадратов.</div>
+                            <div class="date-chip">25 января</div>
+                            <div class="chat-box">
+                                <div class="chat-thread">
+                                    <div class="msg client">
+                                        <div class="avatar"><img src="images/07_006.jpg" alt="Михаил"></div>
+                                        <div class="bubble">
+                                            Александр, здравствуйте. Вы у нас когда-то плитку клали. Мы записали номер. Вы можете снова положить плитку на пол и на фартук кухни в ближайшее время?
+                                            <div class="meta"><span class="time">15:49</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="msg me">
+                                        <div class="avatar"><img src="images/05.jpg" alt="Мастер"></div>
+                                        <div class="bubble">Здравствуйте! Да, пришлите, пожалуйста, фото/видео задачи и ориентировочную площадь — согласуем сроки.
+                                            <div class="meta"><span class="time">15:53</span><span class="status"><i class="fas fa-check-double"></i></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="msg client">
+                                        <div class="avatar"><img src="images/07_006.jpg" alt="Михаил"></div>
+                                        <div class="bubble">В первую очередь на пол плитку положить пять квадратов.
+                                            <div class="meta"><span class="time">15:55</span></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="story-photo">
-                            <img src="images/fartuk.jpg" alt="Фото задачи клиента">
+                            <div class="story-photos">
+                                <img src="images/08_003.jpg" alt="Кухня, до укладки">
+                                <img src="images/05_004.webp" alt="Наши работы">
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-item">
                     <div class="testimonial-content story">
-                        <div class="story-left">
-                            <div class="client-header">
-                                <img class="client-avatar" src="images/07.jpg" alt="Екатерина">
-                                <div class="client-info">
-                                    <div><span class="badge">Повторный клиент</span><span class="meta">Проект кухни</span></div>
+                        <div class="story-card">
+                            <div class="messenger-header">
+                                <div class="meta">
                                     <h4>Екатерина</h4>
-                                    <div class="meta">Дизайнер интерьеров</div>
+                                    <div class="sub">онлайн • СПб</div>
+                                </div>
+                                <div class="platform"><i class="fab fa-telegram-plane"></i><span>Telegram</span></div>
+                                <div class="actions"><i class="fas fa-ellipsis-h"></i></div>
+                            </div>
+                            <div class="story-header">
+                                <div class="avatar"><img src="images/03_003.jpg" alt="Екатерина"></div>
+                                <div class="meta">
+                                    <h4>Екатерина</h4>
+                                    <div class="badge">Возврат спустя 1 год</div>
                                 </div>
                             </div>
-                            <div class="chat">
-                                <div class="msg left">Здравствуйте! Делали у вас санузел в 2023. Хотим обновить фартук на кухне под мозаику.</div>
-                                <div class="msg right">Отлично, пришлите габариты и 2–3 фото зоны.</div>
-                                <div class="msg left">Скинула. Стиль — светлый камень, шов минимальный.</div>
-                                <div class="msg right">Сделаем безупречно. Согласуем раскладку и даты.</div>
+                            <div class="date-chip">Март</div>
+                            <div class="chat-box">
+                                <div class="chat-thread">
+                                    <div class="msg client">
+                                        <div class="avatar"><img src="images/03_003.jpg" alt="Екатерина"></div>
+                                        <div class="bubble">Здравствуйте! Год назад вы делали нам фартук на кухне. Хотим теперь оформить мозаикой прихожую — сможете подсказать по срокам и вариантам?
+                                            <div class="meta"><span class="time">10:12</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="msg me">
+                                        <div class="avatar"><img src="images/05.jpg" alt="Мастер"></div>
+                                        <div class="bubble">Конечно! Пришлите пару фото зоны и желаемый рисунок — предложим эскиз и смету.
+                                            <div class="meta"><span class="time">10:15</span><span class="status"><i class="fas fa-check-double"></i></span></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="story-photo">
-                            <img src="images/03_003.jpg" alt="Фото кухни клиента">
+                            <div class="story-photos">
+                                <img src="images/03_004.jpg" alt="Пример мозаики">
+                                <img src="images/03_008.webp" alt="Вариант узора">
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="testimonial-item">
                     <div class="testimonial-content story">
-                        <div class="story-left">
-                            <div class="client-header">
-                                <img class="client-avatar" src="images/10_004.jpg" alt="Сергей">
-                                <div class="client-info">
-                                    <div><span class="badge">Повторный клиент</span><span class="meta">Пол + фартук</span></div>
-                                    <h4>Сергей</h4>
-                                    <div class="meta">Рекомендует друзьям</div>
+                        <div class="story-card">
+                            <div class="messenger-header">
+                                <div class="meta">
+                                    <h4>Андрей</h4>
+                                    <div class="sub">был(а) в сети 2 ч назад</div>
+                                </div>
+                                <div class="platform"><i class="fab fa-telegram-plane"></i><span>Telegram</span></div>
+                                <div class="actions"><i class="fas fa-ellipsis-h"></i></div>
+                            </div>
+                            <div class="story-header">
+                                <div class="avatar"><img src="images/06_007.jpg" alt="Андрей"></div>
+                                <div class="meta">
+                                    <h4>Андрей</h4>
+                                    <div class="badge">Снова к нам</div>
                                 </div>
                             </div>
-                            <div class="chat">
-                                <div class="msg left">Приветствую! Раньше укладывали у меня в прихожей. Нужна плитка в кухне — около 5 м².</div>
-                                <div class="msg right">Примем. Подскажите формат плитки и желаемый шов.</div>
-                                <div class="msg left">60×60, без порожков, шов тонкий.</div>
-                                <div class="msg right">Сделаем в уровне, подрежем аккуратно. Готовы выехать на замер.</div>
+                            <div class="date-chip">Недавно</div>
+                            <div class="chat-box">
+                                <div class="chat-thread">
+                                    <div class="msg client">
+                                        <div class="avatar"><img src="images/06_007.jpg" alt="Андрей"></div>
+                                        <div class="bubble">Добрый день! Вы нам делали санузел. Сейчас нужно уложить керамогранит на пол в гостиной ~40 м². Когда сможете приступить?
+                                            <div class="meta"><span class="time">11:40</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="msg me">
+                                        <div class="avatar"><img src="images/05.jpg" alt="Мастер"></div>
+                                        <div class="bubble">Готовы на следующей неделе. Пришлём список материалов и согласуем схему раскладки.
+                                            <div class="meta"><span class="time">11:44</span><span class="status"><i class="fas fa-check-double"></i></span></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="story-photo">
-                            <img src="images/ukladka_pol.jpg" alt="Фото пола клиента">
+                            <div class="story-photos">
+                                <img src="images/06_006.webp" alt="Пол до работ">
+                                <img src="images/09_005.jpg" alt="Результат наших работ">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -5198,7 +5540,7 @@
                         </div>
                         <h3>ПРЕМИУМ ПОЧТА</h3>
                         <p>Эксклюзивные предложения</p>
-                        <a href="mailto:vip@elitetiles.ru" class="contact-value">vip@elitetiles.ru</a>
+                        <a href="mailto:Lenmaster@list.ru" class="contact-value">Lenmaster@list.ru</a>
                     </div>
 
                     <div class="contact-card">
@@ -5213,8 +5555,7 @@
 
                 <div class="contact-form-wrapper">
                     <div class="form-header">
-                        <h3>ЭКСКЛЮЗИВНАЯ ЗАЯВКА</h3>
-                        <p>Заполните форму и получите персональное предложение в течение 15 минут</p>
+                        <h3>Заказать обратный звонок</h3>
                     </div>
 
                     <form class="premium-form" id="premiumForm">
@@ -5232,41 +5573,38 @@
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group">
-                                <input type="email" id="email" name="email">
+                            <div class="form-group full-width">
+                                <input type="email" id="email" name="email" autocomplete="email">
                                 <label for="email">Email</label>
-                                <div class="form-line"></div>
-                            </div>
-                            <div class="form-group">
-                                <select id="service" name="service" required>
-                                    <option value="">Выберите услугу</option>
-                                    <option value="vip-bathroom">VIP Ванная комната</option>
-                                    <option value="elite-kitchen">Элитная кухня</option>
-                                    <option value="palace-floors">Дворцовые полы</option>
-                                    <option value="art-mosaic">Художественная мозаика</option>
-                                    <option value="natural-stone">Натуральный камень</option>
-                                    <option value="smart-solutions">Smart решения</option>
-                                </select>
-                                <label for="service">Тип проекта *</label>
                                 <div class="form-line"></div>
                             </div>
                         </div>
 
-                        <div class="form-group full-width">
-                            <textarea id="message" name="message" rows="4"></textarea>
-                            <label for="message">Расскажите о вашем проекте</label>
-                            <div class="form-line"></div>
+                        <div class="form-row">
+                            <div class="form-group full-width">
+                                <textarea id="message" name="message" rows="2"></textarea>
+                                <label for="message">Ваш комментарий</label>
+                                <div class="form-line"></div>
+                            </div>
                         </div>
 
                         <div class="form-submit">
                             <button type="submit" class="btn-premium">
-                                <i class="fas fa-crown"></i>
-                                ПОЛУЧИТЬ VIP ПРЕДЛОЖЕНИЕ
+                                <i class="fas fa-paper-plane"></i>
+                                Отправить заявку
                             </button>
-                            <p class="form-note">
-                                <i class="fas fa-shield-check"></i>
-                                Конфиденциальность гарантирована
-                            </p>
+
+                            <div class="form-quick-divider">или свяжитесь с нами</div>
+                            <div class="form-quick-actions">
+                                <a href="https://wa.me/78123456789" target="_blank" class="social-btn whatsapp-btn" rel="noopener"> 
+                                    <i class="fab fa-whatsapp"></i>
+                                    <span>WhatsApp</span>
+                                </a>
+                                <a href="https://t.me/yourusername" target="_blank" class="social-btn telegram-btn" rel="noopener">
+                                    <i class="fab fa-telegram"></i>
+                                    <span>Telegram</span>
+                                </a>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -5325,7 +5663,7 @@
                         <i class="fas fa-envelope"></i>
                         <div>
                             <span>Премиум поддержка</span>
-                            <a href="mailto:vip@elitetiles.ru">vip@elitetiles.ru</a>
+                            <a href="mailto:Lenmaster@list.ru">Lenmaster@list.ru</a>
                         </div>
                     </div>
                 </div>
@@ -5370,6 +5708,42 @@
     </footer>
 
     <script>
+        // Force page to start at top on fresh load (mobile browsers may restore scroll position)
+        try {
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
+        } catch (e) {}
+
+        // Disable long-press / right-click context menu on images and videos (reduces easy downloading)
+        document.addEventListener('contextmenu', (e) => {
+            const media = e.target && e.target.closest && e.target.closest('img, video');
+            if (media) e.preventDefault();
+        }, true);
+
+        // Ensure anti-download attributes exist even if elements are created/updated later
+        (function ensureMediaAttrs(){
+            try {
+                document.querySelectorAll('video').forEach(v => {
+                    try { v.setAttribute('controlsList', 'nodownload noremoteplayback'); } catch(e) {}
+                    try { v.setAttribute('disablepictureinpicture', ''); } catch(e) {}
+                });
+                document.querySelectorAll('img').forEach(img => {
+                    try { img.setAttribute('draggable', 'false'); } catch(e) {}
+                });
+            } catch (e) {}
+        })();
+
+        window.addEventListener('load', () => {
+            if (!location.hash) {
+                try {
+                    window.scrollTo(0, 0);
+                    document.documentElement.scrollTop = 0;
+                    document.body.scrollTop = 0;
+                } catch (e) {}
+            }
+        }, { once: true });
+
         // Premium Loading Screen
         window.addEventListener('load', () => {
             const loadingScreen = document.getElementById('loadingScreen');
@@ -5455,22 +5829,99 @@
             processObserver.observe(step);
         });
 
+        (function () {
+            const mq = window.matchMedia && window.matchMedia('(max-width: 640px)');
+            if (!mq || !mq.matches) return;
+            const steps = Array.from(document.querySelectorAll('.process-step'));
+            if (!steps.length) return;
+
+            const closeAllExcept = (keep) => {
+                steps.forEach(s => {
+                    if (s !== keep) s.classList.remove('open');
+                });
+            };
+
+            if (!steps.some(s => s.classList.contains('open'))) {
+                steps[0].classList.add('open');
+            }
+
+            steps.forEach((step) => {
+                step.addEventListener('click', (e) => {
+                    if (e && e.target && e.target.closest && e.target.closest('a, button')) return;
+                    const willOpen = !step.classList.contains('open');
+                    closeAllExcept(step);
+                    step.classList.toggle('open', willOpen);
+                });
+            });
+        })();
+
         // Show all services functionality
         const showAllBtn = document.getElementById('showAllServices');
-        const hiddenServices = document.querySelectorAll('.hidden-service');
-        
+        const servicesGrid = document.querySelector('.services-grid');
+        const servicesBatchSize = 6;
+        let servicesPageIndex = 0;
+
+        function updateServicesPage(nextIndex) {
+            if (!servicesGrid) return;
+            const allCards = Array.from(servicesGrid.querySelectorAll('.service-card'));
+            if (!allCards.length) return;
+
+            const pagesCount = Math.ceil(allCards.length / servicesBatchSize);
+            const clampedIndex = ((nextIndex % pagesCount) + pagesCount) % pagesCount;
+            servicesPageIndex = clampedIndex;
+
+            allCards.forEach((card) => {
+                card.classList.remove('page-show');
+                card.classList.add('paged-hide');
+                if (card.classList.contains('hidden-service')) {
+                    card.classList.remove('show');
+                }
+            });
+
+            const start = servicesPageIndex * servicesBatchSize;
+            const batch = allCards.slice(start, start + servicesBatchSize);
+
+            batch.forEach((card, idx) => {
+                card.classList.remove('paged-hide');
+                if (card.classList.contains('hidden-service')) {
+                    card.classList.add('show');
+                }
+                setTimeout(() => {
+                    card.classList.add('page-show');
+                    setTimeout(() => card.classList.remove('page-show'), 700);
+                }, idx * 80);
+            });
+
+            if (showAllBtn) {
+                const icon = showAllBtn.querySelector('i');
+                const atLastPage = servicesPageIndex >= pagesCount - 1;
+                showAllBtn.innerHTML = (icon ? icon.outerHTML : '<i class="fas fa-th"></i>') + (atLastPage ? ' СВЕРНУТЬ' : ' ЕЩЁ УСЛУГИ');
+                if (pagesCount <= 1) showAllBtn.classList.add('hidden');
+                else showAllBtn.classList.remove('hidden');
+            }
+
+            if (batch[0] && typeof batch[0].scrollIntoView === 'function') {
+                batch[0].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        if (servicesGrid) {
+            const allCards = Array.from(servicesGrid.querySelectorAll('.service-card'));
+            if (allCards.length > servicesBatchSize) {
+                updateServicesPage(0);
+            }
+        }
+
         if (showAllBtn) {
             showAllBtn.addEventListener('click', () => {
-                hiddenServices.forEach((service, index) => {
-                    setTimeout(() => {
-                        service.classList.add('show');
-                    }, index * 100);
-                });
-                
-                // Hide the button after clicking
-                setTimeout(() => {
-                    showAllBtn.classList.add('hidden');
-                }, 300);
+                if (!servicesGrid) return;
+                const allCards = Array.from(servicesGrid.querySelectorAll('.service-card'));
+                if (!allCards.length) return;
+                const pagesCount = Math.ceil(allCards.length / servicesBatchSize);
+                if (pagesCount <= 1) return;
+
+                const atLastPage = servicesPageIndex >= pagesCount - 1;
+                updateServicesPage(atLastPage ? 0 : (servicesPageIndex + 1));
             });
         }
 
@@ -5618,6 +6069,151 @@
 
         // Expose hero sync function globally so API script can call it
         window.syncHeroSlidesWithDatabase = syncHeroSlidesWithDatabase;
+
+        // Desktop hero video preview (auto-rotation; opens Reels on click)
+        (function(){
+            const heroDesktopVideo = document.getElementById('heroDesktopVideo');
+            const openReelsBtnDesktop = document.getElementById('openReelsBtnDesktop');
+            const heroImageEl = document.querySelector('.hero-image');
+            if (!heroDesktopVideo) return;
+
+            let playlist = []; // { src, index }
+            let idx = 0;
+            let timer = null;
+            let lastBuiltFrom = '';
+
+            const getSrc = (v) => ((v && (v.src || v.video_url || '')) || '').toString();
+
+            // Toggle class to hide image only when video is truly ready/playing
+            const markHasVideo = () => { if (heroImageEl) heroImageEl.classList.add('hero-has-video'); };
+            const unmarkHasVideo = () => { if (heroImageEl) heroImageEl.classList.remove('hero-has-video'); };
+            heroDesktopVideo.addEventListener('playing', markHasVideo);
+            heroDesktopVideo.addEventListener('canplay', markHasVideo);
+            heroDesktopVideo.addEventListener('loadeddata', markHasVideo);
+            heroDesktopVideo.addEventListener('error', unmarkHasVideo);
+            heroDesktopVideo.addEventListener('emptied', unmarkHasVideo);
+
+            function buildFromVideoData() {
+                if (!window.videoData || !Array.isArray(window.videoData) || !window.videoData.length) return [];
+                const seen = new Set();
+                return window.videoData
+                    .map((v, i) => ({ src: getSrc(v), index: i }))
+                    .filter(it => it.src && !seen.has(it.src) && seen.add(it.src));
+            }
+
+            function buildFromSlides() {
+                const seen = new Set();
+                const items = [];
+                document.querySelectorAll('.hero-video-slide[data-video-url]').forEach((s) => {
+                    const src = (s.getAttribute('data-video-url') || '').toString();
+                    if (src && !seen.has(src)) { seen.add(src); items.push({ src, index: -1 }); }
+                });
+                return items;
+            }
+
+            function buildFallbackSamples() {
+                // Local fallback sources to ensure desktop preview is visible even without DB
+                const candidates = [
+                    'images/video/1.mp4',
+                    'images/video/2.mp4',
+                    'images/video/3.mp4',
+                    'images/video/4.mp4'
+                ];
+                return candidates.map((src) => ({ src, index: -1 }));
+            }
+
+            function buildPlaylist() {
+                const vd = buildFromVideoData();
+                if (vd.length) { lastBuiltFrom = 'videoData'; return [vd[0]]; }
+                const slides = buildFromSlides();
+                if (slides.length) { lastBuiltFrom = 'slides'; return [slides[0]]; }
+                lastBuiltFrom = 'fallback';
+                const fb = buildFallbackSamples();
+                return fb.length ? [fb[0]] : [];
+            }
+
+            function applySource(i) {
+                if (!playlist.length) return;
+                idx = (i + playlist.length) % playlist.length;
+                const { src } = playlist[idx];
+                if (!src) return;
+                if (heroDesktopVideo.src !== src) {
+                    heroDesktopVideo.src = src;
+                    try { heroDesktopVideo.load(); } catch(e) {}
+                }
+                // Ensure image stays visible until playback actually starts
+                unmarkHasVideo();
+                heroDesktopVideo.muted = true;
+                heroDesktopVideo.playsInline = true;
+                try { heroDesktopVideo.setAttribute('playsinline', ''); heroDesktopVideo.setAttribute('webkit-playsinline', ''); } catch(e) {}
+                heroDesktopVideo.loop = true;
+                heroDesktopVideo.play().catch(()=>{});
+            }
+
+            function startSingle() {
+                if (!playlist.length) return;
+                clearInterval(timer);
+                applySource(0);
+                heroDesktopVideo.onended = null; // loop handles repeat
+            }
+
+            playlist = buildPlaylist();
+            if (playlist.length) startSingle();
+
+            // Poll for videoData arrival
+            let tries = 0;
+            const pollId = setInterval(() => {
+                tries++;
+                const beforeSrcs = playlist.map(p=>p.src).join('|');
+                playlist = buildPlaylist();
+                const afterSrcs = playlist.map(p=>p.src).join('|');
+                if (afterSrcs && afterSrcs !== beforeSrcs) {
+                    idx = 0;
+                    applySource(0);
+                }
+                if (tries > 120 || lastBuiltFrom === 'videoData') clearInterval(pollId);
+            }, 1200);
+
+            if (openReelsBtnDesktop) {
+                openReelsBtnDesktop.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const cur = playlist[idx] || null;
+                    try {
+                        if (cur && window.videoData && Array.isArray(window.videoData) && window.videoData.length && typeof openVideoPlayer === 'function') {
+                            const found = window.videoData.findIndex(v => getSrc(v) === cur.src);
+                            if (found >= 0 && typeof currentVideoIndex !== 'undefined') currentVideoIndex = found;
+                            openVideoPlayer();
+                            return;
+                        }
+                    } catch(err) {}
+                    try {
+                        if (cur && typeof videoModal !== 'undefined' && videoModal && typeof videoPlayer !== 'undefined' && videoPlayer) {
+                            videoModal.classList.add('active');
+                            videoPlayer.src = cur.src;
+                            videoPlayer.muted = false;
+                            videoPlayer.load();
+                            videoPlayer.play().catch(()=>{ videoPlayer.muted = true; videoPlayer.play().catch(()=>{}); });
+                            document.body.style.overflow = 'hidden';
+                        }
+                    } catch(e){}
+                });
+            }
+
+            // Also rebuild/start when API sync updates hero slides
+            try {
+                const prevSync = window.syncHeroSlidesWithDatabase;
+                window.syncHeroSlidesWithDatabase = function() {
+                    let result;
+                    try { if (typeof prevSync === 'function') result = prevSync.apply(this, arguments); }
+                    finally {
+                        playlist = buildPlaylist();
+                        if (playlist.length) { idx = 0; startSingle(); }
+                    }
+                    return result;
+                };
+            } catch(e) {}
+        })();
 
         // Hero video card swipe/drag functionality
         if (heroMobileVideo) {
@@ -6588,6 +7184,7 @@
                 
                 const name = document.getElementById('videoName')?.value.trim();
                 const phone = document.getElementById('videoPhone')?.value.trim();
+                const email = document.getElementById('videoEmail')?.value.trim();
 
                 const submitBtn = quickCallbackForm.querySelector('button[type="submit"]');
                 const originalText = submitBtn.innerHTML;
@@ -6599,6 +7196,7 @@
                     result = await submitLeadToDatabase({
                         name,
                         phone,
+                        email,
                         source: 'video_callback_form'
                     });
                 }
@@ -6634,7 +7232,7 @@
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalText;
 
-                console.log('Callback request submitted:', { name, phone, success: result.success });
+                console.log('Callback request submitted:', { name, phone, email, success: result.success });
             });
         }
 
@@ -6651,6 +7249,27 @@
                 }
             });
         });
+
+        // About: expand/collapse extra text
+        (function () {
+            const btn = document.getElementById('aboutMoreBtn');
+            const content = document.getElementById('aboutMoreContent');
+            if (!btn || !content) return;
+
+            const setState = (open) => {
+                content.classList.toggle('is-open', open);
+                content.setAttribute('aria-hidden', open ? 'false' : 'true');
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                btn.textContent = open ? 'Скрыть' : 'Подробнее';
+            };
+
+            let open = false;
+            setState(false);
+            btn.addEventListener('click', () => {
+                open = !open;
+                setState(open);
+            });
+        })();
 
         // Portfolio filter functionality
         document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -6741,6 +7360,7 @@
         const dots = document.querySelectorAll('.dot');
         const prevBtn = document.querySelector('.prev-btn');
         const nextBtn = document.querySelector('.next-btn');
+        const testimonialsSlider = document.querySelector('.testimonials-slider');
 
         function showTestimonialSlide(index) {
             testimonials.forEach(testimonial => {
@@ -6765,8 +7385,8 @@
         }
 
         // Event listeners for testimonial controls
-        nextBtn.addEventListener('click', nextTestimonialSlide);
-        prevBtn.addEventListener('click', prevTestimonialSlide);
+        if (nextBtn) nextBtn.addEventListener('click', nextTestimonialSlide);
+        if (prevBtn) prevBtn.addEventListener('click', prevTestimonialSlide);
 
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
@@ -6775,8 +7395,73 @@
             });
         });
 
+        // Swipe left/right on testimonials slider (do not interfere with chat scroll)
+        (function () {
+            if (!testimonialsSlider) return;
+
+            let startX = 0;
+            let startY = 0;
+            let swiping = false;
+            let blockClickUntil = 0;
+
+            function getPoint(e) {
+                return (e.touches && e.touches[0]) ? e.touches[0] : e;
+            }
+
+            function onStart(e) {
+                const t = e && e.target;
+                if (t && t.closest && t.closest('.chat-box')) return; // allow normal scrolling inside chat
+                if (t && t.closest && t.closest('.control-btn, .testimonial-dots, .dot')) return;
+                const p = getPoint(e);
+                startX = p.clientX;
+                startY = p.clientY;
+                swiping = true;
+            }
+
+            function onMove(e) {
+                if (!swiping) return;
+                const p = getPoint(e);
+                const dx = p.clientX - startX;
+                const dy = p.clientY - startY;
+                if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) {
+                    if (e.cancelable) e.preventDefault();
+                }
+            }
+
+            function onEnd(e) {
+                if (!swiping) return;
+                swiping = false;
+                const p = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : e;
+                const dx = p.clientX - startX;
+                const dy = p.clientY - startY;
+                const isHorizontal = Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy);
+                if (!isHorizontal) return;
+
+                if (dx < 0) nextTestimonialSlide();
+                else prevTestimonialSlide();
+                blockClickUntil = Date.now() + 350;
+            }
+
+            testimonialsSlider.addEventListener('touchstart', onStart, { passive: true });
+            testimonialsSlider.addEventListener('touchmove', onMove, { passive: false });
+            testimonialsSlider.addEventListener('touchend', onEnd, { passive: true });
+            testimonialsSlider.addEventListener('touchcancel', onEnd, { passive: true });
+            testimonialsSlider.addEventListener('pointerdown', onStart);
+            testimonialsSlider.addEventListener('pointermove', onMove);
+            testimonialsSlider.addEventListener('pointerup', onEnd);
+            testimonialsSlider.addEventListener('pointercancel', onEnd);
+
+            // Avoid accidental taps right after swipe
+            testimonialsSlider.addEventListener('click', (e) => {
+                if (Date.now() < blockClickUntil) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }, true);
+        })();
+
         // Auto-play testimonials
-        setInterval(nextTestimonialSlide, 5000);
+        setInterval(nextTestimonialSlide, 8000);
 
         // Phone formatting
         document.getElementById('phone').addEventListener('input', function(e) {
@@ -6808,10 +7493,17 @@
         const closePlayer = document.getElementById('closePlayer');
         const swipeUp = document.getElementById('swipeUp');
         const swipeDown = document.getElementById('swipeDown');
-        
 
-        // Track whether current reels content uses YouTube iframe instead of HTML5 video
-        let usingYouTube = false;
+        let swipeHintTimer = null;
+        function showSwipeHintTemporarily(duration = 3000) {
+            if (!swipeHint) return;
+            if (swipeHintTimer) clearTimeout(swipeHintTimer);
+            swipeHint.style.opacity = '1';
+            swipeHintTimer = setTimeout(() => {
+                swipeHint.style.opacity = '0';
+            }, duration);
+        }
+        
 
         // If Reels overlay closes (class 'active' removed), make sure pause icon is cleared
         if (reelsOverlay) {
@@ -6848,7 +7540,10 @@
             });
             mainVideo.addEventListener('play', removePauseIcon);
             mainVideo.addEventListener('playing', removePauseIcon);
-            mainVideo.addEventListener('ended', removePauseIcon);
+            mainVideo.addEventListener('ended', () => {
+                removePauseIcon();
+                showSwipeHintTemporarily(3200);
+            });
             mainVideo.addEventListener('emptied', removePauseIcon);
             mainVideo.addEventListener('pause', () => {
                 if (suppressPauseOverlay) return;
@@ -6869,7 +7564,6 @@
             // Tap on the video to toggle pause/play (and show icon on pause)
             const togglePlayPause = (e) => {
                 if (!(reelsOverlay && reelsOverlay.classList.contains('active'))) return;
-                if (usingYouTube) return; // No toggle for YouTube iframe without API
                 e && e.stopPropagation && e.stopPropagation();
                 if (mainVideo.paused) {
                     mainVideo.play();
@@ -6917,14 +7611,39 @@
                 console.log(`✅ Setting up video card ${index + 1}`); // Debug
                 thumbnail.addEventListener('click', () => {
                     console.log(`Video card ${index + 1} clicked!`); // Debug
-                    // Ensure playlist is ready from grid, set index, and open Reels overlay
-                    ensureVideoDataFromGrid();
-                    if (!window.videoData || !window.videoData.length) {
-                        console.error('No videoData available to open Reels');
-                        return;
+                    const videoUrl = thumbnail.getAttribute('data-video');
+                    console.log('Video URL:', videoUrl); // Debug
+                    
+                    if (videoUrl) {
+                        if (videoModal && videoPlayer) {
+                            console.log('Opening video from grid:', videoUrl); // Debug
+                            
+                            // Open modal with video
+                            videoModal.classList.add('active');
+                            videoPlayer.src = videoUrl;
+                            videoPlayer.load();
+                            
+                            // Autoplay video with sound
+                            videoPlayer.muted = false; // Enable sound
+                            videoPlayer.play().then(() => {
+                                console.log('Grid video playing with sound');
+                            }).catch(err => {
+                                console.log('Autoplay prevented:', err);
+                                // Try muted if autoplay fails
+                                videoPlayer.muted = true;
+                                videoPlayer.play().catch(e => console.log('Autoplay failed:', e));
+                            });
+                            
+                            document.body.style.overflow = 'hidden';
+                            
+                            // Hide header
+                            if (header) header.style.display = 'none';
+                        } else {
+                            console.error('videoModal or videoPlayer not found!'); // Debug
+                        }
+                    } else {
+                        console.error('No video URL found in data-video attribute'); // Debug
                     }
-                    currentVideoIndex = Math.max(0, Math.min(index, window.videoData.length - 1));
-                    openVideoPlayer();
                 });
             });
         }
@@ -6979,107 +7698,6 @@
         // Make available for external scripts (js/api-integration.js)
         window.renderVideoGridFromDatabase = renderVideoGridFromDatabase;
 
-        // Ensure we have videoData by deriving from the visible grid when backend data is absent
-        function ensureVideoDataFromGrid() {
-            if (window.videoData && Array.isArray(window.videoData) && window.videoData.length) return;
-            const thumbs = Array.from(document.querySelectorAll('.video-thumbnail'));
-            if (!thumbs.length) return;
-            window.videoData = thumbs.map((thumb, index) => {
-                const src = (thumb.getAttribute('data-video') || '').toString();
-                const titleEl = thumb.querySelector('.video-info h4');
-                const descEl = thumb.querySelector('.video-info p');
-                const imgEl = thumb.querySelector('img');
-                return {
-                    src,
-                    title: titleEl ? titleEl.textContent : `Видео проект ${index + 1}`,
-                    description: descEl ? descEl.textContent : '',
-                    thumbnail: imgEl ? imgEl.getAttribute('src') : ''
-                };
-            });
-        }
-
-        // Helpers to support YouTube sources inside the Reels overlay
-        function isYouTubeUrl(url) {
-            if (!url) return false;
-            return /youtube\.com|youtu\.be/i.test(url);
-        }
-        function toYouTubeEmbed(url) {
-            try {
-                if (!url) return '';
-                // Already embed
-                if (url.includes('/embed/')) {
-                    return url + (url.includes('?') ? '&' : '?') + 'autoplay=1&mute=1&playsinline=1&rel=0';
-                }
-                // watch?v=
-                const watchMatch = url.match(/[?&]v=([^&#]+)/);
-                if (watchMatch && watchMatch[1]) {
-                    return `https://www.youtube.com/embed/${watchMatch[1]}?autoplay=1&mute=1&playsinline=1&rel=0`;
-                }
-                // youtu.be/ID
-                const shortMatch = url.match(/youtu\.be\/([^?&#/]+)/);
-                if (shortMatch && shortMatch[1]) {
-                    return `https://www.youtube.com/embed/${shortMatch[1]}?autoplay=1&mute=1&playsinline=1&rel=0`;
-                }
-                return url;
-            } catch (_) { return url; }
-        }
-        function getOrCreateYTFrame() {
-            let iframe = document.getElementById('ytReelsFrame');
-            if (!iframe) {
-                iframe = document.createElement('iframe');
-                iframe.id = 'ytReelsFrame';
-                iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
-                iframe.setAttribute('frameborder', '0');
-                iframe.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%; display:block;';
-                if (videoWrapper) {
-                    // Insert right after the HTML5 video so all overlays remain above
-                    const refNode = mainVideo && mainVideo.parentNode === videoWrapper ? mainVideo.nextSibling : null;
-                    if (refNode) {
-                        videoWrapper.insertBefore(iframe, refNode);
-                    } else {
-                        videoWrapper.appendChild(iframe);
-                    }
-                }
-            }
-            return iframe;
-        }
-        function removeYTFrame() {
-            const iframe = document.getElementById('ytReelsFrame');
-            if (iframe && iframe.parentNode) iframe.parentNode.removeChild(iframe);
-        }
-
-        function loadCurrentVideo() {
-            const video = window.videoData[currentVideoIndex];
-            if (!video) return;
-
-            const src = video.src || '';
-            usingYouTube = isYouTubeUrl(src);
-
-            if (usingYouTube) {
-                // Hide HTML5 video, show YouTube iframe
-                if (mainVideo) {
-                    try { mainVideo.pause(); } catch (_) {}
-                    mainVideo.removeAttribute('src');
-                    try { mainVideo.load(); } catch (_) {}
-                    mainVideo.style.display = 'none';
-                }
-                const iframe = getOrCreateYTFrame();
-                iframe.src = toYouTubeEmbed(src);
-            } else {
-                // Remove YouTube iframe if present
-                removeYTFrame();
-                if (mainVideo) {
-                    mainVideo.style.display = '';
-                    mainVideo.src = src;
-                }
-            }
-
-            if (videoTitle) videoTitle.textContent = video.title || '';
-            if (videoDescription) videoDescription.textContent = video.description || '';
-            if (typeof updateProgress === 'function') updateProgress();
-            if (typeof updateCounter === 'function') updateCounter();
-        }
-
         function openVideoPlayer() {
             // Ensure we have video data and a valid source before opening
             if (!window.videoData || !Array.isArray(window.videoData) || window.videoData.length === 0) {
@@ -7093,7 +7711,12 @@
                 return;
             }
 
-            loadCurrentVideo();
+            mainVideo.src = video.src;
+            videoTitle.textContent = video.title;
+            videoDescription.textContent = video.description;
+            
+            updateProgress();
+            updateCounter();
             
             if (reelsOverlay) reelsOverlay.classList.add('active');
             document.body.classList.add('reels-active');
@@ -7104,117 +7727,14 @@
             removePauseIcon();
             document.body.style.overflow = 'hidden';
             
-            // Hide swipe hint after 3 seconds
-            setTimeout(() => {
-                swipeHint.style.opacity = '0';
-            }, 3000);
+            // Show hint on open, then auto-hide
+            showSwipeHintTemporarily(3000);
             
-            if (!usingYouTube && mainVideo) {
-                try {
-                    mainVideo.muted = true;
-                    mainVideo.setAttribute('muted', '');
-                    mainVideo.setAttribute('playsinline', '');
-                    mainVideo.setAttribute('webkit-playsinline', '');
-                    mainVideo.autoplay = true;
-                } catch (_) {}
-                setTimeout(() => {
-                    const p = mainVideo.play();
-                    if (p && typeof p.catch === 'function') {
-                        p.catch(() => {
-                            try {
-                                mainVideo.muted = true;
-                                mainVideo.play();
-                            } catch (_) {}
-                        });
-                    }
-                }, 100);
-            }
+            // Auto-play after opening
+            setTimeout(() => {
+                mainVideo.play();
+            }, 300);
         }
-
-        // Reset auto-open flag on full page reload so a fresh visit re-triggers auto-open
-        try {
-            const navEntries = performance && performance.getEntriesByType ? performance.getEntriesByType('navigation') : [];
-            const navType = (navEntries && navEntries[0] && navEntries[0].type) || (performance && performance.navigation && performance.navigation.type === 1 ? 'reload' : '');
-            if (navType === 'reload') {
-                sessionStorage.removeItem('reelsAutoOpenDone');
-            }
-        } catch (_) {}
-
-        // Auto-open Reels once per session when the #videos block first appears in viewport
-        let openedByAutoScroll = false;
-        function setupReelsAutoOpen() {
-            try {
-                if (sessionStorage.getItem('reelsAutoOpenDone') === '1') return;
-                const block = document.getElementById('videos');
-                if (!block) return;
-                const io = new IntersectionObserver((entries, obs) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            if (sessionStorage.getItem('reelsAutoOpenDone') === '1') { obs.disconnect(); return; }
-                            ensureVideoDataFromGrid();
-                            openedByAutoScroll = true;
-                            openVideoPlayer();
-                            if (reelsOverlay && reelsOverlay.classList.contains('active')) {
-                                sessionStorage.setItem('reelsAutoOpenDone', '1');
-                                obs.disconnect();
-                            }
-                        }
-                    });
-                }, { threshold: 0.3, rootMargin: '0px 0px -10% 0px' });
-                io.observe(block);
-                let pendingMobileOpen = false;
-                let tapOpenOnce = null;
-                const cleanup = () => {
-                    window.removeEventListener('scroll', manualVisibilityCheck, { passive: true });
-                    window.removeEventListener('touchmove', manualVisibilityCheck, { passive: true });
-                    window.removeEventListener('resize', manualVisibilityCheck);
-                    if (pendingMobileOpen) {
-                        if (tapOpenOnce) {
-                            window.removeEventListener('touchstart', tapOpenOnce, { passive: true });
-                            window.removeEventListener('click', tapOpenOnce, true);
-                            tapOpenOnce = null;
-                        }
-                        pendingMobileOpen = false;
-                    }
-                };
-                const manualVisibilityCheck = () => {
-                    if (sessionStorage.getItem('reelsAutoOpenDone') === '1') { cleanup(); return; }
-                    if (!block) return;
-                    const rect = block.getBoundingClientRect();
-                    const vh = window.innerHeight || document.documentElement.clientHeight || 0;
-                    const visible = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
-                    const denom = Math.min(vh, rect.height || vh) || 1;
-                    const ratio = visible / denom;
-                    if (ratio >= 0.2) {
-                        if (sessionStorage.getItem('reelsAutoOpenDone') === '1') { cleanup(); return; }
-                        ensureVideoDataFromGrid();
-                        openedByAutoScroll = true;
-                        openVideoPlayer();
-                        if (reelsOverlay && reelsOverlay.classList.contains('active')) {
-                            sessionStorage.setItem('reelsAutoOpenDone', '1');
-                            cleanup();
-                        } else if (!pendingMobileOpen) {
-                            pendingMobileOpen = true;
-                            tapOpenOnce = () => {
-                                if (sessionStorage.getItem('reelsAutoOpenDone') === '1') { cleanup(); return; }
-                                openVideoPlayer();
-                                if (reelsOverlay && reelsOverlay.classList.contains('active')) {
-                                    sessionStorage.setItem('reelsAutoOpenDone', '1');
-                                    cleanup();
-                                }
-                            };
-                            window.addEventListener('touchstart', tapOpenOnce, { passive: true, once: true });
-                            window.addEventListener('click', tapOpenOnce, { capture: true, once: true });
-                        }
-                    }
-                };
-                window.addEventListener('scroll', manualVisibilityCheck, { passive: true });
-                window.addEventListener('touchmove', manualVisibilityCheck, { passive: true });
-                window.addEventListener('resize', manualVisibilityCheck);
-                setTimeout(manualVisibilityCheck, 200);
-            } catch (e) { console.warn('Reels auto-open setup failed:', e); }
-        }
-        setupReelsAutoOpen();
 
         function updateProgress() {
             const dots = progressDots.querySelectorAll('.progress-dot');
@@ -7312,18 +7832,22 @@
             videoWrapper.classList.add('switching');
             
             setTimeout(() => {
-                loadCurrentVideo();
+                const video = window.videoData[currentVideoIndex];
+                mainVideo.src = video.src;
+                videoTitle.textContent = video.title;
+                videoDescription.textContent = video.description;
+                
+                updateProgress();
+                updateCounter();
                 
                 // Remove switching animation
                 videoWrapper.classList.remove('switching');
                 
                 // Auto-play new video
-                if (!usingYouTube && mainVideo) {
-                    setTimeout(() => {
-                        removePauseIcon();
-                        mainVideo.play();
-                    }, 100);
-                }
+                setTimeout(() => {
+                    removePauseIcon();
+                    mainVideo.play();
+                }, 100);
             }, 250);
         }
 
@@ -7417,18 +7941,11 @@
                     mainVideo.load();
                     // Optionally restore src after closing (next open will set it anyway)
                 }
-                // Clean up YouTube iframe to stop playback
-                removeYTFrame();
                 if (typeof removePauseIcon === 'function') removePauseIcon();
                 purgePauseIcon();
                 document.body.style.overflow = 'auto';
                 document.body.classList.remove('reels-active');
                 document.body.classList.add('no-pause-overlay');
-                // Scroll back to the video block after closing
-                const block = document.getElementById('videos');
-                if (block && typeof block.scrollIntoView === 'function') {
-                    block.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
                 setTimeout(() => { suppressPauseOverlay = false; }, 2000);
             });
         }
@@ -7441,13 +7958,6 @@
                 if (typeof removePauseIcon === 'function') removePauseIcon();
                 purgePauseIcon();
                 document.body.classList.add('no-pause-overlay');
-                // Clean up YouTube iframe here as well
-                removeYTFrame();
-                // Scroll back to the video block as well
-                const block = document.getElementById('videos');
-                if (block && typeof block.scrollIntoView === 'function') {
-                    block.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
                 setTimeout(() => { suppressPauseOverlay = false; }, 2000);
             }
         }, true);
@@ -7636,11 +8146,30 @@
                     updateZoomIcon();
                     stopSlideshow();
                     lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
                 }
             };
-            const close = () => { if (lightbox) { stopSlideshow(); lightbox.classList.remove('active'); lightbox.classList.remove('show-sidebar'); lightbox.classList.remove('zoomed'); updateZoomIcon(); } };
+            const close = () => {
+                if (lightbox) {
+                    stopSlideshow();
+                    lightbox.classList.remove('active');
+                    lightbox.classList.remove('show-sidebar');
+                    lightbox.classList.remove('zoomed');
+                    lightbox.classList.remove('dragging');
+                    if (lightboxImg) {
+                        lightboxImg.style.transform = '';
+                        lightboxImg.style.opacity = '';
+                    }
+                    updateZoomIcon();
+                }
+                document.body.style.overflow = '';
+            };
             if (lightbox) {
-                lightbox.addEventListener('click', close);
+                let lbBlockCloseUntil = 0;
+                lightbox.addEventListener('click', () => {
+                    if (Date.now() < lbBlockCloseUntil) return;
+                    close();
+                });
                 const onKeyDown = (e) => {
                     if (!lightbox.classList.contains('active')) return;
                     if (e.key === 'Escape') { close(); return; }
@@ -7650,6 +8179,147 @@
                 };
                 document.addEventListener('keydown', onKeyDown);
                 if (lightboxImg) lightboxImg.addEventListener('click', (e) => e.stopPropagation());
+                // Swipe left/right to navigate (mobile)
+                (function () {
+                    let startX = 0;
+                    let startY = 0;
+                    let swiping = false;
+                    let draggingV = false;
+                    let lastDy = 0;
+                    let pointerId = null;
+                    let captured = false;
+
+                    function pt(e) {
+                        return (e.touches && e.touches[0]) ? e.touches[0] : e;
+                    }
+                    function shouldIgnore(e) {
+                        const t = e && e.target;
+                        if (!t || !t.closest) return false;
+                        return !!t.closest('.lightbox-toolbar, .lightbox-sidebar, .lb-btn, .lb-navbtn');
+                    }
+
+                    function onStart(e) {
+                        if (!lightbox.classList.contains('active')) return;
+                        if (shouldIgnore(e)) return;
+                        if (lightbox.classList.contains('zoomed')) return;
+                        const p = pt(e);
+                        startX = p.clientX;
+                        startY = p.clientY;
+                        swiping = true;
+                        draggingV = false;
+                        lastDy = 0;
+                        pointerId = (e && typeof e.pointerId === 'number') ? e.pointerId : null;
+                        captured = false;
+                    }
+                    function onMove(e) {
+                        if (!swiping) return;
+                        const p = pt(e);
+                        const dx = p.clientX - startX;
+                        const dy = p.clientY - startY;
+                        const absDx = Math.abs(dx);
+                        const absDy = Math.abs(dy);
+
+                        if (!draggingV && absDy > 6 && absDy > absDx) {
+                            draggingV = true;
+                            lightbox.classList.add('dragging');
+                        }
+
+                        if (draggingV) {
+                            lastDy = dy;
+                            if (lightboxImg) {
+                                const damp = dy * 0.9;
+                                const scale = Math.max(0.92, 1 - absDy / 1200);
+                                lightboxImg.style.transform = `translateY(${damp}px) scale(${scale})`;
+                                lightboxImg.style.opacity = String(Math.max(0.35, 1 - absDy / 420));
+                            }
+                            if (!captured && pointerId !== null && typeof lightbox.setPointerCapture === 'function') {
+                                try { lightbox.setPointerCapture(pointerId); captured = true; } catch (_) {}
+                            }
+                            if (e.cancelable) e.preventDefault();
+                            return;
+                        }
+
+                        if (absDx > 6 && absDx > absDy) {
+                            if (!captured && pointerId !== null && typeof lightbox.setPointerCapture === 'function') {
+                                try { lightbox.setPointerCapture(pointerId); captured = true; } catch (_) {}
+                            }
+                            if (e.cancelable) e.preventDefault();
+                        }
+                    }
+                    function onEnd(e) {
+                        if (!swiping) return;
+                        swiping = false;
+                        if (captured && pointerId !== null && typeof lightbox.releasePointerCapture === 'function') {
+                            try { lightbox.releasePointerCapture(pointerId); } catch (_) {}
+                        }
+                        captured = false;
+                        pointerId = null;
+                        const p = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : e;
+                        const dx = p.clientX - startX;
+                        const dy = p.clientY - startY;
+                        const absDx = Math.abs(dx);
+                        const absDy = Math.abs(dy);
+
+                        if (draggingV) {
+                            lightbox.classList.remove('dragging');
+                            draggingV = false;
+
+                            const shouldCloseV = absDy > 110 && absDy > absDx;
+                            if (shouldCloseV && lightboxImg) {
+                                const dir = (lastDy || dy) >= 0 ? 1 : -1;
+                                lightboxImg.style.transform = `translateY(${dir * 240}px) scale(0.92)`;
+                                lightboxImg.style.opacity = '0';
+                                lbBlockCloseUntil = Date.now() + 350;
+                                setTimeout(() => close(), 220);
+                                return;
+                            }
+
+                            if (lightboxImg) {
+                                lightboxImg.style.transform = '';
+                                lightboxImg.style.opacity = '';
+                            }
+                            lbBlockCloseUntil = Date.now() + 200;
+                            return;
+                        }
+
+                        const isHorizontal = absDx > 40 && absDx > absDy;
+                        if (!isHorizontal) return;
+                        if (dx < 0) showByIndex(currentIndex() + 1);
+                        else showByIndex(currentIndex() - 1);
+                        lbBlockCloseUntil = Date.now() + 350;
+                    }
+
+                    lightbox.addEventListener('touchstart', onStart, { passive: true });
+                    lightbox.addEventListener('touchmove', onMove, { passive: false });
+                    lightbox.addEventListener('touchend', onEnd, { passive: true });
+                    lightbox.addEventListener('touchcancel', onEnd, { passive: true });
+                    lightbox.addEventListener('pointerdown', onStart);
+                    lightbox.addEventListener('pointermove', onMove);
+                    lightbox.addEventListener('pointerup', onEnd);
+                    lightbox.addEventListener('pointercancel', onEnd);
+                })();
+                // Double tap / double click to zoom in/out
+                let lbLastTapAt = 0;
+                if (lightboxImg) {
+                    lightboxImg.addEventListener('dblclick', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        lightbox.classList.toggle('zoomed');
+                        updateZoomIcon();
+                    });
+                    lightboxImg.addEventListener('touchend', (e) => {
+                        const now = Date.now();
+                        if (now - lbLastTapAt < 300) {
+                            if (e.cancelable) e.preventDefault();
+                            e.stopPropagation();
+                            lightbox.classList.toggle('zoomed');
+                            updateZoomIcon();
+                            lbLastTapAt = 0;
+                            return;
+                        }
+                        lbLastTapAt = now;
+                    }, { passive: false });
+                }
                 if (sidebar) sidebar.addEventListener('click', (e) => e.stopPropagation());
                 if (closeBtn) closeBtn.addEventListener('click', (e) => { e.stopPropagation(); close(); });
                 if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showByIndex(currentIndex() - 1); });
@@ -7682,6 +8352,8 @@
             }
             let swipeBlockUntil = 0;
             featureImg.addEventListener('click', () => open(featureImg.src));
+            const featureZoomBtn = featureWrap ? featureWrap.querySelector('.feature-zoom-btn') : null;
+            if (featureZoomBtn) featureZoomBtn.addEventListener('click', (e) => { e.stopPropagation(); open(featureImg.src); });
             // Clicking a thumb should show that image in the feature area and update rotation index
             const areaEl = document.querySelector('.portfolio-thumbs');
             if (areaEl) areaEl.addEventListener('click', (e) => {

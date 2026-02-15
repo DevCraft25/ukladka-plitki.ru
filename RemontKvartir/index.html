@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Своя бригада — Ремонт квартир от частной бригады</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #000000;
+      --bg2: #070707;
+      --card: rgba(255, 255, 255, 0.04);
+      --stroke: rgba(255, 255, 255, 0.10);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.70);
+      --muted2: rgba(255, 255, 255, 0.58);
+
+      --header-bg: rgba(5, 6, 10, 0.72);
+      --input-bg: rgba(0,0,0,0.25);
+      --sticky-bg: rgba(0,0,0,0.55);
+      --sticky-border: rgba(var(--accent-rgb), 0.18);
+      --footer-bg: rgba(0,0,0,0.00);
+      --footer-border: rgba(255,255,255,0.08);
+      --footer-text: rgba(255,255,255,0.62);
+      --lightbox-bg: rgba(0,0,0,0.72);
+
+      --accent: #22c55e;
+      --accent2: #16a34a;
+      --accent-rgb: 34, 197, 94;
+      --accent2-rgb: 22, 163, 74;
+
+      --danger: #ff4d6d;
+      --shadow: 0 20px 60px rgba(0,0,0,0.55);
+    }
+
+    /* 5 theme variants */
+    html[data-theme="green"] {
+      --bg: #000000;
+      --bg2: #070707;
+      --card: rgba(255, 255, 255, 0.04);
+      --stroke: rgba(255, 255, 255, 0.10);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.70);
+      --muted2: rgba(255, 255, 255, 0.58);
+      --accent: #22c55e;
+      --accent2: #16a34a;
+      --accent-rgb: 34, 197, 94;
+      --accent2-rgb: 22, 163, 74;
+    }
+    html[data-theme="gold"] {
+      --bg: #040302;
+      --bg2: #0b0805;
+      --card: rgba(255, 255, 255, 0.045);
+      --stroke: rgba(255, 255, 255, 0.12);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.72);
+      --muted2: rgba(255, 255, 255, 0.60);
+      --accent: #D4AF37;
+      --accent2: #FFD700;
+      --accent-rgb: 212, 175, 55;
+      --accent2-rgb: 255, 215, 0;
+    }
+    html[data-theme="blue"] {
+      --bg: #02050d;
+      --bg2: #060b16;
+      --card: rgba(255, 255, 255, 0.045);
+      --stroke: rgba(255, 255, 255, 0.12);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.72);
+      --muted2: rgba(255, 255, 255, 0.60);
+      --accent: #3b82f6;
+      --accent2: #2563eb;
+      --accent-rgb: 59, 130, 246;
+      --accent2-rgb: 37, 99, 235;
+    }
+    html[data-theme="red"] {
+      --bg: #0a0203;
+      --bg2: #120506;
+      --card: rgba(255, 255, 255, 0.045);
+      --stroke: rgba(255, 255, 255, 0.12);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.72);
+      --muted2: rgba(255, 255, 255, 0.60);
+      --accent: #ef4444;
+      --accent2: #b91c1c;
+      --accent-rgb: 239, 68, 68;
+      --accent2-rgb: 185, 28, 28;
+    }
+    html[data-theme="purple"] {
+      --bg: #05020a;
+      --bg2: #0b0614;
+      --card: rgba(255, 255, 255, 0.045);
+      --stroke: rgba(255, 255, 255, 0.12);
+      --text: rgba(255, 255, 255, 0.92);
+      --muted: rgba(255, 255, 255, 0.72);
+      --muted2: rgba(255, 255, 255, 0.60);
+      --accent: #a855f7;
+      --accent2: #7c3aed;
+      --accent-rgb: 168, 85, 247;
+      --accent2-rgb: 124, 58, 237;
+    }
+
+    html, body { height: 100%; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background:
+        radial-gradient(1100px 520px at 20% 10%, rgba(var(--accent-rgb), 0.16), transparent 58%),
+        radial-gradient(900px 460px at 78% 12%, rgba(var(--accent2-rgb), 0.14), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(var(--accent-rgb), 0.18);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 12px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      font-size: 22px;
+    }
+    .brand-badge {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.95), rgba(var(--accent2-rgb), 0.95));
+      color: #06101a;
+      box-shadow: 0 14px 30px rgba(var(--accent-rgb), 0.22);
+      flex: 0 0 auto;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-links a {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+    .nav-links a:hover {
+      border-color: rgba(var(--accent-rgb), 0.22);
+      color: var(--text);
+      background: var(--card);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: var(--card);
+      color: var(--text);
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .btn:hover { transform: translateY(-2px); border-color: rgba(var(--accent-rgb), 0.35); box-shadow: 0 14px 40px rgba(0,0,0,0.45); }
+    .btn-primary {
+      border-color: rgba(var(--accent-rgb), 0.35);
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.95), rgba(var(--accent2-rgb), 0.95));
+      color: #06101a;
+    }
+
+    .theme-select {
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: var(--card);
+      color: var(--text);
+      padding: 10px 12px;
+      font-weight: 800;
+      outline: none;
+    }
+
+    .hero {
+      padding-top: 92px;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 160px;
+      background: linear-gradient(to top, rgba(5,6,10,1), transparent);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 26px;
+      align-items: center;
+      padding: 38px 0;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), 0.25);
+      background: rgba(var(--accent-rgb), 0.08);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+    .kicker i { color: var(--accent); }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4.6vw, 3.8rem);
+      line-height: 1.1;
+      font-weight: 900;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(var(--accent-rgb), 0.92));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      max-width: 780px;
+      margin-bottom: 20px;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+      max-width: 760px;
+    }
+    .fact {
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .fact b { display: block; font-size: 14px; margin-bottom: 4px; color: rgba(255,255,255,0.92); }
+    .fact span { color: rgba(255,255,255,0.68); font-size: 13px; }
+
+    .hero-card {
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -30px;
+      background: radial-gradient(500px 200px at 15% 15%, rgba(var(--accent-rgb), 0.18), transparent 60%),
+                  radial-gradient(440px 220px at 90% 10%, rgba(var(--accent2-rgb), 0.16), transparent 60%);
+      pointer-events: none;
+    }
+    .hero-card-inner { position: relative; }
+
+    .calc-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .calc-title h3 { font-size: 16px; font-weight: 800; color: rgba(255,255,255,0.92); }
+    .pill {
+      font-size: 12px;
+      font-weight: 800;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), 0.30);
+      background: rgba(var(--accent-rgb), 0.08);
+      color: rgba(255,255,255,0.88);
+    }
+
+    .field { margin-bottom: 12px; }
+    label { display: block; font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+    input, select {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background: var(--input-bg);
+      color: var(--text);
+      outline: none;
+    }
+    input::placeholder { color: var(--muted2); }
+
+    .calc-result {
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(var(--accent-rgb), 0.22);
+      background: rgba(var(--accent-rgb), 0.08);
+      display: grid;
+      gap: 6px;
+    }
+    .calc-result b { font-size: 14px; color: rgba(255,255,255,0.92); }
+    .price {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 28px;
+      line-height: 1;
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.95), rgba(255,255,255,0.92));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .calc-note { color: rgba(255,255,255,0.66); font-size: 12px; }
+
+    section { padding: 72px 0; }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+      margin-bottom: 12px;
+      color: rgba(255,255,255,0.92);
+    }
+    .section-sub { color: var(--muted); max-width: 850px; margin-bottom: 22px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255,255,255,0.03);
+      padding: 18px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(var(--accent-rgb), 0.30); }
+    .card .icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.95), rgba(var(--accent2-rgb), 0.95));
+      color: #06101a;
+      margin-bottom: 12px;
+      box-shadow: 0 16px 34px rgba(var(--accent-rgb), 0.18);
+    }
+    .card h3 { font-size: 16px; font-weight: 900; margin-bottom: 6px; }
+    .card p { color: rgba(255,255,255,0.70); font-size: 14px; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .step {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      background: rgba(255,255,255,0.03);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .step::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(380px 160px at 20% 15%, rgba(var(--accent-rgb), 0.14), transparent 60%);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    .step .inner { position: relative; }
+    .num {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 28px;
+      color: rgba(var(--accent-rgb), 0.92);
+      margin-bottom: 10px;
+    }
+    .step b { display: block; font-size: 15px; margin-bottom: 6px; }
+    .step span { color: rgba(255,255,255,0.70); font-size: 13px; }
+
+    .quiz {
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .quiz-left { padding: 18px; border-radius: 18px; background: rgba(0,0,0,0.22); border: 1px solid rgba(255,255,255,0.08); }
+    .quiz-right { padding: 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03); }
+    .quiz-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+    .progress {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .progress > div {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.95), rgba(var(--accent2-rgb), 0.95));
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+    .quiz-q { font-weight: 900; margin-bottom: 10px; }
+    .options { display: grid; gap: 10px; }
+    .opt {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.24);
+      color: rgba(255,255,255,0.88);
+      border-radius: 16px;
+      padding: 12px 12px;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .opt:hover { transform: translateY(-2px); border-color: rgba(var(--accent-rgb), 0.30); }
+    .opt small { color: rgba(255,255,255,0.62); font-weight: 700; }
+
+    .ba {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .ba-card {
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+    }
+    .ba-stage {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: rgba(0,0,0,0.35);
+    }
+    .ba-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; user-select: none; pointer-events: none; }
+    .ba-after {
+      position: absolute;
+      inset: 0;
+      width: 50%;
+      overflow: hidden;
+    }
+    .ba-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 3px;
+      background: rgba(255,255,255,0.78);
+      box-shadow: 0 0 0 6px rgba(var(--accent-rgb), 0.18);
+    }
+    .ba-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.95), rgba(var(--accent2-rgb), 0.95));
+      border: 2px solid rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #06101a;
+      font-weight: 900;
+      box-shadow: 0 16px 44px rgba(0,0,0,0.45);
+    }
+    .ba-range { width: 100%; margin-top: 12px; }
+    .ba-range input { width: 100%; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .shot {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      aspect-ratio: 16 / 10;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      position: relative;
+    }
+    .shot:hover { transform: scale(1.02); border-color: rgba(var(--accent-rgb), 0.28); }
+    .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .shot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.05));
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+    .shot:hover::after { opacity: 1; }
+
+    .faq { display: grid; gap: 10px; max-width: 900px; }
+    .faq-item { border-radius: 18px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); overflow: hidden; }
+    .faq-q { width: 100%; padding: 16px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border: none; background: transparent; color: rgba(255,255,255,0.92); cursor: pointer; text-align: left; }
+    .faq-q b { font-size: 15px; }
+    .faq-a { display: none; padding: 0 16px 16px; color: rgba(255,255,255,0.70); }
+    .faq-item.open .faq-a { display: block; }
+    .faq-q i { color: var(--accent); }
+
+    .cta {
+      border-radius: 24px;
+      border: 1px solid rgba(var(--accent-rgb), 0.24);
+      background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.12), rgba(var(--accent2-rgb), 0.10));
+      padding: 26px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      align-items: center;
+    }
+    .cta h3 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 28px; margin-bottom: 6px; }
+    .cta p { color: rgba(255,255,255,0.72); }
+
+    .form {
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .footer {
+      padding: 42px 0;
+      border-top: 1px solid var(--footer-border);
+      color: var(--footer-text);
+      background: var(--footer-bg);
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: var(--lightbox-bg);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 22px;
+    }
+    .lightbox.open { display: flex; }
+    .lb-inner { max-width: 1100px; width: 100%; position: relative; }
+    .lb-inner img { width: 100%; max-height: 82vh; object-fit: contain; border-radius: 18px; border: 1px solid rgba(255,255,255,0.12); }
+    .lb-close {
+      position: absolute;
+      right: -10px;
+      top: -10px;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(var(--accent-rgb), 0.45);
+      background: rgba(0,0,0,0.55);
+      color: rgba(255,255,255,0.92);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .customizer-btn {
+      position: fixed !important;
+      right: 20px !important;
+      bottom: 110px !important;
+      z-index: 99999 !important;
+      width: 60px !important;
+      height: 60px !important;
+      border-radius: 50% !important;
+      border: 3px solid #ffffff !important;
+      background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+      color: #ffffff !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 26px !important;
+      cursor: pointer !important;
+      box-shadow: 0 8px 30px rgba(34, 197, 94, 0.6), 0 0 0 5px rgba(34, 197, 94, 0.2), inset 0 2px 4px rgba(255,255,255,0.3) !important;
+      transition: all 0.3s ease !important;
+      pointer-events: auto !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    .customizer-btn:hover {
+      transform: scale(1.1) !important;
+      box-shadow: 0 12px 40px rgba(34, 197, 94, 0.8), 0 0 0 8px rgba(34, 197, 94, 0.3) !important;
+    }
+
+    .customizer {
+      position: fixed;
+      right: 16px;
+      bottom: 180px;
+      width: min(340px, calc(100vw - 32px));
+      max-height: calc(100vh - 220px);
+      z-index: 10000;
+      border-radius: 20px;
+      border: 2px solid #22c55e;
+      background: #0a0a0a;
+      box-shadow: 0 30px 100px rgba(0,0,0,0.90), 0 0 20px rgba(34, 197, 94, 0.3);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+    }
+    .customizer.open { display: flex; animation: slideIn 0.3s ease; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .customizer-h {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px 18px 14px;
+      background: rgba(var(--accent-rgb), 0.08);
+      border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
+    }
+    .customizer-h b {
+      font-weight: 900;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .customizer-h b i {
+      font-size: 16px;
+      color: var(--accent);
+    }
+
+    .customizer-b {
+      padding: 20px;
+      overflow-y: auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    /* Группы настроек */
+    .c-group {
+      border: 2px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+    }
+    .c-group-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 18px;
+      font-size: 14px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .c-group-title:hover {
+      background: rgba(255,255,255,0.10);
+    }
+    .c-group-title .c-arrow {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.5);
+      border: 2px solid rgba(255,255,255,0.4);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .c-group-title .c-arrow::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 8px solid #fff;
+      transition: transform 0.3s ease;
+      margin-top: 2px;
+    }
+    .c-group.open .c-group-title .c-arrow::after {
+      transform: rotate(180deg);
+      margin-top: -2px;
+    }
+    .c-group-title:hover .c-arrow {
+      background: var(--accent2);
+      transform: scale(1.1);
+    }
+    .c-simple-row {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .c-simple-row:last-child {
+      border-bottom: none;
+    }
+    .c-simple-row label {
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .c-row {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    .c-row:last-child { border-bottom: none; }
+    .c-row label {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Цветовые превью */
+    .c-color-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      border: 3px solid #22c55e;
+      background: #fff;
+      display: block;
+      position: relative;
+    }
+    .c-color-wrap input[type="color"] {
+      width: 44px;
+      height: 44px;
+      border: none;
+      padding: 0;
+      margin: 0;
+      display: block;
+    }
+
+    /* Слайдеры */
+    .c-range-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .c-range-wrap input[type="range"] {
+      width: 120px;
+      height: 12px;
+      -webkit-appearance: slider-horizontal;
+      appearance: auto;
+      background: #555;
+      border: 2px solid #22c55e;
+      border-radius: 6px;
+      display: block;
+    }
+    .c-range-value {
+      font-size: 14px;
+      font-weight: bold;
+      color: #22c55e;
+      min-width: 40px;
+      text-align: right;
+      display: inline-block;
+    }
+
+    /* Быстрые пресеты */
+    .c-presets {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 8px 0;
+    }
+    .c-preset {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .c-preset:hover {
+      transform: scale(1.2);
+      border-color: rgba(255,255,255,0.70);
+    }
+    .c-preset.active::after {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+    }
+
+    /* Кнопка сброса */
+    .c-reset-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.20);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      margin-top: 8px;
+    }
+    .c-reset-btn:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    .sticky {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 12px;
+      z-index: 1200;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      padding: 0 14px;
+    }
+    .sticky-inner {
+      pointer-events: auto;
+      width: min(980px, 100%);
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(5, 6, 10, 0.70);
+      backdrop-filter: blur(16px);
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.50);
+    }
+    .sticky-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 99px;
+      background: var(--accent);
+      box-shadow: 0 0 0 8px rgba(var(--accent-rgb), 0.12);
+      flex: 0 0 auto;
+    }
+    .sticky-left div { min-width: 0; }
+    .sticky-left b { display: block; font-size: 13px; }
+    .sticky-left span { display: block; font-size: 12px; color: rgba(255,255,255,0.65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .facts { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .quiz { grid-template-columns: 1fr; }
+      .ba { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr; }
+      .cta { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top">
+          <span class="brand-badge"><i class="fa-solid fa-hammer"></i></span>
+          <span>Своя бригада</span>
+        </a>
+        <div class="nav-links" aria-label="Навигация">
+          <a href="#services">Услуги</a>
+          <a href="#process">Как работаем</a>
+          <a href="#quiz">Квиз</a>
+          <a href="#portfolio">Портфолио</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end">
+          <select class="theme-select" id="themeSelect" aria-label="Тема">
+            <option value="green">Зелёный</option>
+            <option value="gold">Золото</option>
+            <option value="blue">Синий</option>
+            <option value="red">Красный</option>
+            <option value="purple">Фиолетовый</option>
+          </select>
+          <a class="btn btn-primary" href="#lead"><i class="fa-solid fa-bolt"></i> Быстрый расчет</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="kicker"><i class="fa-solid fa-shield-heart"></i> Честные сроки • Договор • Гарантия</div>
+            <h1>Ремонт квартир от частной бригады</h1>
+            <p class="subtitle">Сделаем ремонт «под ключ» аккуратно и по-человечески: смета понятная, этапы прозрачные, качество контролируем сами. Без менеджерских накруток — вы общаетесь напрямую с бригадой.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#lead"><i class="fa-solid fa-phone"></i> Получить смету</a>
+              <a class="btn" href="#portfolio"><i class="fa-solid fa-images"></i> Смотреть работы</a>
+              <button class="btn" id="copyPhone" type="button"><i class="fa-solid fa-copy"></i> Скопировать телефон</button>
+            </div>
+            <div class="facts">
+              <div class="fact"><b>Сроки</b><span>фиксируем в договоре</span></div>
+              <div class="fact"><b>Материалы</b><span>помогаем выбрать без переплаты</span></div>
+              <div class="fact"><b>Гарантия</b><span>до 3 лет на работы</span></div>
+            </div>
+          </div>
+
+          <aside class="hero-card" aria-label="Калькулятор">
+            <div class="hero-card-inner">
+              <div class="calc-title">
+                <h3><i class="fa-solid fa-calculator" style="color: var(--accent)"></i> Калькулятор цены</h3>
+                <span class="pill">за 20 секунд</span>
+              </div>
+
+              <div class="field">
+                <label for="area">Площадь квартиры (м²)</label>
+                <input id="area" type="number" min="10" max="500" step="1" placeholder="например: 45" value="45" />
+              </div>
+
+              <div class="field">
+                <label for="type">Тип ремонта</label>
+                <select id="type">
+                  <option value="cosmetic">Косметический</option>
+                  <option value="capital" selected>Капитальный</option>
+                  <option value="design">Дизайнерский</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="rooms">Комнат</label>
+                <select id="rooms">
+                  <option value="1">1</option>
+                  <option value="2" selected>2</option>
+                  <option value="3">3</option>
+                  <option value="4">4+</option>
+                </select>
+              </div>
+
+              <button class="btn btn-primary" id="calcBtn" type="button"><i class="fa-solid fa-wand-magic-sparkles"></i> Посчитать</button>
+
+              <div class="calc-result" id="calcResult" aria-live="polite">
+                <b>Ориентировочная стоимость работ</b>
+                <div class="price" id="price">—</div>
+                <div class="calc-note">Точная смета — после бесплатного замера. Это не оферта.</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <h2 class="section-title">Услуги</h2>
+        <p class="section-sub">Полный цикл ремонта: от демонтажа до чистовой. Смета — понятная: вы видите, за что платите.</p>
+        <div class="grid">
+          <div class="card"><div class="icon"><i class="fa-solid fa-paint-roller"></i></div><h3>Косметический ремонт</h3><p>Обновление без «вскрытия» всего: стены, потолок, пол, мелкие работы.</p></div>
+          <div class="card"><div class="icon"><i class="fa-solid fa-trowel-bricks"></i></div><h3>Капитальный ремонт</h3><p>Демонтаж, выравнивание, инженерка, чистовые работы — всё под ключ.</p></div>
+          <div class="card"><div class="icon"><i class="fa-solid fa-ruler-combined"></i></div><h3>Ремонт по дизайн-проекту</h3><p>Точные размеры, узлы, скрытые люки, световые сценарии и аккуратная сборка.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="container">
+        <h2 class="section-title">Как работаем</h2>
+        <p class="section-sub">Простая схема без лишних звонков. Вы понимаете, что происходит на каждом этапе.</p>
+        <div class="steps">
+          <div class="step"><div class="inner"><div class="num">01</div><b>Замер и консультация</b><span>Бесплатно приезжаем, уточняем задачи, даем рекомендации.</span></div></div>
+          <div class="step"><div class="inner"><div class="num">02</div><b>Смета и договор</b><span>Фиксируем стоимость работ, этапы и сроки. Прозрачные условия.</span></div></div>
+          <div class="step"><div class="inner"><div class="num">03</div><b>Работы по этапам</b><span>Фото/видео отчеты, контроль качества, чистота на объекте.</span></div></div>
+          <div class="step"><div class="inner"><div class="num">04</div><b>Сдача и гарантия</b><span>Приемка, финальная уборка, гарантийные обязательства.</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <div class="container">
+        <h2 class="section-title">Квиз: точнее смета за 1 минуту</h2>
+        <p class="section-sub">Ответь на 3 вопроса — и мы предложим оптимальный план работ. (Без спама.)</p>
+        <div class="quiz" aria-label="Квиз">
+          <div class="quiz-left">
+            <div class="quiz-title">
+              <b>Прогресс</b>
+              <span class="pill" id="quizStep">Шаг 1/3</span>
+            </div>
+            <div class="progress" aria-hidden="true"><div id="quizBar"></div></div>
+            <div style="height: 14px"></div>
+            <div class="quiz-q" id="quizQ">Какой тип ремонта нужен?</div>
+            <div class="options" id="quizOpts"></div>
+            <div style="height: 12px"></div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+              <button class="btn" id="quizBack" type="button"><i class="fa-solid fa-arrow-left"></i> Назад</button>
+              <button class="btn btn-primary" id="quizSkip" type="button"><i class="fa-solid fa-forward"></i> Пропустить</button>
+            </div>
+          </div>
+          <div class="quiz-right">
+            <b style="display:block; margin-bottom: 8px">Ваши ответы</b>
+            <div style="display:grid; gap: 10px; color: rgba(255,255,255,0.70); font-weight: 700; font-size: 14px" id="quizSummary">
+              <div>Тип: —</div>
+              <div>Срок: —</div>
+              <div>Квартира: —</div>
+            </div>
+            <div style="height: 14px"></div>
+            <a class="btn btn-primary" href="#lead"><i class="fa-solid fa-paper-plane"></i> Получить смету по квизу</a>
+            <div style="height: 10px"></div>
+            <div style="color: rgba(255,255,255,0.62); font-size: 12px">Мы свяжемся только для уточнения деталей и сметы.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="beforeafter">
+      <div class="container">
+        <h2 class="section-title">До / После</h2>
+        <p class="section-sub">Наглядно: как меняется квартира после грамотной подготовки и чистовой.</p>
+        <div class="ba">
+          <div class="ba-card">
+            <b style="display:block; margin-bottom: 10px">Комната</b>
+            <div class="ba-stage" data-ba>
+              <img alt="До" src="../images/bathroom/photo_1.jpg">
+              <div class="ba-after"><img alt="После" src="../images/bathroom/photo_3.jpg"></div>
+              <div class="ba-line"></div>
+              <div class="ba-knob"><i class="fa-solid fa-arrows-left-right"></i></div>
+            </div>
+            <div class="ba-range"><input type="range" min="0" max="100" value="50" data-ba-range></div>
+            <div style="color: rgba(255,255,255,0.62); font-size: 12px; margin-top: 8px">Потяни ползунок — сравни.</div>
+          </div>
+          <div class="ba-card">
+            <b style="display:block; margin-bottom: 10px">Кухня</b>
+            <div class="ba-stage" data-ba>
+              <img alt="До" src="../images/keramogranit/keramogranit-10.webp">
+              <div class="ba-after"><img alt="После" src="../images/keramogranit/ukladka-krupnoformatnoj-plitki-15.webp"></div>
+              <div class="ba-line"></div>
+              <div class="ba-knob"><i class="fa-solid fa-arrows-left-right"></i></div>
+            </div>
+            <div class="ba-range"><input type="range" min="0" max="100" value="50" data-ba-range></div>
+            <div style="color: rgba(255,255,255,0.62); font-size: 12px; margin-top: 8px">Потяни ползунок — сравни.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio">
+      <div class="container">
+        <h2 class="section-title">Портфолио</h2>
+        <p class="section-sub">Фото с объектов. Нажмите на карточку — откроется полноразмер.</p>
+        <div class="gallery" id="gallery">
+          <div class="shot" data-src="../images/bathroom/photo_1.jpg"><img src="../images/bathroom/photo_1.jpg" alt="Проект 1"></div>
+          <div class="shot" data-src="../images/bathroom/photo_2.jpg"><img src="../images/bathroom/photo_2.jpg" alt="Проект 2"></div>
+          <div class="shot" data-src="../images/bathroom/photo_3.jpg"><img src="../images/bathroom/photo_3.jpg" alt="Проект 3"></div>
+          <div class="shot" data-src="../images/ukladka_pol.webp"><img src="../images/ukladka_pol.webp" alt="Проект 4"></div>
+          <div class="shot" data-src="../images/keramogranit/keramogranit-10.webp"><img src="../images/keramogranit/keramogranit-10.webp" alt="Проект 5"></div>
+          <div class="shot" data-src="../images/keramogranit/ukladka-krupnoformatnoj-plitki-15.webp"><img src="../images/keramogranit/ukladka-krupnoformatnoj-plitki-15.webp" alt="Проект 6"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <h2 class="section-title">FAQ</h2>
+        <p class="section-sub">Коротко отвечаем на частые вопросы.</p>
+        <div class="faq" id="faqList">
+          <div class="faq-item"><button class="faq-q" type="button"><b>Вы работаете по договору?</b><i class="fa-solid fa-plus"></i></button><div class="faq-a">Да. Фиксируем этапы, сроки и стоимость работ. Это защищает и вас, и нас.</div></div>
+          <div class="faq-item"><button class="faq-q" type="button"><b>Можно ли делать ремонт поэтапно?</b><i class="fa-solid fa-plus"></i></button><div class="faq-a">Да. Разбиваем на этапы: демонтаж/черновые/инженерка/чистовые. Оплата — по выполнению этапов.</div></div>
+          <div class="faq-item"><button class="faq-q" type="button"><b>Как быстро вы можете начать?</b><i class="fa-solid fa-plus"></i></button><div class="faq-a">Обычно в течение 3–7 дней после замера и согласования сметы. Срочные старты — по возможности.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lead">
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h3>Нужно посчитать ремонт?</h3>
+            <p>Оставьте номер — перезвоним и уточним детали. Смета понятная, без «сюрпризов».</p>
+          </div>
+          <form class="form" onsubmit="return false;" aria-label="Заявка">
+            <div class="field">
+              <label for="name">Имя</label>
+              <input id="name" placeholder="Например: Алексей" autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="phone">Телефон</label>
+              <input id="phone" placeholder="+7 (___) ___-__-__" inputmode="tel" autocomplete="tel" />
+            </div>
+            <button class="btn btn-primary" id="leadBtn" type="button"><i class="fa-solid fa-paper-plane"></i> Отправить</button>
+            <div style="color: rgba(255,255,255,0.62); font-size: 12px">Нажимая «Отправить», вы соглашаетесь на обработку данных для связи.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap: 14px; flex-wrap: wrap;">
+        <div style="display:flex; align-items:center; gap: 10px">
+          <span class="brand-badge" style="width: 34px; height: 34px"><i class="fa-solid fa-hammer"></i></span>
+          <b>Своя бригада</b>
+        </div>
+        <div>© <span id="y"></span> Своя бригада. Ремонт квартир от частной бригады.</div>
+      </div>
+    </footer>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lb-inner">
+      <button class="lb-close" id="lbClose" type="button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      <img id="lbImg" alt="" />
+    </div>
+  </div>
+
+  <button class="customizer-btn" id="customizerBtn" type="button"><i class="fa-solid fa-palette"></i></button>
+  <div class="customizer" id="customizer" aria-hidden="true">
+    <div class="customizer-h">
+      <b><i class="fa-solid fa-sliders"></i> Тема</b>
+      <button class="btn" id="customizerClose" type="button" aria-label="Close" style="padding: 8px 10px; font-size: 12px;"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="customizer-b">
+      <!-- Быстрые пресеты -->
+      <div class="c-presets" id="cPresets">
+        <div class="c-preset active" data-theme="green" style="background: linear-gradient(135deg, #22c55e, #16a34a);" title="Зелёный"></div>
+        <div class="c-preset" data-theme="gold" style="background: linear-gradient(135deg, #D4AF37, #FFD700);" title="Золотой"></div>
+        <div class="c-preset" data-theme="blue" style="background: linear-gradient(135deg, #3b82f6, #2563eb);" title="Синий"></div>
+        <div class="c-preset" data-theme="red" style="background: linear-gradient(135deg, #ef4444, #b91c1c);" title="Красный"></div>
+        <div class="c-preset" data-theme="purple" style="background: linear-gradient(135deg, #a855f7, #7c3aed);" title="Фиолетовый"></div>
+      </div>
+
+      <div style="border-top: 1px solid #333; margin: 10px 0;"></div>
+
+      <!-- ФОН -->
+      <div style="margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase;">Фон сайта</div>
+      <div class="c-simple-row">
+        <label>Фон верх</label>
+        <input id="c_bg" type="color" value="#000000" style="width: 44px; height: 44px; border: 2px solid #22c55e; border-radius: 8px; cursor: pointer;">
+      </div>
+      <div class="c-simple-row">
+        <label>Фон низ</label>
+        <input id="c_bg2" type="color" value="#070707" style="width: 44px; height: 44px; border: 2px solid #22c55e; border-radius: 8px; cursor: pointer;">
+      </div>
+
+      <div style="border-top: 1px solid #333; margin: 10px 0;"></div>
+
+      <!-- HEADER -->
+      <div style="margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase;">Header</div>
+      <div class="c-simple-row">
+        <label>Цвет Header</label>
+        <input id="c_header_bg" type="color" value="#05060a" style="width: 44px; height: 44px; border: 2px solid #22c55e; border-radius: 8px; cursor: pointer;">
+      </div>
+
+      <div style="border-top: 1px solid #333; margin: 10px 0;"></div>
+
+      <!-- КАРТОЧКИ -->
+      <div style="margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase;">Карточки</div>
+      <div class="c-simple-row">
+        <label>Цвет карточек</label>
+        <input id="c_card_bg" type="color" value="#ffffff" style="width: 44px; height: 44px; border: 2px solid #fff; border-radius: 8px; cursor: pointer;">
+      </div>
+      <div class="c-simple-row">
+        <label>Цвет обводки</label>
+        <input id="c_card_border" type="color" value="#ffffff" style="width: 44px; height: 44px; border: 2px solid #fff; border-radius: 8px; cursor: pointer;">
+      </div>
+
+      <div style="border-top: 1px solid #333; margin: 10px 0;"></div>
+
+      <!-- ТЕКСТ -->
+      <div style="margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase;">Текст</div>
+      <div class="c-simple-row">
+        <label>Цвет текста</label>
+        <input id="c_text" type="color" value="#ffffff" style="width: 44px; height: 44px; border: 2px solid #fff; border-radius: 8px; cursor: pointer;">
+      </div>
+      <div class="c-simple-row">
+        <label>Цвет вторичного</label>
+        <input id="c_muted" type="color" value="#aaaaaa" style="width: 44px; height: 44px; border: 2px solid #aaa; border-radius: 8px; cursor: pointer;">
+      </div>
+
+      <div style="border-top: 1px solid #333; margin: 10px 0;"></div>
+
+      <!-- STICKY -->
+      <div style="margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase;">Sticky панель</div>
+      <div class="c-simple-row">
+        <label>Цвет фона</label>
+        <input id="c_sticky_bg" type="color" value="#000000" style="width: 44px; height: 44px; border: 2px solid #fff; border-radius: 8px; cursor: pointer;">
+      </div>
+
+      <div style="border-top: 1px solid #333; margin: 10px 0;"></div>
+
+      <!-- FOOTER -->
+      <div style="margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase;">Footer</div>
+      <div class="c-simple-row">
+        <label>Цвет фона</label>
+        <input id="c_footer_bg" type="color" value="#000000" style="width: 44px; height: 44px; border: 2px solid #fff; border-radius: 8px; cursor: pointer;">
+      </div>
+
+      <div style="border-top: 1px solid #333; margin: 10px 0;"></div>
+
+      <!-- АКЦЕНТЫ -->
+      <div style="margin-bottom: 8px; font-size: 12px; color: #888; text-transform: uppercase;">Акценты</div>
+      <div class="c-simple-row">
+        <label>Акцент 1</label>
+        <input id="c_accent" type="color" value="#22c55e" style="width: 44px; height: 44px; border: 2px solid #22c55e; border-radius: 8px; cursor: pointer;">
+      </div>
+      <div class="c-simple-row">
+        <label>Акцент 2</label>
+        <input id="c_accent2" type="color" value="#16a34a" style="width: 44px; height: 44px; border: 2px solid #16a34a; border-radius: 8px; cursor: pointer;">
+      </div>
+
+      <button class="c-reset-btn" id="customizerReset" type="button" style="margin-top: 15px;"><i class="fa-solid fa-rotate-left"></i> Сбросить все</button>
+    </div>
+  </div>
+
+  <div class="sticky" aria-hidden="false">
+    <div class="sticky-inner">
+      <div class="sticky-left">
+        <span class="dot"></span>
+        <div>
+          <b>Быстрый расчет</b>
+          <span id="stickyText">Ответим и посчитаем смету</span>
+        </div>
+      </div>
+      <div style="display:flex; gap: 10px; align-items:center; flex-wrap: wrap; justify-content:flex-end">
+        <a class="btn" href="#quiz"><i class="fa-solid fa-wand-magic-sparkles"></i> Квиз</a>
+        <a class="btn btn-primary" href="#lead"><i class="fa-solid fa-phone"></i> Заявка</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Theme switcher (5 variants)
+      var THEME_KEY = 'remont_theme_v1';
+      var defaultTheme = 'green';
+      var select = document.getElementById('themeSelect');
+
+      function applyTheme(t) {
+        var theme = (t || '').toLowerCase();
+        if (!theme) theme = defaultTheme;
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+
+      var saved = null;
+      try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+      applyTheme(saved || defaultTheme);
+
+      if (select) {
+        select.value = (saved || defaultTheme);
+        select.addEventListener('change', function () {
+          applyTheme(select.value);
+          try { localStorage.setItem(THEME_KEY, select.value); } catch (e) {}
+        });
+      }
+
+      document.getElementById('y').textContent = String(new Date().getFullYear());
+
+      var CUSTOM_KEY = 'remont_custom_v1';
+      function hexToRgb(hex) {
+        var h = String(hex || '').replace('#', '').trim();
+        if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+        if (h.length !== 6) return null;
+        var n = parseInt(h, 16);
+        if (!isFinite(n)) return null;
+        return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+      }
+      function clamp01(x) { return Math.max(0, Math.min(1, Number(x))); }
+      function setVar(k, v) { document.documentElement.style.setProperty(k, v); }
+
+      function applyCustom(s) {
+        if (!s) return;
+        if (s.bg) setVar('--bg', s.bg);
+        if (s.bg2) setVar('--bg2', s.bg2);
+        if (s.accent) {
+          setVar('--accent', s.accent);
+          var rgb = hexToRgb(s.accent);
+          if (rgb) setVar('--accent-rgb', rgb.r + ', ' + rgb.g + ', ' + rgb.b);
+        }
+        if (s.accent2) {
+          setVar('--accent2', s.accent2);
+          var rgb2 = hexToRgb(s.accent2);
+          if (rgb2) setVar('--accent2-rgb', rgb2.r + ', ' + rgb2.g + ', ' + rgb2.b);
+        }
+        if (s.headerBg) setVar('--header-bg', s.headerBg);
+        if (s.cardBg) setVar('--card', s.cardBg);
+        if (s.cardBorder) setVar('--stroke', s.cardBorder);
+        if (s.text) setVar('--text', s.text);
+        if (s.muted) setVar('--muted', s.muted);
+        if (s.stickyBg) setVar('--sticky-bg', s.stickyBg);
+        if (s.footerBg) setVar('--footer-bg', s.footerBg);
+      }
+
+      function loadCustom() {
+        try {
+          var raw = localStorage.getItem(CUSTOM_KEY);
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (e) { return null; }
+      }
+      function saveCustom(s) {
+        try { localStorage.setItem(CUSTOM_KEY, JSON.stringify(s)); } catch (e) {}
+      }
+
+      var cState = loadCustom();
+      if (cState) applyCustom(cState);
+
+      var custBtn = document.getElementById('customizerBtn');
+      var cust = document.getElementById('customizer');
+      var custClose = document.getElementById('customizerClose');
+      var custReset = document.getElementById('customizerReset');
+
+      function custOpen() { cust.classList.add('open'); custBtn.classList.add('active'); cust.setAttribute('aria-hidden', 'false'); }
+      function custHide() { cust.classList.remove('open'); custBtn.classList.remove('active'); cust.setAttribute('aria-hidden', 'true'); }
+      if (custBtn) custBtn.addEventListener('click', function () { cust.classList.contains('open') ? custHide() : custOpen(); });
+      if (custClose) custClose.addEventListener('click', custHide);
+
+      // Группы настроек (toggle)
+      document.querySelectorAll('.c-group-title').forEach(function (title) {
+        title.addEventListener('click', function () {
+          var group = title.closest('.c-group');
+          group.classList.toggle('open');
+        });
+      });
+
+      // Быстрые пресеты тем
+      var presets = document.querySelectorAll('.c-preset');
+      presets.forEach(function (p) {
+        p.addEventListener('click', function () {
+          var theme = p.getAttribute('data-theme');
+          document.documentElement.setAttribute('data-theme', theme);
+          try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
+          presets.forEach(function (x) { x.classList.remove('active'); });
+          p.classList.add('active');
+        });
+      });
+
+      // Обновляем активный пресет при загрузке
+      var currentTheme = document.documentElement.getAttribute('data-theme') || 'green';
+      presets.forEach(function (p) {
+        if (p.getAttribute('data-theme') === currentTheme) p.classList.add('active');
+        else p.classList.remove('active');
+      });
+
+      function bindColor(id, key) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (!cState) cState = {};
+        if (cState[key]) el.value = cState[key];
+        el.addEventListener('input', function () {
+          cState[key] = el.value;
+          applyCustom(cState);
+          saveCustom(cState);
+        });
+      }
+      function bindRange(id, key, displayId) {
+        var el = document.getElementById(id);
+        var display = displayId ? document.getElementById(displayId) : null;
+        if (!el) return;
+        if (!cState) cState = {};
+        if (typeof cState[key] === 'number') {
+          el.value = String(Math.round((cState[key] * 100)));
+          if (display) display.textContent = el.value + '%';
+        }
+        el.addEventListener('input', function () {
+          cState[key] = Number(el.value) / 100;
+          if (display) display.textContent = el.value + '%';
+          applyCustom(cState);
+          saveCustom(cState);
+        });
+      }
+
+      bindColor('c_bg', 'bg');
+      bindColor('c_bg2', 'bg2');
+      bindColor('c_accent', 'accent');
+      bindColor('c_accent2', 'accent2');
+      bindColor('c_header_bg', 'headerBg');
+      bindColor('c_card_bg', 'cardBg');
+      bindColor('c_card_border', 'cardBorder');
+      bindColor('c_text', 'text');
+      bindColor('c_muted', 'muted');
+      bindColor('c_sticky_bg', 'stickyBg');
+      bindColor('c_footer_bg', 'footerBg');
+
+      if (!cState) cState = {};
+      if (typeof cState.muted2A !== 'number') cState.muted2A = 0.58;
+      if (typeof cState.stickyA !== 'number') cState.stickyA = 0.55;
+      if (typeof cState.footerA !== 'number') cState.footerA = 0.62;
+      if (typeof cState.lightboxA !== 'number') cState.lightboxA = 0.72;
+      applyCustom(cState);
+
+      if (custReset) {
+        custReset.addEventListener('click', function () {
+          try { localStorage.removeItem(CUSTOM_KEY); } catch (e) {}
+          cState = null;
+          document.documentElement.style.removeProperty('--bg');
+          document.documentElement.style.removeProperty('--bg2');
+          document.documentElement.style.removeProperty('--accent');
+          document.documentElement.style.removeProperty('--accent2');
+          document.documentElement.style.removeProperty('--accent-rgb');
+          document.documentElement.style.removeProperty('--accent2-rgb');
+          document.documentElement.style.removeProperty('--header-bg');
+          document.documentElement.style.removeProperty('--card');
+          document.documentElement.style.removeProperty('--stroke');
+          document.documentElement.style.removeProperty('--text');
+          document.documentElement.style.removeProperty('--muted');
+          document.documentElement.style.removeProperty('--sticky-bg');
+          document.documentElement.style.removeProperty('--footer-bg');
+        });
+      }
+
+      var PHONE = '+7 900 000-00-00';
+
+      var copyPhone = document.getElementById('copyPhone');
+      if (copyPhone) {
+        copyPhone.addEventListener('click', async function () {
+          try {
+            await navigator.clipboard.writeText(PHONE);
+            var t = document.getElementById('stickyText');
+            if (t) t.textContent = 'Телефон скопирован: ' + PHONE;
+            setTimeout(function () { if (t) t.textContent = 'Ответим и посчитаем смету'; }, 2600);
+          } catch (e) {
+            alert('Телефон: ' + PHONE);
+          }
+        });
+      }
+
+      function formatMoney(n) {
+        try {
+          return new Intl.NumberFormat('ru-RU').format(Math.round(n)) + ' ₽';
+        } catch (e) {
+          return String(Math.round(n)) + ' ₽';
+        }
+      }
+
+      function calc() {
+        var area = Number(document.getElementById('area').value || 0);
+        var type = document.getElementById('type').value;
+        var rooms = Number(document.getElementById('rooms').value || 1);
+
+        if (!area || area < 10) area = 10;
+        if (area > 500) area = 500;
+
+        var base = 0;
+        if (type === 'cosmetic') base = 6500;
+        if (type === 'capital') base = 11500;
+        if (type === 'design') base = 16500;
+
+        var kRooms = 1 + Math.max(0, rooms - 1) * 0.06;
+        var estimate = area * base * kRooms;
+
+        document.getElementById('price').textContent = formatMoney(estimate);
+      }
+
+      document.getElementById('calcBtn').addEventListener('click', calc);
+      calc();
+
+      // FAQ accordion
+      var faq = document.getElementById('faqList');
+      if (faq) {
+        faq.addEventListener('click', function (e) {
+          var btn = e.target.closest && e.target.closest('.faq-q');
+          if (!btn) return;
+          var item = btn.closest('.faq-item');
+          var opened = item.classList.contains('open');
+          faq.querySelectorAll('.faq-item.open').forEach(function (x) {
+            x.classList.remove('open');
+            var ic = x.querySelector('i');
+            if (ic) ic.className = 'fa-solid fa-plus';
+          });
+          if (!opened) {
+            item.classList.add('open');
+            var ic2 = item.querySelector('i');
+            if (ic2) ic2.className = 'fa-solid fa-minus';
+          }
+        });
+      }
+
+      // Lightbox
+      var lb = document.getElementById('lightbox');
+      var lbImg = document.getElementById('lbImg');
+      var lbClose = document.getElementById('lbClose');
+
+      function lbOpen(src, alt) {
+        lbImg.src = src;
+        lbImg.alt = alt || '';
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      function lbHide() {
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden', 'true');
+        lbImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('gallery').addEventListener('click', function (e) {
+        var shot = e.target.closest && e.target.closest('.shot');
+        if (!shot) return;
+        var src = shot.getAttribute('data-src');
+        var img = shot.querySelector('img');
+        lbOpen(src || (img && img.src), img && img.alt);
+      });
+      if (lbClose) lbClose.addEventListener('click', lbHide);
+      if (lb) lb.addEventListener('click', function (e) { if (e.target === lb) lbHide(); });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && lb.classList.contains('open')) lbHide();
+      });
+
+      // Before/After
+      function applyBA(stage, value) {
+        var after = stage.querySelector('.ba-after');
+        var line = stage.querySelector('.ba-line');
+        var knob = stage.querySelector('.ba-knob');
+        var v = Math.max(0, Math.min(100, Number(value)));
+        after.style.width = v + '%';
+        line.style.left = v + '%';
+        knob.style.left = v + '%';
+      }
+
+      document.querySelectorAll('[data-ba]').forEach(function (stage) {
+        var range = stage.parentElement.querySelector('[data-ba-range]');
+        if (!range) return;
+        applyBA(stage, range.value);
+        range.addEventListener('input', function () { applyBA(stage, range.value); });
+      });
+
+      // Quiz
+      var quiz = {
+        idx: 0,
+        answers: { type: null, time: null, obj: null },
+        steps: [
+          {
+            key: 'type',
+            q: 'Какой тип ремонта нужен?',
+            opts: [
+              { v: 'Косметический', s: 'Быстро освежить' },
+              { v: 'Капитальный', s: 'Полный цикл' },
+              { v: 'Дизайнерский', s: 'По проекту' },
+            ]
+          },
+          {
+            key: 'time',
+            q: 'Когда планируете старт?',
+            opts: [
+              { v: 'В ближайшие 2 недели', s: 'Срочно' },
+              { v: 'В течение месяца', s: 'Планово' },
+              { v: 'Пока присматриваюсь', s: 'Нужно посоветовать' },
+            ]
+          },
+          {
+            key: 'obj',
+            q: 'Какая квартира?',
+            opts: [
+              { v: 'Новостройка', s: 'С нуля' },
+              { v: 'Вторичка', s: 'С демонтажом' },
+              { v: 'Студия', s: 'Компактно' },
+            ]
+          }
+        ]
+      };
+
+      var qEl = document.getElementById('quizQ');
+      var optsEl = document.getElementById('quizOpts');
+      var barEl = document.getElementById('quizBar');
+      var stepEl = document.getElementById('quizStep');
+      var sumEl = document.getElementById('quizSummary');
+      var backBtn = document.getElementById('quizBack');
+      var skipBtn = document.getElementById('quizSkip');
+
+      function renderQuiz() {
+        var step = quiz.steps[quiz.idx];
+        qEl.textContent = step.q;
+        optsEl.innerHTML = '';
+        step.opts.forEach(function (o) {
+          var div = document.createElement('div');
+          div.className = 'opt';
+          div.innerHTML = '<div><b>' + o.v + '</b><br><small>' + o.s + '</small></div><i class="fa-solid fa-chevron-right" style="color: rgba(255,255,255,0.55)"></i>';
+          div.addEventListener('click', function () {
+            quiz.answers[step.key] = o.v;
+            updateSummary();
+            nextQuiz();
+          });
+          optsEl.appendChild(div);
+        });
+
+        var pct = ((quiz.idx) / (quiz.steps.length - 1)) * 100;
+        barEl.style.width = String(Math.max(0, Math.min(100, pct))) + '%';
+        stepEl.textContent = 'Шаг ' + String(quiz.idx + 1) + '/' + String(quiz.steps.length);
+        backBtn.disabled = quiz.idx === 0;
+      }
+
+      function updateSummary() {
+        sumEl.innerHTML = '';
+        var t = quiz.answers.type || '—';
+        var time = quiz.answers.time || '—';
+        var obj = quiz.answers.obj || '—';
+        sumEl.innerHTML = '<div>Тип: ' + t + '</div><div>Срок: ' + time + '</div><div>Квартира: ' + obj + '</div>';
+      }
+
+      function nextQuiz() {
+        if (quiz.idx < quiz.steps.length - 1) {
+          quiz.idx++;
+          renderQuiz();
+          return;
+        }
+        barEl.style.width = '100%';
+        stepEl.textContent = 'Готово';
+      }
+
+      function prevQuiz() {
+        if (quiz.idx > 0) {
+          quiz.idx--;
+          renderQuiz();
+        }
+      }
+
+      backBtn.addEventListener('click', prevQuiz);
+      skipBtn.addEventListener('click', nextQuiz);
+      updateSummary();
+      renderQuiz();
+
+      // Fake lead action (placeholder)
+      document.getElementById('leadBtn').addEventListener('click', function () {
+        var name = document.getElementById('name').value.trim();
+        var phone = document.getElementById('phone').value.trim();
+        if (!phone) {
+          alert('Введите телефон, пожалуйста.');
+          return;
+        }
+        var t = document.getElementById('stickyText');
+        if (t) t.textContent = 'Заявка отправлена. Мы свяжемся с вами!';
+        setTimeout(function () { if (t) t.textContent = 'Ответим и посчитаем смету'; }, 3200);
+
+        // In future you can connect this to api.php or separate endpoint.
+        console.log('Lead:', { name: name, phone: phone, quiz: quiz.answers });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -77,13 +77,67 @@
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 14px;
     }
-    .tile { border: 1px solid rgba(212,175,55,.3); border-radius: 16px; overflow: hidden; background: #0a0a0a; }
+    .tile { border: 1px solid rgba(212,175,55,.3); border-radius: 16px; overflow: hidden; background: #121212; }
     .tile img { width: 100%; height: 240px; object-fit: cover; display:block; }
     @media(min-width: 768px) {
       .tile img { height: 320px; }
     }
     .top-actions { display:flex; gap:10px; }
     .footer-actions { text-align: center; margin-top: 26px; }
+    /* Projects layout */
+    .project-list { display: grid; gap: 28px; }
+    .project-card { border: 1px solid rgba(212,175,55,.3); border-radius: 16px; background: #121212; padding: 14px; box-shadow: 0 10px 24px rgba(0,0,0,.35); }
+    .proj-title { margin: 6px 8px 12px; font-size: 1.15rem; font-weight: 800; }
+    .proj-slider { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(212,175,55,.25); background:#121212; touch-action: pan-y; }
+    .proj-slider .slides { display: flex; transition: transform .35s ease; will-change: transform; }
+    .proj-slider .slide { min-width: 100%; position: relative; height: 320px; }
+    @media(min-width: 768px) { .proj-slider .slide { height: 440px; } }
+    @media(max-width: 768px) {
+      .container { padding: 20px 12px 54px; }
+      .project-card { padding: 8px; }
+      .proj-title { margin: 6px 6px 10px; }
+      .proj-slider { width: calc(100% + 8px); margin-left: 50%; transform: translateX(-50%); }
+      .proj-slider .nav.prev { left: 8px; }
+      .proj-slider .nav.next { right: 8px; }
+      .proj-slider .zoom-btn { top: 8px; right: 8px; }
+    }
+    .proj-slider .slide img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; user-select: none; -webkit-user-drag: none; }
+    .proj-slider .slide video { width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
+    .proj-slider .zoom-btn { position: absolute; top: 10px; right: 10px; width: 42px; height: 42px; border-radius: 12px; border:1px solid rgba(212,175,55,.6); background: rgba(18,18,18,.86); color:#fff; display:flex; align-items:center; justify-content:center; z-index:3; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+    .proj-slider .sound-btn { position: absolute; top: 10px; right: 10px; width: 42px; height: 42px; border-radius: 12px; border:1px solid rgba(212,175,55,.6); background: rgba(18,18,18,.86); color:#fff; display:flex; align-items:center; justify-content:center; z-index:3; box-shadow: 0 8px 24px rgba(0,0,0,.35); cursor: pointer; }
+    .proj-slider .sound-btn i { pointer-events: none; }
+    .proj-slider .sound-btn:active { transform: scale(0.98); }
+    .proj-slider .nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(212,175,55,.6); background: rgba(18,18,18,.76); color:#fff; display:flex; align-items:center; justify-content:center; z-index:3; }
+    .proj-slider .nav.prev { left: 10px; }
+    .proj-slider .nav.next { right: 10px; }
+    .proj-slider .dots { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); display:flex; align-items:center; gap:8px; z-index:3; }
+    .proj-slider .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.35); border:none; padding:0; }
+    .proj-slider .dot.active { background: var(--gold); }
+    .proj-desc { margin-top: 12px; display:flex; gap:12px; align-items:flex-start; justify-content: space-between; }
+    .proj-desc .text { flex:1; min-width: 0; color: rgba(255,255,255,.92); line-height: 1.5; }
+    .proj-desc .text.clamp { display:-webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow:hidden; }
+    .proj-desc .text.expanded { -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; }
+    .proj-desc .read-more { flex-shrink:0; margin-left: 12px; color: var(--gold); font-weight: 700; text-decoration: none; white-space: nowrap; align-self: flex-start; }
+    .proj-desc .read-more:hover { text-decoration: underline; }
+    .proj-desc.open { flex-direction: column; }
+    .proj-desc.open .read-more { margin-left: 0; margin-top: 8px; align-self: flex-end; }
+    /* Simple image lightbox */
+    .img-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.92); display: none; align-items: center; justify-content: center; z-index: 99999; touch-action: none; }
+    .img-lightbox.active { display: flex; }
+    .img-lightbox img { max-width: 96vw; max-height: 94vh; border-radius: 12px; border: 1px solid rgba(212,175,55,.4); box-shadow: 0 20px 80px rgba(0,0,0,.6); transform: scale(1); transition: transform .18s ease, opacity .18s ease; touch-action: manipulation; }
+    .img-lightbox video { max-width: 96vw; max-height: 94vh; border-radius: 12px; border: 1px solid rgba(212,175,55,.4); box-shadow: 0 20px 80px rgba(0,0,0,.6); background: #000; }
+    .img-lightbox.zoomed img { transform: scale(2); }
+    .img-lightbox.has-video img { display: none; }
+    .img-lightbox:not(.has-video) video { display: none; }
+    .img-lightbox.dragging img,
+    .img-lightbox.dragging video { transition: none; }
+    .img-lightbox .lb-close { position: absolute; top: 14px; right: 14px; width: 42px; height: 42px; border-radius: 12px; border: 1px solid rgba(212,175,55,.6); background: rgba(18,18,18,.88); color:#fff; display:flex; align-items:center; justify-content:center; }
+    .img-lightbox .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(212,175,55,.45); background: rgba(18,18,18,.82); color:#fff; display:flex; align-items:center; justify-content:center; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,.4); z-index: 2; }
+    .img-lightbox .lb-nav.prev { left: 12px; }
+    .img-lightbox .lb-nav.next { right: 12px; }
+    .img-lightbox .lb-nav i { font-size: 18px; pointer-events: none; }
+    .img-lightbox .lb-nav:active { transform: translateY(-50%) scale(0.98); }
+    .img-lightbox .lb-nav[disabled] { opacity: 0.6; cursor: default; }
   </style>
 </head>
 <body>
@@ -100,24 +154,522 @@
       <p>Реальные примеры наших работ. Больше фото добавим по мере обновлений.</p>
     </div>
 
-    <div class="gallery-grid">
-      <a class="tile" href="#"><img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-01.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/apron/232007.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/keramogranit/keramogranit-7.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/keramogranit/keramogranit-3.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/apron/232710.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-01.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/apron/232007.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/keramogranit/keramogranit-7.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/keramogranit/keramogranit-3.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-08.webp" alt="Пример работы"/></a>
-      <a class="tile" href="#"><img src="images/apron/232710.webp" alt="Пример работы"/></a>
+    <div class="project-list">
+      <article class="project-card">
+        <h2 class="proj-title">Ремонт ванной комнаты</h2>
+        <div class="proj-slider" data-index="0">
+          <button class="nav prev" type="button" aria-label="Предыдущий"><i class="fas fa-chevron-left"></i></button>
+          <div class="slides">
+            <div class="slide">
+              <img src="images/keramogranit/ukladka-krupnoformatnoj-plitki-01.webp" alt="Ремонт ванной — крупноформатный керамогранит" />
+              <button class="zoom-btn" type="button" aria-label="Увеличить"><i class="fas fa-search-plus"></i></button>
+            </div>
+            <div class="slide">
+              <img src="images/keramogranit/keramogranit-7.webp" alt="Ремонт ванной — этапы работ" />
+              <button class="zoom-btn" type="button" aria-label="Увеличить"><i class="fas fa-search-plus"></i></button>
+            </div>
+            <div class="slide">
+              <video class="proj-video" src="images/video/1.mp4" playsinline muted preload="metadata" loop></video>
+            </div>
+          </div>
+          <button class="nav next" type="button" aria-label="Следующий"><i class="fas fa-chevron-right"></i></button>
+          <div class="dots" aria-label="Навигация по слайдам"></div>
+        </div>
+        <div class="proj-desc">
+          <p class="text clamp">Ремонт ванной в Санкт‑Петербурге и Ленинградской области. Площадь 24 м², использовали эпоксидную затирку Litokol и крупноформатный керамогранит. Все узлы выполнены по ГОСТ, гидроизоляция и идеальная геометрия швов.</p>
+          <a class="read-more" href="#">Подробнее</a>
+        </div>
+      </article>
+
+      <article class="project-card">
+        <h2 class="proj-title">Укладка плитки в ванную</h2>
+        <div class="proj-slider" data-index="0">
+          <button class="nav prev" type="button" aria-label="Предыдущий"><i class="fas fa-chevron-left"></i></button>
+          <div class="slides">
+            <div class="slide">
+              <img src="images/apron/232007.webp" alt="Укладка плитки — подготовка" />
+              <button class="zoom-btn" type="button" aria-label="Увеличить"><i class="fas fa-search-plus"></i></button>
+            </div>
+            <div class="slide">
+              <img src="images/apron/232710.webp" alt="Укладка плитки — материалы" />
+              <button class="zoom-btn" type="button" aria-label="Увеличить"><i class="fas fa-search-plus"></i></button>
+            </div>
+            <div class="slide">
+              <video class="proj-video" src="images/video/2.mp4" playsinline muted preload="metadata" loop></video>
+            </div>
+          </div>
+          <button class="nav next" type="button" aria-label="Следующий"><i class="fas fa-chevron-right"></i></button>
+          <div class="dots" aria-label="Навигация по слайдам"></div>
+        </div>
+        <div class="proj-desc">
+          <p class="text clamp">Укладка плитки в ванной комнате, включая нишу с подсветкой. Сложная геометрия, точные примыкания и запил под 45°. Согласуем дизайн и подберём материалы под ваш бюджет.</p>
+          <a class="read-more" href="#">Подробнее</a>
+        </div>
+      </article>
     </div>
 
     <div class="footer-actions">
       <a class="btn-premium" href="index.html#contact"><i class="fas fa-phone-alt"></i> Заказать консультацию</a>
     </div>
   </div>
+  <div id="imgLightbox" class="img-lightbox" aria-hidden="true">
+    <button class="lb-close" type="button" aria-label="Закрыть"><i class="fas fa-times"></i></button>
+    <button class="lb-nav prev" type="button" aria-label="Предыдущее" disabled><i class="fas fa-chevron-left"></i></button>
+    <button class="lb-nav next" type="button" aria-label="Следующее" disabled><i class="fas fa-chevron-right"></i></button>
+    <img src="" alt="Просмотр изображения" />
+    <video class="lb-video" playsinline controls preload="metadata"></video>
+  </div>
+  <script>
+    (function(){
+      // Simple slider + dots + zoom per project
+      const lightbox = document.getElementById('imgLightbox');
+      const lbImg = lightbox.querySelector('img');
+      const lbVideo = lightbox.querySelector('video');
+      const lbClose = lightbox.querySelector('.lb-close');
+      const lbPrev = lightbox.querySelector('.lb-nav.prev');
+      const lbNext = lightbox.querySelector('.lb-nav.next');
+      let lbItems = [];
+      let lbIndex = 0;
+      let lbBlockCloseUntil = 0;
+      let lbSoundEnabled = true;
+      function updateLbNav(){
+        const ok = !!(lbItems && lbItems.length > 1);
+        if (lbPrev) lbPrev.disabled = !ok;
+        if (lbNext) lbNext.disabled = !ok;
+      }
+      function showLbIndex(i) {
+        if (!lbItems || !lbItems.length) return;
+        const len = lbItems.length;
+        lbIndex = ((i % len) + len) % len;
+        const item = lbItems[lbIndex];
+        const isVideo = item && item.type === 'video';
+
+        lightbox.classList.toggle('has-video', isVideo);
+        lightbox.classList.remove('zoomed');
+
+        if (isVideo) {
+          try {
+            if (lbVideo) {
+              lbVideo.pause();
+              lbVideo.src = item.src || '';
+              lbVideo.currentTime = 0;
+              // Try to autoplay with sound; if blocked by browser policy, fallback to muted autoplay
+              lbVideo.muted = !lbSoundEnabled;
+              let pr;
+              try { pr = lbVideo.play(); } catch (_) { pr = null; }
+              if (pr && typeof pr.catch === 'function') {
+                pr.catch(() => {
+                  try {
+                    lbVideo.muted = true;
+                    lbSoundEnabled = false;
+                    const pr2 = lbVideo.play();
+                    if (pr2 && typeof pr2.catch === 'function') pr2.catch(() => {});
+                  } catch (_) {}
+                });
+              }
+            }
+          } catch (_) {}
+        } else {
+          if (lbVideo) {
+            try { lbVideo.pause(); } catch (_) {}
+            lbVideo.src = '';
+          }
+          lbImg.src = item && item.src ? item.src : '';
+          lbImg.alt = (item && item.alt) ? item.alt : '';
+        }
+      }
+      function openLightbox(items, idx){
+        lbItems = Array.isArray(items) ? items : [];
+        lbIndex = Number.isFinite(idx) ? idx : 0;
+        if (lbItems.length) showLbIndex(lbIndex);
+        updateLbNav();
+        lightbox.classList.remove('zoomed');
+        lightbox.classList.add('active');
+        document.body.style.overflow='hidden';
+      }
+      function closeLightbox(){
+        lightbox.classList.remove('active');
+        lightbox.classList.remove('zoomed');
+        lightbox.classList.remove('has-video');
+        lightbox.classList.remove('dragging');
+        lbImg.src='';
+        if (lbVideo) {
+          try { lbVideo.pause(); } catch (_) {}
+          lbVideo.src = '';
+        }
+        lbImg.style.transform = '';
+        lbImg.style.opacity = '';
+        if (lbVideo) {
+          lbVideo.style.transform = '';
+          lbVideo.style.opacity = '';
+        }
+        document.body.style.overflow='';
+      }
+      lbClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox && Date.now() >= lbBlockCloseUntil) closeLightbox(); });
+      if (lbPrev) lbPrev.addEventListener('click', (e)=>{ e.stopPropagation(); if (lbPrev.disabled) return; showLbIndex(lbIndex - 1); });
+      if (lbNext) lbNext.addEventListener('click', (e)=>{ e.stopPropagation(); if (lbNext.disabled) return; showLbIndex(lbIndex + 1); });
+      lbImg.addEventListener('click', (e)=>{ e.stopPropagation(); });
+      if (lbVideo) {
+        lbVideo.addEventListener('click', (e)=>{
+          e.stopPropagation();
+        });
+        lbVideo.addEventListener('volumechange', ()=>{
+          lbSoundEnabled = !lbVideo.muted;
+        });
+        lbVideo.addEventListener('play', ()=>{
+          lbSoundEnabled = !lbVideo.muted;
+        });
+      }
+
+      // Double tap / double click zoom toggle
+      let lastTapAt = 0;
+      function toggleZoom(){ lightbox.classList.toggle('zoomed'); }
+      lbImg.addEventListener('dblclick', (e)=>{ e.preventDefault(); toggleZoom(); });
+      lbImg.addEventListener('touchend', (e)=>{
+        const now = Date.now();
+        if (now - lastTapAt < 300) {
+          if (e.cancelable) e.preventDefault();
+          toggleZoom();
+          lastTapAt = 0;
+          return;
+        }
+        lastTapAt = now;
+      }, { passive: false });
+
+      // Swipe in lightbox (left/right) to navigate, up/down to close
+      (function(){
+        let startX = 0, startY = 0, swiping = false;
+        let draggingV = false;
+        let lastDy = 0;
+        let pointerId = null, captured = false;
+        function getP(e){ return (e.touches && e.touches[0]) ? e.touches[0] : e; }
+        function onStart(e){
+          if (!lightbox.classList.contains('active')) return;
+          const p = getP(e);
+          startX = p.clientX;
+          startY = p.clientY;
+          swiping = true;
+          draggingV = false;
+          lastDy = 0;
+          pointerId = (e && typeof e.pointerId === 'number') ? e.pointerId : null;
+          captured = false;
+        }
+        function onMove(e){
+          if (!swiping) return;
+          const p = getP(e);
+          const dx = p.clientX - startX;
+          const dy = p.clientY - startY;
+          const absDx = Math.abs(dx);
+          const absDy = Math.abs(dy);
+
+          if (!draggingV && !lightbox.classList.contains('zoomed') && absDy > 6 && absDy > absDx) {
+            draggingV = true;
+            lightbox.classList.add('dragging');
+          }
+
+          if (draggingV) {
+            lastDy = dy;
+            const el = lightbox.classList.contains('has-video') ? lbVideo : lbImg;
+            if (el) {
+              const damp = dy * 0.9;
+              const scale = Math.max(0.92, 1 - absDy / 1200);
+              el.style.transform = `translateY(${damp}px) scale(${scale})`;
+              el.style.opacity = String(Math.max(0.35, 1 - absDy / 420));
+            }
+            if (!captured && pointerId !== null && typeof lightbox.setPointerCapture === 'function') {
+              try { lightbox.setPointerCapture(pointerId); captured = true; } catch(_) {}
+            }
+            if (e.cancelable) e.preventDefault();
+            return;
+          }
+
+          if (absDx > 6 && absDx > absDy) {
+            if (!captured && pointerId !== null && typeof lightbox.setPointerCapture === 'function') {
+              try { lightbox.setPointerCapture(pointerId); captured = true; } catch(_) {}
+            }
+            if (e.cancelable) e.preventDefault();
+          }
+        }
+        function onEnd(e){
+          if (!swiping) return;
+          swiping = false;
+          if (captured && pointerId !== null && typeof lightbox.releasePointerCapture === 'function') {
+            try { lightbox.releasePointerCapture(pointerId); } catch(_) {}
+          }
+          captured = false;
+          pointerId = null;
+          const p = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : e;
+          const dx = p.clientX - startX;
+          const dy = p.clientY - startY;
+          const absDx = Math.abs(dx);
+          const absDy = Math.abs(dy);
+
+          if (draggingV) {
+            lightbox.classList.remove('dragging');
+            draggingV = false;
+            const shouldCloseV = absDy > 110 && absDy > absDx;
+            const el = lightbox.classList.contains('has-video') ? lbVideo : lbImg;
+            if (shouldCloseV && el) {
+              const dir = (lastDy || dy) >= 0 ? 1 : -1;
+              el.style.transform = `translateY(${dir * 240}px) scale(0.92)`;
+              el.style.opacity = '0';
+              lbBlockCloseUntil = Date.now() + 350;
+              setTimeout(() => closeLightbox(), 220);
+              return;
+            }
+            if (el) {
+              el.style.transform = '';
+              el.style.opacity = '';
+            }
+            lbBlockCloseUntil = Date.now() + 200;
+            return;
+          }
+
+          const isHorizontal = absDx > 40 && absDx > absDy;
+          if (!isHorizontal) return;
+          if (!lbItems || lbItems.length < 2) return;
+          if (dx < 0) showLbIndex(lbIndex + 1);
+          else showLbIndex(lbIndex - 1);
+          lbBlockCloseUntil = Date.now() + 350;
+        }
+        lightbox.addEventListener('touchstart', onStart, { passive: true });
+        lightbox.addEventListener('touchmove', onMove, { passive: false });
+        lightbox.addEventListener('touchend', onEnd, { passive: true });
+        lightbox.addEventListener('touchcancel', onEnd, { passive: true });
+        lightbox.addEventListener('pointerdown', onStart);
+        lightbox.addEventListener('pointermove', onMove);
+        lightbox.addEventListener('pointerup', onEnd);
+        lightbox.addEventListener('pointercancel', onEnd);
+      })();
+
+      // Make sure only one inline project video plays at a time (across all project cards)
+      function pauseOtherProjectVideos(activeVideo) {
+        const vids = Array.from(document.querySelectorAll('.proj-slider video'));
+        vids.forEach((v) => {
+          if (!v || v === activeVideo) return;
+          try { v.pause(); } catch (_) {}
+          try { v.currentTime = 0; } catch (_) {}
+        });
+      }
+
+      document.querySelectorAll('.proj-slider').forEach((slider)=>{
+        const slidesEl = slider.querySelector('.slides');
+        const slides = Array.from(slidesEl.querySelectorAll('.slide'));
+        const items = slides.map((s) => {
+          const img = s.querySelector('img');
+          if (img) return { type: 'img', src: img.src, alt: img.alt || '' };
+          const v = s.querySelector('video');
+          if (v) return { type: 'video', src: v.getAttribute('src') || v.src || '', alt: '' };
+          return null;
+        }).filter(Boolean);
+        const prevBtn = slider.querySelector('.nav.prev');
+        const nextBtn = slider.querySelector('.nav.next');
+        const dotsEl = slider.querySelector('.dots');
+        let index = 0;
+        let swipeStartX = 0;
+        let swipeStartY = 0;
+        let swiping = false;
+        let swipeMoved = false;
+        let blockClickUntil = 0;
+        let pointerCaptured = false;
+        let activePointerId = null;
+
+        // Build dots
+        dotsEl.innerHTML = slides.map((_,i)=>`<button class="dot${i===0?' active':''}" data-i="${i}" aria-label="Слайд ${i+1}"></button>`).join('');
+        const dots = Array.from(dotsEl.querySelectorAll('.dot'));
+
+        function syncVideos(){
+          slides.forEach((s, i) => {
+            const v = s.querySelector('video');
+            if (!v) return;
+            if (i === index) {
+              pauseOtherProjectVideos(v);
+              try { v.play(); } catch (_) {}
+            } else {
+              try { v.pause(); } catch (_) {}
+              try { v.currentTime = 0; } catch (_) {}
+            }
+          });
+        }
+
+        function update(){
+          slidesEl.style.transform = `translateX(-${index*100}%)`;
+          dots.forEach((d,i)=> d.classList.toggle('active', i===index));
+          syncVideos();
+        }
+
+        prevBtn.addEventListener('click', ()=>{ index = (index - 1 + slides.length) % slides.length; update(); });
+        nextBtn.addEventListener('click', ()=>{ index = (index + 1) % slides.length; update(); });
+        dotsEl.addEventListener('click', (e)=>{ const btn = e.target.closest('.dot'); if(!btn) return; index = parseInt(btn.dataset.i,10); update(); });
+
+        function onSwipeStart(e) {
+          // Don't start swipe when interacting with UI controls
+          const t = e && e.target;
+          if (t && t.closest && t.closest('.nav, .dots, .dot, .zoom-btn')) return;
+          const p = (e.touches && e.touches[0]) ? e.touches[0] : e;
+          swipeStartX = p.clientX;
+          swipeStartY = p.clientY;
+          swiping = true;
+          swipeMoved = false;
+          pointerCaptured = false;
+          activePointerId = (e && typeof e.pointerId === 'number') ? e.pointerId : null;
+        }
+
+        function onSwipeMove(e) {
+          if (!swiping) return;
+          const p = (e.touches && e.touches[0]) ? e.touches[0] : e;
+          const dx = p.clientX - swipeStartX;
+          const dy = p.clientY - swipeStartY;
+          if (Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(dy)) {
+            swipeMoved = true;
+            if (!pointerCaptured && activePointerId !== null && slider && typeof slider.setPointerCapture === 'function') {
+              try { slider.setPointerCapture(activePointerId); pointerCaptured = true; } catch (_) {}
+            }
+            if (e.cancelable) e.preventDefault();
+          }
+        }
+
+        function onSwipeEnd(e) {
+          if (!swiping) return;
+          swiping = false;
+          if (pointerCaptured && activePointerId !== null && slider && typeof slider.releasePointerCapture === 'function') {
+            try { slider.releasePointerCapture(activePointerId); } catch (_) {}
+          }
+          pointerCaptured = false;
+          activePointerId = null;
+          const p = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : e;
+          const dx = p.clientX - swipeStartX;
+          const dy = p.clientY - swipeStartY;
+          const isHorizontal = Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy);
+          if (isHorizontal) {
+            if (dx < 0) {
+              index = (index + 1) % slides.length;
+            } else {
+              index = (index - 1 + slides.length) % slides.length;
+            }
+            update();
+            blockClickUntil = Date.now() + 350;
+          }
+          swipeMoved = false;
+        }
+
+        slider.addEventListener('pointerdown', onSwipeStart);
+        slider.addEventListener('pointermove', onSwipeMove);
+        slider.addEventListener('pointerup', onSwipeEnd);
+        slider.addEventListener('pointercancel', onSwipeEnd);
+        slider.addEventListener('touchstart', onSwipeStart, { passive: true });
+        slider.addEventListener('touchmove', onSwipeMove, { passive: false });
+        slider.addEventListener('touchend', onSwipeEnd, { passive: true });
+        slider.addEventListener('touchcancel', onSwipeEnd, { passive: true });
+
+        // Add visible sound toggle button over inline videos (so user knows sound is clickable)
+        function ensureSoundButton(videoEl) {
+          if (!videoEl) return;
+          const slide = videoEl.closest('.slide');
+          if (!slide) return;
+          if (slide.querySelector('.sound-btn')) return;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'sound-btn';
+          btn.setAttribute('aria-label', 'Звук');
+          btn.innerHTML = '<i class="fas fa-volume-xmark"></i>';
+
+          const syncIcon = () => {
+            const icon = btn.querySelector('i');
+            if (!icon) return;
+            const muted = !!videoEl.muted;
+            icon.classList.toggle('fa-volume-xmark', muted);
+            icon.classList.toggle('fa-volume-high', !muted);
+          };
+
+          btn.addEventListener('click', (e) => {
+            if (Date.now() < blockClickUntil) return;
+            e.preventDefault();
+            e.stopPropagation();
+            pauseOtherProjectVideos(videoEl);
+            videoEl.muted = !videoEl.muted;
+            try { videoEl.play(); } catch (_) {}
+            syncIcon();
+          });
+
+          videoEl.addEventListener('volumechange', syncIcon);
+          syncIcon();
+          slide.appendChild(btn);
+        }
+
+        // Disable native drag on images (improves mobile tap reliability)
+        slides.forEach((s)=>{
+          const img = s.querySelector('img');
+          if (!img) return;
+          img.addEventListener('dragstart', (e)=>{ e.preventDefault(); });
+          img.addEventListener('click', (e)=>{
+            if (Date.now() < blockClickUntil) return;
+            e.preventDefault();
+            const i = items.findIndex(it => it && it.type === 'img' && it.src === img.src);
+            openLightbox(items, i >= 0 ? i : 0);
+          });
+        });
+
+        slides.forEach((s)=>{
+          const v = s.querySelector('video');
+          if (!v) return;
+          ensureSoundButton(v);
+          v.addEventListener('play', ()=>{
+            pauseOtherProjectVideos(v);
+          });
+          v.addEventListener('click', (e)=>{
+            if (Date.now() < blockClickUntil) return;
+            e.preventDefault();
+            const src = v.getAttribute('src') || v.src || '';
+            const i = items.findIndex(it => it && it.type === 'video' && it.src === src);
+            openLightbox(items, i >= 0 ? i : 0);
+          });
+        });
+
+        // Zoom on button or image
+        slider.addEventListener('click', (e)=>{
+          if (Date.now() < blockClickUntil) return;
+          const z = e.target.closest('.zoom-btn, .slide img');
+          if(!z) return;
+          openLightbox(items, index);
+        });
+
+        update();
+      });
+
+      // Read more toggles
+      const readMoreBtns = Array.from(document.querySelectorAll('.project-card .read-more'));
+      function setDescOpen(descEl, open) {
+        if (!descEl) return;
+        const textEl = descEl.querySelector('.text');
+        const btnEl = descEl.querySelector('.read-more');
+        if (textEl) {
+          textEl.classList.toggle('expanded', open);
+          textEl.classList.toggle('clamp', !open);
+        }
+        descEl.classList.toggle('open', open);
+        if (btnEl) btnEl.textContent = open ? 'Скрыть' : 'Подробнее';
+      }
+      function closeAllExcept(descToKeep) {
+        readMoreBtns.forEach((btnEl) => {
+          const d = btnEl.closest('.proj-desc');
+          if (!d || d === descToKeep) return;
+          if (d.classList.contains('open')) setDescOpen(d, false);
+        });
+      }
+
+      readMoreBtns.forEach((btn)=>{
+        btn.addEventListener('click', (e)=>{
+          e.preventDefault();
+          const desc = btn.closest('.proj-desc');
+          if (!desc) return;
+          const willOpen = !desc.classList.contains('open');
+          if (willOpen) closeAllExcept(desc);
+          setDescOpen(desc, willOpen);
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

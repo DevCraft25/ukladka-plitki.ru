@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP Ванные комнаты - ELITE TILES</title>
+    <title>VIP Ванные комнаты - ELITE TILER</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -77,7 +77,7 @@
 
         .service-hero {
             padding-top: 120px;
-            min-height: 70vh;
+            min-height: 82vh;
             background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url('images/bathroom/photo_1.jpg');
             background-size: cover;
             background-position: center;
@@ -119,9 +119,9 @@
 
         .hero-content h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 4rem;
+            font-size: clamp(2.4rem, 4.8vw, 4rem);
             font-weight: 900;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             background: linear-gradient(45deg, var(--white), var(--gold));
             -webkit-background-clip: text;
             background-clip: text;
@@ -129,9 +129,10 @@
         }
 
         .hero-content .subtitle {
-            font-size: 1.5rem;
+            font-size: clamp(1.1rem, 2.1vw, 1.5rem);
             color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            max-width: 920px;
         }
 
         .hero-price {
@@ -139,10 +140,17 @@
             padding: 1rem 2rem;
             background: var(--gold);
             color: var(--black);
-            font-size: 1.8rem;
+            font-size: clamp(1.25rem, 2.5vw, 1.8rem);
             font-weight: 700;
             border-radius: 10px;
-            margin-bottom: 2rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
         }
 
         .hero-cta {
@@ -157,6 +165,12 @@
             border-radius: 50px;
             text-decoration: none;
             transition: all 0.3s ease;
+        }
+
+        .hero-cta.secondary {
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid rgba(212, 175, 55, 0.7);
         }
 
         .hero-cta:hover {
@@ -176,17 +190,63 @@
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: clamp(1.85rem, 3.4vw, 2.5rem);
             margin-bottom: 2rem;
             color: var(--gold);
         }
 
         .section-text {
-            font-size: 1.2rem;
+            font-size: clamp(1.05rem, 1.8vw, 1.2rem);
             line-height: 1.8;
             color: rgba(255, 255, 255, 0.8);
             margin-bottom: 2rem;
         }
+
+        .hero-facts {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 2.25rem;
+            max-width: 980px;
+        }
+
+        .fact-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            border-radius: 14px;
+            padding: 1.25rem 1.25rem;
+        }
+
+        .fact-title {
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.92);
+            margin-bottom: 0.25rem;
+        }
+
+        .fact-value {
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.98rem;
+        }
+
+        .reels-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .reel-card { position: relative; border-radius: 16px; overflow: hidden; background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 175, 55, 0.18); aspect-ratio: 9 / 16; cursor: pointer; transition: transform 0.25s ease, border-color 0.25s ease; }
+        .reel-card:hover { transform: translateY(-4px); border-color: rgba(212, 175, 55, 0.55); }
+        .reel-card video { width: 100%; height: 100%; object-fit: cover; display: block; filter: contrast(1.02) saturate(1.05); }
+        .reel-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.05)); opacity: 0.9; pointer-events: none; }
+        .reel-badge { position: absolute; left: 14px; bottom: 14px; display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.55rem 0.85rem; background: rgba(0,0,0,0.55); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 999px; color: rgba(255,255,255,0.92); font-weight: 700; font-size: 0.92rem; z-index: 2; }
+        .reel-badge i { color: var(--gold); }
+
+        .reels-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; z-index: 2500; padding: 1.25rem; }
+        .reels-modal.open { display: flex; }
+        .reels-shell { width: min(420px, 100%); aspect-ratio: 9 / 16; border-radius: 18px; overflow: hidden; position: relative; border: 1px solid rgba(212, 175, 55, 0.25); background: rgba(0,0,0,0.55); }
+        .reels-player { width: 100%; height: 100%; object-fit: cover; background: #000; }
+        .reels-topbar { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; z-index: 3; }
+        .reels-close { width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(212, 175, 55, 0.55); background: rgba(0,0,0,0.55); color: var(--gold); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+        .reels-nav { display: inline-flex; gap: 0.5rem; }
+        .reels-btn { width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(212, 175, 55, 0.3); background: rgba(0,0,0,0.4); color: rgba(255,255,255,0.92); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+        .reels-btn:hover { border-color: rgba(212, 175, 55, 0.65); }
+        .reels-hint { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); padding: 0.6rem 0.9rem; border-radius: 999px; background: rgba(0,0,0,0.55); border: 1px solid rgba(212, 175, 55, 0.25); color: rgba(255,255,255,0.9); font-weight: 700; font-size: 0.95rem; z-index: 3; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .reels-hint i { color: var(--gold); }
 
         .features-grid {
             display: grid;
@@ -269,18 +329,21 @@
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .gallery-item {
             position: relative;
-            border-radius: 15px;
+            border-radius: 18px;
             overflow: hidden;
-            height: 400px;
+            aspect-ratio: 16 / 10;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.25s ease;
         }
 
         .gallery-item:hover {
@@ -292,6 +355,20 @@
             height: 100%;
             object-fit: cover;
         }
+
+        .lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 2rem; }
+        .lightbox.open { display: flex; }
+        .lightbox-inner { max-width: 1100px; width: 100%; position: relative; }
+        .lightbox-img { width: 100%; max-height: 80vh; object-fit: contain; border-radius: 14px; border: 1px solid rgba(212, 175, 55, 0.25); }
+        .lightbox-close { position: absolute; top: -14px; right: -14px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(212, 175, 55, 0.55); background: rgba(0,0,0,0.65); color: var(--gold); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+        .faq-list { display: grid; gap: 0.75rem; margin-top: 1.5rem; }
+        .faq-item { border: 1px solid rgba(212, 175, 55, 0.22); border-radius: 14px; overflow: hidden; background: rgba(255, 255, 255, 0.03); }
+        .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 1.25rem; cursor: pointer; background: transparent; border: none; color: var(--white); text-align: left; font-size: 1.05rem; }
+        .faq-q span { color: rgba(255, 255, 255, 0.92); font-weight: 700; }
+        .faq-a { display: none; padding: 0 1.25rem 1.1rem; color: rgba(255, 255, 255, 0.72); line-height: 1.7; }
+        .faq-item.open .faq-a { display: block; }
+        .faq-icon { color: var(--gold); font-size: 1.1rem; flex: 0 0 auto; }
 
         .process-steps {
             margin-top: 3rem;
@@ -394,16 +471,27 @@
                 gap: 1rem;
             }
 
+            .hero-facts { grid-template-columns: 1fr; }
+
+            .reels-grid { grid-template-columns: 1fr; }
+
+            .gallery-grid { grid-template-columns: 1fr; }
+
             .cta-section {
                 padding: 2rem;
             }
+        }
+
+        @media (max-width: 1024px) {
+            .reels-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
     </style>
 </head>
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="index.html" class="logo">ELITE TILES</a>
+            <a href="index.html" class="logo">ELITE TILER</a>
             <a href="index.html#services" class="back-btn">
                 <i class="fas fa-arrow-left"></i>
                 Все услуги
@@ -420,11 +508,32 @@
             <h1>VIP Ванные комнаты</h1>
             <p class="subtitle">Элитная облицовка с использованием премиальных материалов</p>
             <div class="hero-price">от 8500₽/м²</div>
-            <br><br>
-            <a href="index.html#contact" class="hero-cta">
-                <i class="fas fa-phone"></i>
-                Заказать расчет
-            </a>
+
+            <div class="hero-actions">
+                <a href="index.html#contact" class="hero-cta">
+                    <i class="fas fa-phone"></i>
+                    Заказать расчет
+                </a>
+                <a href="#gallery" class="hero-cta secondary">
+                    <i class="fas fa-images"></i>
+                    Смотреть работы
+                </a>
+            </div>
+
+            <div class="hero-facts">
+                <div class="fact-card">
+                    <div class="fact-title">Материалы</div>
+                    <div class="fact-value">мрамор, керамогранит, мозаика</div>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-title">Гидроизоляция</div>
+                    <div class="fact-value">узлы и примыкания по технологии</div>
+                </div>
+                <div class="fact-card">
+                    <div class="fact-title">Гарантия</div>
+                    <div class="fact-value">на работы и материалы по договору</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -492,6 +601,17 @@
                     <h3>Гарантия 5 лет</h3>
                     <p>Расширенная гарантия на все работы и материалы сроком 5 лет.</p>
                 </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="reels">
+            <h2 class="section-title">Reels</h2>
+            <p class="section-text">Короткие видео с объектов: гидроизоляция, подрезка, раскладка и финальный результат.</p>
+            <div class="reels-grid" id="reelsGrid">
+                <div class="reel-card" data-src="images/video/1.mp4"><video src="images/video/1.mp4" muted playsinline preload="metadata"></video><div class="reel-badge"><i class="fas fa-play"></i> Смотреть</div></div>
+                <div class="reel-card" data-src="images/video/2.mp4"><video src="images/video/2.mp4" muted playsinline preload="metadata"></video><div class="reel-badge"><i class="fas fa-play"></i> Смотреть</div></div>
+                <div class="reel-card" data-src="images/video/3.mp4"><video src="images/video/3.mp4" muted playsinline preload="metadata"></video><div class="reel-badge"><i class="fas fa-play"></i> Смотреть</div></div>
+                <div class="reel-card" data-src="images/video/4.mp4"><video src="images/video/4.mp4" muted playsinline preload="metadata"></video><div class="reel-badge"><i class="fas fa-play"></i> Смотреть</div></div>
             </div>
         </section>
 
@@ -570,7 +690,7 @@
             </div>
         </section>
 
-        <section class="content-section">
+        <section class="content-section" id="gallery">
             <h2 class="section-title">Галерея работ</h2>
             <div class="gallery-grid">
                 <div class="gallery-item">
@@ -581,6 +701,24 @@
                 </div>
                 <div class="gallery-item">
                     <img src="images/bathroom/photo_3.jpg" alt="VIP ванная 3">
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">FAQ</h2>
+            <div class="faq-list" id="faq">
+                <div class="faq-item">
+                    <button class="faq-q" type="button"><span>Сколько времени занимает ремонт ванной?</span><i class="fas fa-plus faq-icon"></i></button>
+                    <div class="faq-a">Срок зависит от объема, основания и выбранных материалов. После замера и согласования проекта мы называем сроки и фиксируем их в договоре.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" type="button"><span>Вы делаете гидроизоляцию и подготовку основания?</span><i class="fas fa-plus faq-icon"></i></button>
+                    <div class="faq-a">Да. Делаем выравнивание, грунтовку и гидроизоляцию с правильными примыканиями и узлами — это основа долговечности.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" type="button"><span>Можно ли работать с крупным форматом плитки?</span><i class="fas fa-plus faq-icon"></i></button>
+                    <div class="faq-a">Да. Работаем с крупноформатным керамогранитом, используем технологию нанесения клея и систему выравнивания для идеальной плоскости.</div>
                 </div>
             </div>
         </section>
@@ -597,9 +735,185 @@
 
     <footer class="footer">
         <div class="footer-content">
-            <a href="index.html" class="logo">ELITE TILES</a>
-            <p class="footer-text">© 2024 ELITE TILES. Все права защищены.</p>
+            <a href="index.html" class="logo">ELITE TILER</a>
+            <p class="footer-text">© 2024 ELITE TILER. Все права защищены.</p>
         </div>
     </footer>
+
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+        <div class="lightbox-inner">
+            <button class="lightbox-close" type="button" id="lightboxClose" aria-label="Close"><i class="fas fa-times"></i></button>
+            <img class="lightbox-img" id="lightboxImg" alt="" />
+        </div>
+    </div>
+
+    <div class="reels-modal" id="reelsModal" aria-hidden="true">
+        <div class="reels-shell" role="dialog" aria-modal="true">
+            <div class="reels-topbar">
+                <div class="reels-nav">
+                    <button class="reels-btn" type="button" id="reelsPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                    <button class="reels-btn" type="button" id="reelsNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <button class="reels-close" type="button" id="reelsClose" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <video class="reels-player" id="reelsPlayer" playsinline webkit-playsinline muted controls controlsList="nodownload noplaybackrate" preload="auto"></video>
+            <div class="reels-hint" id="reelsHint"><i class="fas fa-arrow-up"></i> Следующее видео</div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var galleryItems = document.querySelectorAll('.gallery-item');
+            var lightbox = document.getElementById('lightbox');
+            var lightboxImg = document.getElementById('lightboxImg');
+            var lightboxClose = document.getElementById('lightboxClose');
+
+            function lbOpen(src, alt) {
+                lightboxImg.src = src;
+                lightboxImg.alt = alt || '';
+                lightbox.classList.add('open');
+                lightbox.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function lbClose() {
+                lightbox.classList.remove('open');
+                lightbox.setAttribute('aria-hidden', 'true');
+                lightboxImg.src = '';
+                document.body.style.overflow = '';
+            }
+
+            galleryItems.forEach(function (el) {
+                el.addEventListener('click', function () {
+                    var img = el.querySelector('img');
+                    if (!img) return;
+                    lbOpen(img.src, img.alt);
+                });
+            });
+
+            if (lightboxClose) lightboxClose.addEventListener('click', lbClose);
+            if (lightbox) {
+                lightbox.addEventListener('click', function (e) {
+                    if (e.target === lightbox) lbClose();
+                });
+            }
+
+            var faqButtons = document.querySelectorAll('.faq-q');
+            faqButtons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var item = btn.closest('.faq-item');
+                    var opened = item.classList.contains('open');
+                    document.querySelectorAll('.faq-item.open').forEach(function (i) {
+                        i.classList.remove('open');
+                        var icon = i.querySelector('.faq-icon');
+                        if (icon) icon.className = 'fas fa-plus faq-icon';
+                    });
+                    if (!opened) {
+                        item.classList.add('open');
+                        var ic = item.querySelector('.faq-icon');
+                        if (ic) ic.className = 'fas fa-minus faq-icon';
+                    }
+                });
+            });
+
+            var reelsGrid = document.getElementById('reelsGrid');
+            var reelsModal = document.getElementById('reelsModal');
+            var reelsPlayer = document.getElementById('reelsPlayer');
+            var reelsClose = document.getElementById('reelsClose');
+            var reelsPrev = document.getElementById('reelsPrev');
+            var reelsNext = document.getElementById('reelsNext');
+            var reelsHint = document.getElementById('reelsHint');
+            var reelCards = Array.prototype.slice.call(document.querySelectorAll('.reel-card'));
+            var reelIdx = 0;
+
+            function showHint() {
+                if (!reelsHint) return;
+                reelsHint.style.opacity = '1';
+            }
+
+            function hideHint() {
+                if (!reelsHint) return;
+                reelsHint.style.opacity = '0';
+            }
+
+            function openReel(i) {
+                reelIdx = (i + reelCards.length) % reelCards.length;
+                var src = reelCards[reelIdx] && reelCards[reelIdx].getAttribute('data-src');
+                if (!src) return;
+                reelsPlayer.pause();
+                reelsPlayer.src = src;
+                try { reelsPlayer.load(); } catch (e) {}
+                reelsPlayer.muted = true;
+                reelsPlayer.playsInline = true;
+                try { reelsPlayer.setAttribute('playsinline', ''); reelsPlayer.setAttribute('webkit-playsinline', ''); } catch (e) {}
+                reelsModal.classList.add('open');
+                reelsModal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                showHint();
+                reelsPlayer.play().catch(function () {});
+            }
+
+            function closeReels() {
+                reelsModal.classList.remove('open');
+                reelsModal.setAttribute('aria-hidden', 'true');
+                reelsPlayer.pause();
+                reelsPlayer.src = '';
+                document.body.style.overflow = '';
+            }
+
+            function nextReel() { openReel(reelIdx + 1); }
+            function prevReel() { openReel(reelIdx - 1); }
+
+            if (reelsGrid) {
+                reelsGrid.addEventListener('click', function (e) {
+                    var card = e.target && e.target.closest && e.target.closest('.reel-card');
+                    if (!card) return;
+                    var idx = reelCards.indexOf(card);
+                    openReel(idx < 0 ? 0 : idx);
+                });
+            }
+
+            reelCards.forEach(function (card) {
+                var v = card.querySelector('video');
+                if (!v) return;
+                v.muted = true;
+                v.loop = true;
+                v.playsInline = true;
+                try { v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', ''); } catch (e) {}
+                v.play().catch(function () {});
+            });
+
+            if (reelsClose) reelsClose.addEventListener('click', closeReels);
+            if (reelsPrev) reelsPrev.addEventListener('click', prevReel);
+            if (reelsNext) reelsNext.addEventListener('click', nextReel);
+
+            if (reelsModal) {
+                reelsModal.addEventListener('click', function (e) {
+                    if (e.target === reelsModal) closeReels();
+                });
+            }
+
+            if (reelsPlayer) {
+                reelsPlayer.addEventListener('ended', function () {
+                    showHint();
+                });
+                reelsPlayer.addEventListener('play', function () {
+                    hideHint();
+                });
+                reelsPlayer.addEventListener('pause', function () {
+                    showHint();
+                });
+            }
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    if (lightbox && lightbox.classList.contains('open')) lbClose();
+                    if (reelsModal && reelsModal.classList.contains('open')) closeReels();
+                }
+                if ((e.key === 'ArrowRight' || e.key === 'l') && reelsModal && reelsModal.classList.contains('open')) nextReel();
+                if ((e.key === 'ArrowLeft' || e.key === 'j') && reelsModal && reelsModal.classList.contains('open')) prevReel();
+            });
+        })();
+    </script>
 </body>
 </html>
